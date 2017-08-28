@@ -1,0 +1,6 @@
+/ipch/*
+/x64/*
+/GUI/x64/*
+/GUI/GeneratedFiles/*
+/Thesis/x64/*
+/Thesis/Debug/*
