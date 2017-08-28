@@ -9,12 +9,16 @@ class GUI : public QMainWindow
 
 public:
 	GUI(QWidget *parent = Q_NULLPTR);
+	
+	void singleImage (QLabel *image, QString file);
 
 	private slots:
 		//menu bar funtions
 		void on_action_Open_triggered();
+		void loadPictures(int center);
 
 private:
 	Ui::GUIClass ui;
 	QString filepath;
+	QStringList filenames;
 };
