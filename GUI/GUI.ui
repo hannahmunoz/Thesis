@@ -192,7 +192,7 @@
     <item row="0" column="2">
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
-       <widget class="QLabel" name="PictureFrame">
+       <widget class="ClickableLabel" name="PictureFrame">
         <property name="minimumSize">
          <size>
           <width>300</width>
@@ -327,6 +327,13 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>ClickableLabel</class>
+   <extends>QLabel</extends>
+   <header>ClickableLabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="GUI.qrc"/>
  </resources>

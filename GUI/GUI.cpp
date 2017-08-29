@@ -1,10 +1,12 @@
 #include "stdafx.h"
 #include "GUI.h"
 #include "ToolHandler.h"
+#include "ClickableLabel.h"
 #include <qfile.h>
 #include <qfiledialog.h>
 #include <qtextstream.h>
 #include <qpixmap.h>
+
 
 GUI::GUI(QWidget *parent)
 	: QMainWindow(parent)
@@ -22,6 +24,9 @@ GUI::GUI(QWidget *parent)
 	populateToolbox();
 	ToolHandler* tools = new ToolHandler();
 	connect(ui.Toolbox, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)), tools, SLOT(menuHandler (QListWidgetItem *, QListWidgetItem *)));
+
+	//label events
+	connect(ui.PictureFrame, SIGNAL(clicked()), tools, SLOT(boxSelection()));
 }
 
 void GUI::on_action_Open_triggered()

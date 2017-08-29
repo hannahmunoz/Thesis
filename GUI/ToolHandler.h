@@ -10,6 +10,11 @@ class ToolHandler : public QObject
 
 	public slots:
 		void menuHandler(QListWidgetItem *current, QListWidgetItem * previous);
+		void boxSelection();
+
+private:
+	QListWidgetItem *currentSelection;
+	QListWidgetItem *previousSelection;
 
 };
 
