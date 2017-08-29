@@ -11,6 +11,7 @@ public:
 	GUI(QWidget *parent = Q_NULLPTR);
 	
 	void singleImage (QLabel *image, QString file);
+	void populateToolbox();
 
 	private slots:
 		//menu bar funtions

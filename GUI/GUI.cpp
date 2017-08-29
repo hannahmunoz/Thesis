@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "GUI.h"
+#include "ToolHandler.h"
 #include <qfile.h>
 #include <qfiledialog.h>
 #include <qtextstream.h>
@@ -9,17 +10,22 @@ GUI::GUI(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
+
+	//set up the processing bar
 	ui.PictureProcessingBar->hide();
 
+	//set up the slider
 	connect(ui.ImageScroller, SIGNAL(valueChanged(int)), this, SLOT(loadPictures(int)));
-
 	ui.ImageScroller->setRange(0, 0);
+
+	//set up the toolbox
+	populateToolbox();
+	ToolHandler* tools = new ToolHandler();
+	connect(ui.Toolbox, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)), tools, SLOT(menuHandler (QListWidgetItem *, QListWidgetItem *)));
 }
 
 void GUI::on_action_Open_triggered()
 {
-	//with help from http://www.qtcentre.org/threads/34226-QFileDialog-select-multiple-directories?p=220108#post220108
-
 	//set the parameters of the file finder
 	QFileDialog filefinder;
 	QStringList typeFilter;
@@ -76,7 +82,12 @@ void GUI::loadPictures(int center)
 
 void GUI::singleImage(QLabel *image, QString file) {
 	image->setPixmap(QPixmap(file).scaled(image->width(), image->height(), Qt::KeepAspectRatio));
+}
 
+void GUI::populateToolbox()
+{
+	new QListWidgetItem(tr("Select Area"), ui.Toolbox);
+	new QListWidgetItem(tr("Test"), ui.Toolbox);
 }
 
 
