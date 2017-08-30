@@ -13,11 +13,18 @@ class ClickableLabel : public QLabel
 public:
 	explicit ClickableLabel(QWidget* parent = Q_NULLPTR, Qt::WindowFlags f = Qt::WindowFlags());
 	~ClickableLabel();
+	void paintEvent(QPaintEvent *);
+	void setSelection(std::string);
 
-signals:
+	signals:
 	void clicked();
 
 protected:
 	void mousePressEvent(QMouseEvent* event);
+
+
+private:	
+	QPainter painter;
+	std::string current;
 };
 

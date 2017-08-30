@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "GUI.h"
-#include "ToolHandler.h"
+
 #include "ClickableLabel.h"
 #include <qfile.h>
 #include <qfiledialog.h>
@@ -22,11 +22,12 @@ GUI::GUI(QWidget *parent)
 
 	//set up the toolbox
 	populateToolbox();
-	ToolHandler* tools = new ToolHandler();
+	tools = new ToolHandler();
 	connect(ui.Toolbox, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)), tools, SLOT(menuHandler (QListWidgetItem *, QListWidgetItem *)));
 
 	//label events
-	connect(ui.PictureFrame, SIGNAL(clicked()), tools, SLOT(boxSelection()));
+	connect(ui.PictureFrame, SIGNAL(clicked()), this, SLOT( passSelection()));
+
 }
 
 void GUI::on_action_Open_triggered()
@@ -83,6 +84,13 @@ void GUI::loadPictures(int center)
 		singleImage(ui.FarRightScrollImage, NULL);
 	}
 }
+
+void GUI::passSelection()
+{
+	ui.PictureFrame->setSelection(tools->getCurrentSelection());
+}
+
+
 
 
 void GUI::singleImage(QLabel *image, QString file) {

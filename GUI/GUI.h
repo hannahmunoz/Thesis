@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QtWidgets/QMainWindow>
+#include "ToolHandler.h"
 #include "ui_GUI.h"
 
 class GUI : public QMainWindow
@@ -17,9 +18,12 @@ public:
 		//menu bar funtions
 		void on_action_Open_triggered();
 		void loadPictures(int center);
+		void passSelection();
+
 
 private:
 	Ui::GUIClass ui;
+	ToolHandler* tools;
 	QString filepath;
 	QStringList filenames;
 };

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "ToolHandler.h"
+#include "DrawHandler.h"
 #include "qapplication.h"
 #include "opencv2\core.hpp"
 
@@ -17,7 +18,7 @@ void ToolHandler::menuHandler(QListWidgetItem *current, QListWidgetItem * previo
 	if (previous != NULL) {
 		previousSelection = previous;
 		if (previous->text().compare("Select Area") == 0) {
-			QApplication::restoreOverrideCursor();
+			QApplication::setOverrideCursor(QCursor(Qt::ArrowCursor));
 		}
 	}
 }
@@ -26,7 +27,20 @@ void ToolHandler::boxSelection()
 {
 	if (currentSelection != NULL) {
 		if (currentSelection->text().compare("Select Area") == 0) {
-			QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+
+			//QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 		}
 	}
 }
+
+std::string ToolHandler::getCurrentSelection()
+{
+	return currentSelection->text().toStdString();
+}
+
+
+
+
+
+
+
