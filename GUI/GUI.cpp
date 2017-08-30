@@ -26,7 +26,7 @@ GUI::GUI(QWidget *parent)
 	connect(ui.Toolbox, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)), tools, SLOT(menuHandler (QListWidgetItem *, QListWidgetItem *)));
 
 	//label events
-	connect(ui.PictureFrame, SIGNAL(clicked()), this, SLOT( passSelection()));
+	connect(ui.Toolbox, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT( passSelection(QListWidgetItem *)));
 
 }
 
@@ -85,12 +85,10 @@ void GUI::loadPictures(int center)
 	}
 }
 
-void GUI::passSelection()
+void GUI::passSelection(QListWidgetItem *item)
 {
 	ui.PictureFrame->setSelection(tools->getCurrentSelection());
 }
-
-
 
 
 void GUI::singleImage(QLabel *image, QString file) {

@@ -18,7 +18,7 @@ public:
 		//menu bar funtions
 		void on_action_Open_triggered();
 		void loadPictures(int center);
-		void passSelection();
+		void passSelection(QListWidgetItem *);
 
 
 private:

@@ -25,6 +25,7 @@ protected:
 
 private:	
 	QPainter painter;
+	QTimer timer;
 	std::string current;
 };
 

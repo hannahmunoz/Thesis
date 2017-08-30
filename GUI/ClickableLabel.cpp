@@ -3,11 +3,16 @@
 #include "ToolHandler.h"
 
 
-ClickableLabel::ClickableLabel(QWidget* parent, Qt::WindowFlags f): QLabel(parent) {
-
+ClickableLabel::ClickableLabel(QWidget* parent, Qt::WindowFlags f): QLabel(parent) 
+{
+	connect(&timer, SIGNAL(timeout()), this, SLOT(update()));
+	timer.start(200);
 }
 
-ClickableLabel::~ClickableLabel() {}
+ClickableLabel::~ClickableLabel() 
+{
+	
+}
 
 void ClickableLabel::mousePressEvent(QMouseEvent* event) {
 	emit clicked();
@@ -21,10 +26,11 @@ void ClickableLabel::paintEvent(QPaintEvent *) {
 			painter.setFont(QFont("Arial", 30));
 			painter.drawText(rect(), Qt::AlignCenter, "Qt");
 			painter.end();
+
 		}
-		else {
+		//else {
 			//painter.drawText(rect(), Qt::AlignCenter, "qT");
-		}
+		//}
 	}
 }
 
