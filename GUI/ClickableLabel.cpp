@@ -5,8 +5,8 @@
 
 ClickableLabel::ClickableLabel(QWidget* parent, Qt::WindowFlags f): QLabel(parent) 
 {
-	//connect(&timer, SIGNAL(timeout()), this, SLOT(update()));
-	//timer.start(200);
+	connect(&timer, SIGNAL(timeout()), this, SLOT(update()));
+	timer.start(200);
 }
 
 ClickableLabel::~ClickableLabel() 
@@ -20,19 +20,20 @@ void ClickableLabel::mousePressEvent(QMouseEvent* event) {
 
 void ClickableLabel::paintEvent(QPaintEvent *event) {
 	QLabel::paintEvent(event);
-	if (!current.empty()){
-		if (current.compare("Select Area") == 0) {
-
-			painter.begin(&p);
-			painter.setPen(Qt::blue);
-			painter.setFont(QFont("Arial", 30));
-			painter.drawText(rect(), Qt::AlignCenter, "Qt");
-			painter.end();
-			setPixmap(p);
+	if (!p.isNull()) {
+		if (!current.empty()) {
+			if (current.compare("Select Area") == 0) {
+				painter.begin(this);
+				painter.setPen(Qt::blue);
+				painter.setFont(QFont("Arial", 30));
+				painter.drawText(rect(), Qt::AlignCenter, "Qt");
+				painter.end();
+				//setPixmap(p);
+			}
+			//else {
+				//painter.drawText(rect(), Qt::AlignCenter, "qT");
+			//}
 		}
-		//else {
-			//painter.drawText(rect(), Qt::AlignCenter, "qT");
-		//}
 	}
 }
 
