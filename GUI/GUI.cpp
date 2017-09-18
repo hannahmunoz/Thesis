@@ -52,7 +52,8 @@ void GUI::on_action_Open_triggered()
 void GUI::loadPictures(int center)
 {
 	//load main picture
-	singleImage(ui.PictureFrame, filenames.at(center));
+	//singleImage(ui.PictureFrame, filenames.at(center));
+	ui.PictureFrame->setPix(filenames.at(center));
 	// and center
 	singleImage(ui.CenterScollImage, filenames.at(center));
 
