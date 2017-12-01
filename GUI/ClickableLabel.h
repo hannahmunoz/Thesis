@@ -26,10 +26,12 @@ public:
 
 protected:
 	void mousePressEvent(QMouseEvent* event);
+	void mouseMoveEvent(QMouseEvent* event);
 
 
 private:
 	QPixmap p;
+	QPoint dragStartPosition;
 	QPainter painter;
 	QTimer timer;
 	std::string current;

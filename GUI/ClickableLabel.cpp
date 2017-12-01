@@ -15,7 +15,21 @@ ClickableLabel::~ClickableLabel()
 }
 
 void ClickableLabel::mousePressEvent(QMouseEvent* event) {
+	if (event->button() == Qt::LeftButton)
+		dragStartPosition = event->pos();
 	emit clicked();
+}
+
+void ClickableLabel::mouseMoveEvent(QMouseEvent * event)
+{
+	// check that we're still dragging
+	/*if (!(event->buttons() & qt::leftbutton))
+		return;
+	if ((event->pos() - dragstartposition).manhattanlength () < qapplication::startdragdistance())
+		return;*/
+	QDrag *drag = new QDrag(this);
+	drag->pixmap();
+
 }
 
 void ClickableLabel::paintEvent(QPaintEvent *event) {
@@ -41,6 +55,7 @@ void ClickableLabel::setSelection(std::string c)
 {
 	current = c;
 }
+
 void ClickableLabel::setPix(QString file)
 {
 	p = QPixmap(file);

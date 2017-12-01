@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -60,35 +60,60 @@
     </size>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="6" column="2">
-     <widget class="QProgressBar" name="PictureProcessingBar">
-      <property name="value">
-       <number>24</number>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="2">
-     <spacer name="verticalSpacer">
+    <item row="0" column="1">
+     <spacer name="horizontalSpacer_2">
       <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeType">
-       <enum>QSizePolicy::Fixed</enum>
+       <enum>Qt::Horizontal</enum>
       </property>
       <property name="sizeHint" stdset="0">
        <size>
-        <width>20</width>
-        <height>40</height>
+        <width>40</width>
+        <height>20</height>
        </size>
       </property>
      </spacer>
     </item>
-    <item row="3" column="2">
-     <widget class="QSlider" name="ImageScroller">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
+    <item row="0" column="0">
+     <widget class="QListWidget" name="Toolbox">
+      <property name="maximumSize">
+       <size>
+        <width>200</width>
+        <height>500</height>
+       </size>
       </property>
      </widget>
+    </item>
+    <item row="0" column="2">
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
+      </property>
+      <item>
+       <widget class="ClickableLabel" name="PictureFrame">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="lineWidth">
+         <number>2</number>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
     <item row="2" column="2">
      <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -189,22 +214,33 @@
       </item>
      </layout>
     </item>
-    <item row="0" column="2">
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <item row="3" column="2">
+     <widget class="QSlider" name="ImageScroller">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Fixed</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="1" column="0" rowspan="3">
+     <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="ClickableLabel" name="PictureFrame">
-        <property name="minimumSize">
-         <size>
-          <width>300</width>
-          <height>300</height>
-         </size>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
-        </property>
-        <property name="lineWidth">
-         <number>2</number>
-        </property>
+       <widget class="QLabel" name="RGBView">
         <property name="text">
          <string/>
         </property>
@@ -212,28 +248,19 @@
       </item>
      </layout>
     </item>
-    <item row="0" column="0">
-     <widget class="QListWidget" name="Toolbox">
-      <property name="maximumSize">
-       <size>
-        <width>200</width>
-        <height>500</height>
-       </size>
+    <item row="6" column="2">
+     <widget class="QProgressBar" name="PictureProcessingBar">
+      <property name="value">
+       <number>24</number>
       </property>
      </widget>
     </item>
-    <item row="0" column="1">
-     <spacer name="horizontalSpacer_2">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
+    <item row="6" column="0">
+     <widget class="QPushButton" name="ProcessButton">
+      <property name="text">
+       <string>Process</string>
       </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -278,19 +305,15 @@
     <addaction name="separator"/>
     <addaction name="action_Exit"/>
    </widget>
-   <widget class="QMenu" name="menu_options">
-    <property name="title">
-     <string>&amp;Options</string>
-    </property>
-   </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
-     <string>Edit</string>
+     <string>Metadata</string>
     </property>
+    <addaction name="actionEdit"/>
+    <addaction name="actionView"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menuEdit"/>
-   <addaction name="menu_options"/>
   </widget>
   <action name="action_Open">
    <property name="text">
@@ -323,6 +346,36 @@
   <action name="actionRedo">
    <property name="text">
     <string>Redo</string>
+   </property>
+  </action>
+  <action name="actionEdit">
+   <property name="text">
+    <string>Edit</string>
+   </property>
+  </action>
+  <action name="actionView">
+   <property name="text">
+    <string>View</string>
+   </property>
+  </action>
+  <action name="actionAutoGenorate">
+   <property name="text">
+    <string>AutoGenerate</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="actionSave_As">
+   <property name="text">
+    <string>Save As</string>
+   </property>
+  </action>
+  <action name="actionExport">
+   <property name="text">
+    <string>Export</string>
    </property>
   </action>
  </widget>
