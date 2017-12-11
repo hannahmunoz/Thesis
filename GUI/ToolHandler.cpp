@@ -10,14 +10,19 @@ ToolHandler::ToolHandler() {
 }
 
 void ToolHandler::menuHandler(QListWidgetItem *current, QListWidgetItem * previous) {
-	currentSelection = current;
-	if (current->text().compare("Select Area") == 0) {
-		QApplication::setOverrideCursor(QCursor(Qt::CrossCursor));
+	if (current != NULL) {
+		currentSelection = current;
+		if (current->text().compare("Region of Interest") == 0) {
+			QApplication::setOverrideCursor(QCursor(Qt::CrossCursor));
+		}
+		else if (current->text().compare("Select") == 0) {
+			QApplication::setOverrideCursor(QCursor(Qt::CrossCursor));
+		}
 	}
 
 	if (previous != NULL) {
 		previousSelection = previous;
-		if (previous->text().compare("Select Area") == 0) {
+		if (previous->text().compare("Region of Interest") == 0) {
 			QApplication::setOverrideCursor(QCursor(Qt::ArrowCursor));
 		}
 	}
@@ -26,7 +31,7 @@ void ToolHandler::menuHandler(QListWidgetItem *current, QListWidgetItem * previo
 void ToolHandler::boxSelection()
 {
 	if (currentSelection != NULL) {
-		if (currentSelection->text().compare("Select Area") == 0) {
+		if (currentSelection->text().compare("Region of Interest") == 0) {
 
 			//QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 		}

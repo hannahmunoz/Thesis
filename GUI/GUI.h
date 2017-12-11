@@ -20,7 +20,7 @@ public:
 	
 	void singleImage (QLabel *image, QString file);
 	void populateToolbox();
-
+	void threadExport();
 	private slots:
 		//menu bar funtions
 		void on_action_Open_triggered();
@@ -29,12 +29,16 @@ public:
 		void passSelection(QListWidgetItem *);
 		void loadRGB(cv::Mat image);
 		void testResults();
+		void Export();
+		void loadMDWindow();
 
 	signals:
 		void imageSet(cv::Mat image);
 
 
 	private:
+
+
 		Ui::GUIClass ui;
 		ToolHandler* tools;
 		QString filepath;

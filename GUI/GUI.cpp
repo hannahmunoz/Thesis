@@ -6,6 +6,7 @@
 #include <qfiledialog.h>
 #include <qtextstream.h>
 #include <qpixmap.h>
+#include <Metadata.h>
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
@@ -20,6 +21,7 @@ GUI::GUI(QWidget *parent)
 	ui.setupUi(this);
 
 	//set up the processing bar
+	//connect(ui.PictureProcessingBar, SIGNAL(signalProgress(int)), ui.PictureProcessingBar, SLOT(setValue(int)));
 	ui.PictureProcessingBar->hide();
 
 	//set up the slider
@@ -39,7 +41,12 @@ GUI::GUI(QWidget *parent)
 
 	//connect Process Button
 	connect(ui.ProcessButton, SIGNAL(clicked()), this, SLOT(testResults()));
+	connect(ui.ExportButton, SIGNAL(clicked()), this, SLOT(Export()));
+	ui.ProcessButton->setEnabled(false);
+	ui.ExportButton->setEnabled(false);
 
+	//connect edit
+	connect(ui.menuEdit, SIGNAL(triggered(QAction *)), this, SLOT(loadMDWindow()));
 }
 
 // where the hell is this call??
@@ -63,6 +70,8 @@ GUI::GUI(QWidget *parent)
 
 void GUI::loadPictures(int center)
 {
+	ui.ProcessButton->setEnabled(true);
+	ui.ExportButton->setEnabled(true);
 	//load main picture
 	//singleImage(ui.PictureFrame, filenames.at(center));
 	ui.PictureFrame->setPix(filenames.at(center));
@@ -157,8 +166,16 @@ void GUI::loadRGB(Mat image) {
 
 void GUI::populateToolbox()
 {
-	new QListWidgetItem(tr("Select Area"), ui.Toolbox);
-	new QListWidgetItem(tr("Test"), ui.Toolbox);
+	new QListWidgetItem(tr("Select"), ui.Toolbox);
+	new QListWidgetItem(tr("Region of Interest"), ui.Toolbox);
+
+	ui.Toolbox->setCurrentRow(0);
+}
+
+void GUI::loadMDWindow()
+{
+	Metadata *mdWindow = new Metadata();
+	mdWindow->show();
 }
 
 

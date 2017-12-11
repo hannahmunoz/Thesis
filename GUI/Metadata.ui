@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Metadata</class>
+ <widget class="QWidget" name="Metadata">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>350</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>350</width>
+    <height>400</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>350</width>
+    <height>400</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Metadata Editor</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/* Style sheet from 
+	https://github.com/EClaesson/QTDark/blob/master/QTDark.stylesheet
+	Edited to Grey and Blue for UNR*/
+
+/*
+	Copyright 2013 Emanuel Claesson
+
+	Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+
+		http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+*/
+
+/*
+	COLOR_DARK     = #3e3e3e
+	COLOR_MEDIUM   = #a3a3a3
+	COLOR_MEDLIGHT = #999999
+	COLOR_LIGHT    = #DDDDDD
+	COLOR_ACCENT   = #003366
+*/
+
+* {
+	background: #3e3e3e;
+	color: #DDDDDD;;
+}
+
+QWidget::item:selected {
+	background: #003366;
+}
+
+QCheckBox, QRadioButton {
+	border: none;
+}
+
+QRadioButton::indicator, QCheckBox::indicator {
+	width: 13px;
+	height: 13px;
+}
+
+QRadioButton::indicator::unchecked, QCheckBox::indicator::unchecked {
+	border: 1px solid #999999;
+	background: none;
+}
+
+QRadioButton::indicator:unchecked:hover, QCheckBox::indicator:unchecked:hover {
+	border: 1px solid #DDDDDD;
+}
+
+QRadioButton::indicator::checked, QCheckBox::indicator::checked {
+	border: 1px solid #999999;
+	background: #999999;
+}
+
+QRadioButton::indicator:checked:hover, QCheckBox::indicator:checked:hover {
+	border: 1px solid #DDDDDD;
+	background: #DDDDDD;
+}
+
+QGroupBox {
+	margin-top: 6px;
+}
+
+QGroupBox::title {
+	top: -7px;
+	left: 7px;
+}
+
+QScrollBar {
+	border: 1px solid #999999;
+	background: #3e3e3e;
+}
+
+QScrollBar:horizontal {
+	height: 15px;
+	margin: 0px 0px 0px 32px;
+}
+
+QScrollBar:vertical {
+	width: 15px;
+	margin: 32px 0px 0px 0px;
+}
+
+QScrollBar::handle {
+	background: #a3a3a3;
+	border: 1px solid #999999;
+}
+
+QScrollBar::handle:horizontal {
+	border-width: 0px 1px 0px 1px;
+}
+
+QScrollBar::handle:vertical {
+	border-width: 1px 0px 1px 0px;
+}
+
+QScrollBar::handle:horizontal {
+	min-width: 20px;
+}
+
+QScrollBar::handle:vertical {
+	min-height: 20px;
+}
+
+QScrollBar::add-line, QScrollBar::sub-line {
+	background:#a3a3a3;
+	border: 1px solid #999999;
+	subcontrol-origin: margin;
+}
+
+QScrollBar::add-line {
+	position: absolute;
+}
+
+QScrollBar::add-line:horizontal {
+	width: 15px;
+	subcontrol-position: left;
+	left: 15px;
+}
+
+QScrollBar::add-line:vertical {
+	height: 15px;
+	subcontrol-position: top;
+	top: 15px;
+}
+
+QScrollBar::sub-line:horizontal {
+	width: 15px;
+	subcontrol-position: top left;
+}
+
+QScrollBar::sub-line:vertical {
+	height: 15px;
+	subcontrol-position: top;
+}
+
+QScrollBar:left-arrow, QScrollBar::right-arrow, QScrollBar::up-arrow, QScrollBar::down-arrow {
+	border: 1px solid #999999;
+	width: 3px;
+	height: 3px;
+}
+
+QScrollBar::add-page, QScrollBar::sub-page {
+	background: none;
+}
+
+QAbstractButton:hover {
+	background: #a3a3a3;
+}
+
+QAbstractButton:pressed {
+	background: #999999;
+}
+
+QAbstractItemView {
+	show-decoration-selected: 1;
+	selection-background-color: #003366;
+	selection-color: #DDDDDD;
+	alternate-background-color: #a3a3a3;
+}
+
+QHeaderView {
+	border: 1px solid #999999;
+}
+
+QHeaderView::section {
+	background: #3e3e3e;
+	border: 1px solid #999999;
+	padding: 4px;
+}
+
+QHeaderView::section:selected, QHeaderView::section::checked {
+	background: #a3a3a3;
+}
+
+QTableView {
+	gridline-color: #999999;
+}
+
+QTabBar {
+	margin-left: 2px;
+}
+
+QTabBar::tab {
+	border-radius: 0px;
+	padding: 4px;
+	margin: 4px;
+}
+
+QTabBar::tab:selected {
+	background: #a3a3a3;
+}
+
+QComboBox::down-arrow {
+	border: 1px solid #999999;
+	background: #a3a3a3;
+}
+
+QComboBox::drop-down {
+	border: 1px solid #999999;
+	background: #a3a3a3;
+}
+
+QComboBox::down-arrow {
+	width: 3px;
+	height: 3px;
+	border: 1px solid #999999;
+}
+
+QAbstractSpinBox {
+	padding-right: 15px;
+}
+
+QAbstractSpinBox::up-button, QAbstractSpinBox::down-button {
+	border: 1px solid #999999;
+	background: #a3a3a3;
+	subcontrol-origin: border;
+}
+
+QAbstractSpinBox::up-arrow, QAbstractSpinBox::down-arrow {
+	width: 3px;
+	height: 3px;
+	border: 1px solid #999999;
+}
+
+QSlider {
+	border: none;
+}
+
+QSlider::groove:horizontal {
+	height: 5px;
+	margin: 4px 0px 4px 0px;
+}
+
+QSlider::groove:vertical {
+	width: 5px;
+	margin: 0px 4px 0px 4px;
+}
+
+QSlider::handle {
+	border: 1px solid #999999;
+	background: #a3a3a3;
+}
+
+QSlider::handle:horizontal {
+	width: 15px;
+	margin: -4px 0px -4px 0px;
+}
+
+QSlider::handle:vertical {
+	height: 15px;
+	margin: 0px -4px 0px -4px;
+}
+
+QSlider::add-page:vertical, QSlider::sub-page:horizontal {
+	background: #003366;
+}
+
+QSlider::sub-page:vertical, QSlider::add-page:horizontal {
+	background: #a3a3a3;
+}
+
+QLabel {
+	border: none;
+}
+
+QProgressBar {
+	text-align: center;
+}
+
+QProgressBar::chunk {
+	width: 1px;
+	background-color: #003366;
+}
+
+QMenu::separator {
+	background: #a3a3a3;
+}</string>
+  </property>
+  <widget class="QWidget" name="formLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>12</y>
+     <width>331</width>
+     <height>334</height>
+    </rect>
+   </property>
+   <layout class="QFormLayout" name="formLayout">
+    <property name="fieldGrowthPolicy">
+     <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+    </property>
+    <property name="labelAlignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+    <property name="formAlignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+    </property>
+    <item row="0" column="0">
+     <widget class="QLabel" name="nameLabel">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Name</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="nameLineEdit"/>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="emailLineEdit"/>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="phoneLabel">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Phone</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="phoneLineEdit"/>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="websiteLabel">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Website</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLineEdit" name="websiteLineEdit"/>
+    </item>
+    <item row="4" column="0">
+     <widget class="QLabel" name="institutionNameLabel">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Institution Name</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QLineEdit" name="institutionNameLineEdit"/>
+    </item>
+    <item row="5" column="0">
+     <widget class="QLabel" name="institutionAddress1Label">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Address 1</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1">
+     <widget class="QLineEdit" name="institutionAddress1LineEdit"/>
+    </item>
+    <item row="6" column="0">
+     <widget class="QLabel" name="institutionAddress2Label">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Address 2</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1">
+     <widget class="QLineEdit" name="institutionAddress2LineEdit"/>
+    </item>
+    <item row="7" column="0">
+     <widget class="QLabel" name="Adress3Label">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+        <underline>false</underline>
+       </font>
+      </property>
+      <property name="text">
+       <string>Address 3</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="1">
+     <widget class="QLineEdit" name="Address3Edit">
+      <property name="font">
+       <font>
+        <weight>50</weight>
+        <bold>false</bold>
+        <underline>false</underline>
+       </font>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="0">
+     <widget class="QLabel" name="institutionPhoneLabel">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Institution Phone</string>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="1">
+     <widget class="QLineEdit" name="institutionPhoneLineEdit"/>
+    </item>
+    <item row="13" column="0">
+     <widget class="QLabel" name="notesLabel">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Notes</string>
+      </property>
+     </widget>
+    </item>
+    <item row="13" column="1">
+     <widget class="QTextEdit" name="notesEdit"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="emailLabel">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+        <underline>false</underline>
+       </font>
+      </property>
+      <property name="text">
+       <string>Email</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>349</y>
+     <width>331</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QPushButton" name="Save">
+      <property name="text">
+       <string>Save</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="Cancel">
+      <property name="text">
+       <string>Cancel</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>Cancel</sender>
+   <signal>clicked()</signal>
+   <receiver>Metadata</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>259</x>
+     <y>369</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>174</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
