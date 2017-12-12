@@ -5,20 +5,28 @@
 #include "opencv2\core.hpp"
 
 ToolHandler::ToolHandler() {
+	// set the selections to null
 	currentSelection = NULL;
 	previousSelection = NULL;
 }
 
 void ToolHandler::menuHandler(QListWidgetItem *current, QListWidgetItem * previous) {
+	// check that something has been selected in the tool box
 	if (current != NULL) {
+		// change the current seletion
 		currentSelection = current;
+		// ROI
 		if (current->text().compare("Region of Interest") == 0) {
+			// Change cursor type, more logic will go here
 			QApplication::setOverrideCursor(QCursor(Qt::CrossCursor));
 		}
+		// Select
 		else if (current->text().compare("Select") == 0) {
-			QApplication::setOverrideCursor(QCursor(Qt::CrossCursor));
+			// change cursor type, more logic will go here
+			QApplication::setOverrideCursor(QCursor(Qt::ArrowCursor));
 		}
 	}
+
 
 	if (previous != NULL) {
 		previousSelection = previous;
@@ -29,7 +37,7 @@ void ToolHandler::menuHandler(QListWidgetItem *current, QListWidgetItem * previo
 }
 
 void ToolHandler::boxSelection()
-{
+{	// ROI logic, not implemented yet. 
 	if (currentSelection != NULL) {
 		if (currentSelection->text().compare("Region of Interest") == 0) {
 

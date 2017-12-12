@@ -9,14 +9,18 @@ void GUI::on_action_Open_triggered()
 		<< "image/png";
 	filefinder.setMimeTypeFilters(typeFilter);
 
+	// opens file handler
 	filenames = QFileDialog::getOpenFileNames(this, "Select Pictures", "C:\\");
-	if (filenames.size() > 0) {
-		ui.ImageScroller->setRange(0, filenames.size() - 1);
-		loadPictures(0);
 
+	// checks that images were selected
+	if (filenames.size() > 0) {
+		// adjusts the scroller
+		ui.ImageScroller->setRange(0, filenames.size() - 1);
+		//loads the picture
+		loadPictures(0);
 	}
 
-	//otherwise do stuff witht the image
+	//otherwise do stuff with the image
 }
 
 void GUI::on_action_Edit_triggered()

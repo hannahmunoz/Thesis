@@ -14,10 +14,11 @@
 #include <opencv2/imgcodecs/imgcodecs.hpp>
 using namespace cv;
 
-
+//main window
 GUI::GUI(QWidget *parent)
 	: QMainWindow(parent)
 {
+	// create window
 	ui.setupUi(this);
 
 	//set up the processing bar
@@ -49,31 +50,13 @@ GUI::GUI(QWidget *parent)
 	connect(ui.menuEdit, SIGNAL(triggered(QAction *)), this, SLOT(loadMDWindow()));
 }
 
-// where the hell is this call??
-/*void GUI::on_action_Open_triggered()
-{
-	//set the parameters of the file finder
-	QFileDialog filefinder;
-	QStringList typeFilter;
-	typeFilter << "image/jpeg" 
-			   << "image/png";
-	filefinder.setMimeTypeFilters(typeFilter);
-
-	filenames = QFileDialog::getOpenFileNames(this, "Select Pictures", "C:\\");
-	if (filenames.size() > 0) {
-		ui.ImageScroller->setRange(0, filenames.size() - 1);
-		loadPictures(0);
-	}
-
-	//otherwise do stuff witht the image
-}*/
-
 void GUI::loadPictures(int center)
 {
+	// activate buttons
 	ui.ProcessButton->setEnabled(true);
 	ui.ExportButton->setEnabled(true);
-	//load main picture
-	//singleImage(ui.PictureFrame, filenames.at(center));
+
+	//load pictures
 	ui.PictureFrame->setPix(filenames.at(center));
 	// and center
 	singleImage(ui.CenterScollImage, filenames.at(center));
@@ -110,15 +93,19 @@ void GUI::loadPictures(int center)
 
 void GUI::passSelection(QListWidgetItem *item)
 {
+	// pass current selection to the tool box
 	ui.PictureFrame->setSelection(tools->getCurrentSelection());
 }
 
 
 void GUI::singleImage(QLabel *image, QString file) {
+	// set a single image in a label
 	image->setPixmap(QPixmap(file).scaled(image->width(), image->height(), Qt::KeepAspectRatio));
 }
 
-// I didn't write this but idk where it's from
+// I didn't write this 
+// https://docs.opencv.org/2.4/doc/tutorials/imgproc/histograms/histogram_calculation/histogram_calculation.html
+// creates the RGB historgram on the side from the main image
 void GUI::loadRGB(Mat image) {
 	std::vector<Mat> bgr_planes;
 	split(image, bgr_planes);
@@ -164,16 +151,20 @@ void GUI::loadRGB(Mat image) {
 
 }
 
+// loads options in the tool box
 void GUI::populateToolbox()
 {
 	new QListWidgetItem(tr("Select"), ui.Toolbox);
 	new QListWidgetItem(tr("Region of Interest"), ui.Toolbox);
 
+	// set to "select" so it starts with the arrow cursor
 	ui.Toolbox->setCurrentRow(0);
 }
 
+
 void GUI::loadMDWindow()
 {
+	// creates a new window for the metadata creator
 	Metadata *mdWindow = new Metadata();
 	mdWindow->show();
 }

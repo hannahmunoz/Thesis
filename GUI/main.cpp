@@ -7,6 +7,7 @@
 
 int main(int argc, char *argv[])
 {
+	// loads the main window
 	QApplication a(argc, argv);
 	GUI w;
 	w.show();
