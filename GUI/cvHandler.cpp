@@ -18,7 +18,7 @@ void GUI::testResults()
 
 	// threshold value
 	// > means snow/cloud
-	float threshold = 0.60;
+	float threshold = 0.75;
 	// have the user create a save file
 	QString filename = QFileDialog::getSaveFileName(this, tr("Save Results"), "/", tr("CSV Files (*.csv);; All files (*.*)"));
 	QFile file(filename);
@@ -37,8 +37,8 @@ void GUI::testResults()
 		QTextStream stream(&file);
 
 		//headers
-		stream << "Picture," << "ROI 1";
-		stream << "," << "Coverage (percentage)";
+		stream << "Picture," << "ROI " << endl;
+		stream << "Date," << "Coverage (percentage)" <<endl;
 
 		// For every image in the series
 		for (int i = 0; i < filenames.size(); i++) {
@@ -47,9 +47,14 @@ void GUI::testResults()
 			// load the image in
 			Mat image;
 			image = imread(filenames[i].toStdString(), CV_LOAD_IMAGE_COLOR);
+			cv::Rect roi(0, 0, 640, 150);
+			Mat imageROI = image(roi);
+			cv::imshow("image", imageROI);
 
 			// if image isn't corrupted
 			if (image.data) {
+				Mat imageCheck = imread(filenames[i].toStdString(), 0);
+				
 				// output image number
 				// will need to be changed to parse datetime stamp if avaible
 				stream << i << ",";
@@ -57,24 +62,31 @@ void GUI::testResults()
 				int imageCoverage = 0;
 
 				// for each row and column in the image
-				for (int row = 0; row < image.rows; row++) {
-					for (int col = 0; col < image.cols; col++) {
+				for (int row = 0; row < imageROI.rows; row++) {
+					for (int col = 0; col < imageROI.cols; col++) {
 						// get pixel color intensity
 						Vec3b intensity = image.at <Vec3b>(row, col);
 						// check threshold value
 						// probably move to a function so it can be changed easily
 						if (threshold > (float) intensity.val[2] / (float) intensity.val[0]){
-							//increase coverage percentage 
-							imageCoverage++;
+	
+							//imageCheck.at<uchar>(row, col) = 0;
+							
 						}
 						else {
+							//increase coverage percentage 
+							imageCoverage++;
+							imageCheck.at<uchar>(row, col) = 255;
 							// do nothing
 						}
 					}
 				}
 
 				// ouput coverage percentage
-				stream << (((float)imageCoverage/((float)image.rows*(float)image.cols))*100);
+
+				imshow("Main Image", image);
+				imshow("Gray image", imageCheck);
+				stream << (((float)imageCoverage/((float)imageROI.rows*(float)imageROI.cols))*100);
 			}
 			// out error to csv
 			else {

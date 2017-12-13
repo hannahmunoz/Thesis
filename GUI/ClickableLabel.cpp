@@ -2,6 +2,12 @@
 #include "ClickableLabel.h"
 #include "ToolHandler.h"
 
+#include "opencv2\core.hpp"
+#include "opencv2\highgui.hpp"
+#include "opencv2\imgproc.hpp"
+using namespace cv;
+
+
 
 ClickableLabel::ClickableLabel(QWidget* parent, Qt::WindowFlags f): QLabel(parent) 
 {
@@ -20,9 +26,24 @@ ClickableLabel::~ClickableLabel()
 void ClickableLabel::mousePressEvent(QMouseEvent* event) {
 	// unimplmented
 	// eventually for when ROI are working
-	if (event->button() == Qt::LeftButton)
+	/*if (event->button() == Qt::LeftButton)
 		dragStartPosition = event->pos();
-	emit clicked();
+	emit clicked();*/
+	/*Rect Rec(0, 0, 700, 150);
+	// https://asmaloney.com/2013/11/code/converting-between-cvmat-and-qimage-or-qpixmap/
+	QImage swapped = p.toImage();
+	if (swapped.format() == QImage::Format_RGB32)
+	{
+		swapped = swapped.convertToFormat(QImage::Format_RGB888);
+	}
+
+	swapped = swapped.rgbSwapped();
+
+	Mat temp (swapped.height(), swapped.width(), CV_8UC3, const_cast <uchar*>(swapped.bits()), static_cast<size_t>(swapped.bytesPerLine()));
+
+	rectangle(temp, Rec, Scalar(255), 1, 8, 0);
+	QImage image(temp.data, temp.cols, temp.rows, static_cast<int>(temp.step),QImage::Format_RGB888);*/
+	//p.fromImage(image);
 }
 
 void ClickableLabel::mouseMoveEvent(QMouseEvent * event)
@@ -49,8 +70,9 @@ void ClickableLabel::paintEvent(QPaintEvent *event) {
 			if (current.compare("Region of Interest") == 0) {
 				painter.begin(this);
 				painter.setPen(Qt::blue);
-				painter.setFont(QFont("Arial", 30));
-				painter.drawText(rect(), Qt::AlignCenter, "Qt");
+				painter.drawRect(0, 0, 700, 120);
+				/*painter.setFont(QFont("Arial", 30));
+				painter.drawText(rect(), Qt::AlignCenter, "Qt");*/
 				painter.end();
 				//setPixmap(p);
 			}

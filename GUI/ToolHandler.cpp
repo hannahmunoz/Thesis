@@ -1,8 +1,11 @@
 #include "stdafx.h"
 #include "ToolHandler.h"
 #include "DrawHandler.h"
+
 #include "qapplication.h"
-#include "opencv2\core.hpp"
+
+
+
 
 ToolHandler::ToolHandler() {
 	// set the selections to null
@@ -19,6 +22,7 @@ void ToolHandler::menuHandler(QListWidgetItem *current, QListWidgetItem * previo
 		if (current->text().compare("Region of Interest") == 0) {
 			// Change cursor type, more logic will go here
 			QApplication::setOverrideCursor(QCursor(Qt::CrossCursor));
+			//boxSelection();
 		}
 		// Select
 		else if (current->text().compare("Select") == 0) {
@@ -40,7 +44,8 @@ void ToolHandler::boxSelection()
 {	// ROI logic, not implemented yet. 
 	if (currentSelection != NULL) {
 		if (currentSelection->text().compare("Region of Interest") == 0) {
-
+			/*Rect Rec(100, 100, 200, 200);
+			rectangle(ui->, Rec, Scalar(255), 1, 8, 0);*/
 			//QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 		}
 	}
