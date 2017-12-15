@@ -69,7 +69,7 @@ void ClickableLabel::paintEvent(QPaintEvent *event) {
 		if (!current.empty()) {
 			if (current.compare("Region of Interest") == 0) {
 				painter.begin(this);
-				painter.setPen(Qt::blue);
+				painter.setPen(QPen(Qt::red, 3, Qt::DashLine));
 				painter.drawRect(0, 0, 700, 120);
 				/*painter.setFont(QFont("Arial", 30));
 				painter.drawText(rect(), Qt::AlignCenter, "Qt");*/
