@@ -47,7 +47,8 @@ void GUI::testResults()
 			// load the image in
 			Mat image;
 			image = imread(filenames[i].toStdString(), CV_LOAD_IMAGE_COLOR);
-			cv::Rect roi(0, 0, 640, 150);
+			cv::Rect roi(0, 180, 640, 300);
+			//cv::Rect roi(0, 0, 640, 150);
 			Mat imageROI = image(roi);
 			cv::imshow("image", imageROI);
 
@@ -76,7 +77,7 @@ void GUI::testResults()
 						else {
 							//increase coverage percentage 
 							imageCoverage++;
-							imageCheck.at<uchar>(row, col) = 255;
+							imageCheck.at<uchar>(row+180, col) = 255;
 							// do nothing
 						}
 					}

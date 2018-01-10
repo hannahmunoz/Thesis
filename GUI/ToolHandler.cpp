@@ -53,7 +53,12 @@ void ToolHandler::boxSelection()
 
 std::string ToolHandler::getCurrentSelection()
 {
-	return currentSelection->text().toStdString();
+	if (currentSelection != NULL) {
+		return currentSelection->text().toStdString();
+	}
+	else {
+		return "Select";
+	}
 }
 
 

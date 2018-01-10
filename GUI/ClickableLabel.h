@@ -7,6 +7,7 @@
 #include <qpainter.h>
 #include <qcolor.h>
 #include <qimage.h>
+#include "ResizableRubberband.h"
 
 // straight from https://wiki.qt.io/Clickable_QLabel
 
@@ -14,26 +15,30 @@ class ClickableLabel : public QLabel
 {
 	Q_OBJECT
 
-public:
-	explicit ClickableLabel(QWidget* parent = Q_NULLPTR, Qt::WindowFlags f = Qt::WindowFlags());
-	~ClickableLabel();
-	void paintEvent(QPaintEvent *);
-	void setSelection(std::string);
-	void setPix(QString file);
+	public:
+		explicit ClickableLabel(QWidget* parent = Q_NULLPTR, Qt::WindowFlags f = Qt::WindowFlags());
+		~ClickableLabel();
+		//void paintEvent(QPaintEvent *);
+		void setSelection(std::string);
+		void setPix(QString file);
 
 	signals:
-	void clicked();
+		void clicked();
 
-protected:
-	void mousePressEvent(QMouseEvent* event);
-	void mouseMoveEvent(QMouseEvent* event);
+	public slots:
+		void removeRubberBand();
+
+	protected:
+		void mousePressEvent(QMouseEvent* event);
+		void mouseMoveEvent(QMouseEvent* event);
 
 
-private:
-	QPixmap p;
-	QPoint dragStartPosition;
-	QPainter painter;
-	QTimer timer;
-	std::string current;
+	private:
+		QPixmap p;
+		QPoint origin;
+		QPainter painter;
+		QTimer timer;
+		std::string current;
+		ResizableRubberband* rubberBand;
 };
 

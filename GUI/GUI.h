@@ -37,8 +37,6 @@ public:
 
 
 	private:
-
-
 		Ui::GUIClass ui;
 		ToolHandler* tools;
 		QString filepath;

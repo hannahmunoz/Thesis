@@ -94,6 +94,15 @@
     <ClCompile Include="Metadata.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ResizableRubberband.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ResizableRubberband.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ResizableRubberband.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -130,6 +139,9 @@
     </CustomBuild>
     <CustomBuild Include="Metadata.ui">
       <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ResizableRubberband.h">
+      <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>
