@@ -13,6 +13,8 @@ class ResizableRubberband : public QWidget
 	public:
 		ResizableRubberband(QPoint origin, QWidget* parent = 0);
 		~ResizableRubberband();
+		void setOrigin(QPoint);
+		QPoint getOrigin();
 
 	signals:
 		void deletion();
@@ -24,6 +26,7 @@ class ResizableRubberband : public QWidget
 	private:
 		QRubberBand* rubberband;
 		QHBoxLayout* layout;
+		QPoint origin;
 		void resizeEvent(QResizeEvent *);
 		void paintEvent(QPaintEvent * event);
 		void mousePressEvent(QMouseEvent * event);

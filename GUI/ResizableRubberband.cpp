@@ -25,6 +25,16 @@ ResizableRubberband::~ResizableRubberband()
 {	
 }
 
+void ResizableRubberband::setOrigin(QPoint o)
+{
+	origin = o;
+}
+
+QPoint ResizableRubberband::getOrigin()
+{
+	return origin;
+}
+
 
 void ResizableRubberband::mousePressEvent(QMouseEvent* event) {
 	 if (event->buttons() == Qt::RightButton) {

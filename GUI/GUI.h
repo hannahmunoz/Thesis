@@ -28,7 +28,7 @@ public:
 		void loadPictures(int center);
 		void passSelection(QListWidgetItem *);
 		void loadRGB(cv::Mat image);
-		void testResults(ResizableRubberband*);
+		void testResults(std::vector<ResizableRubberband*>);
 		void Export();
 		void loadMDWindow();
 

@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "GUI.h"
 
+#include <vector>
+
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -15,7 +17,7 @@ using namespace cv;
 
 
 //outputs snow/cloud coverage % to a csv
-void GUI::testResults(ResizableRubberband* rb)
+void GUI::testResults(std::vector<ResizableRubberband*> rbs)
 {	// probably move to thread?
 	// threshold value
 	// > means snow/cloud
@@ -46,57 +48,65 @@ void GUI::testResults(ResizableRubberband* rb)
 			// increase progress
 			ui.PictureProcessingBar->setValue(i);
 			// load the image in
-			Mat image;
-			image = imread(filenames[i].toStdString(), CV_LOAD_IMAGE_COLOR);
-			QRect region = rb->geometry().normalized();
-			cv::Rect roi(region.topLeft().x(), region.topLeft().y(), region.bottomRight().x(), region.bottomRight().y());
-			Mat imageROI = image(roi);
-			//test image showing
-			cv::imshow("image", imageROI);
+			Mat image = imread(filenames[i].toStdString(), CV_LOAD_IMAGE_COLOR);
 
 			// if image isn't corrupted
 			if (image.data) {
-				Mat imageCheck = imread(filenames[i].toStdString(), 0);
-				
-				// output image number
-				// will need to be changed to parse datetime stamp if avaible
-				stream << i << ",";
-				// inital cover percentage = 0
-				int imageCoverage = 0;
 
-				// for each row and column in the image
-				for (int row = 0; row < imageROI.rows; row++) {
-					for (int col = 0; col < imageROI.cols; col++) {
-						// get pixel color intensity
-						Vec3b intensity = image.at <Vec3b>(row, col);
-						// check threshold value
-						// probably move to a function so it can be changed easily
-						if (threshold > (float) intensity.val[2] / (float) intensity.val[0]){
-	
-							//imageCheck.at<uchar>(row, col) = 0;
-							
-						}
-						else {
-							//increase coverage percentage 
-							imageCoverage++;
-							imageCheck.at<uchar>(row+180, col) = 255;
-							// do nothing
+				// for each region of interest
+				for (int j = 0; j < rbs.size(); j++) {
+					QRect region = rbs.at(j)->geometry();
+					QPoint coord = rbs.at(j)->getOrigin();
+					cv::Rect roi(coord.rx(), coord.ry(), region.width(), region.height());
+					//Mat imageROI = image(roi);
+					Mat imageROI = image(roi);
+
+					//test image showing
+					cv::imshow("image", imageROI);
+
+					//Mat imageCheck = imread(filenames[i].toStdString(), 0);
+
+					// output image number
+					// will need to be changed to parse datetime stamp if avaible
+					stream << i << ",";
+					// inital cover percentage = 0
+					int imageCoverage = 0;
+
+					// for each row and column in the image
+					for (int row = 0; row < imageROI.rows; row++) {
+						for (int col = 0; col < imageROI.cols; col++) {
+							// get pixel color intensity
+							Vec3b intensity = image.at <Vec3b>(row, col);
+							// check threshold value
+							// probably move to a function so it can be changed easily
+							if (threshold > (float) intensity.val[2] / (float)intensity.val[0]) {
+
+								//imageCheck.at<uchar>(row, col) = 0;
+
+							}
+							else {
+								//increase coverage percentage 
+								imageCoverage++;
+								//imageCheck.at<uchar>(row, col) = 255;
+								// do nothing
+							}
 						}
 					}
-				}
 
-				// ouput coverage percentage
-				// test outputs
-				imshow("Main Image", image);
-				imshow("Gray image", imageCheck);
-				stream << (((float)imageCoverage/((float)imageROI.rows*(float)imageROI.cols))*100);
-			}
-			// out error to csv
-			else {
-				stream << i << ",";
-				stream << "image cannot be read";
-			}
-			stream << endl;
+						// ouput coverage percentage
+						// test outputs
+						//imshow("Main Image", image);
+						//imshow("Gray image", imageCheck);
+						stream << (((float)imageCoverage / ((float)imageROI.rows*(float)imageROI.cols)) * 100);
+					}
+				}
+				// out error to csv
+				else {
+					stream << i << ",";
+					stream << "image cannot be read";
+				}
+				stream << endl;
+			
 		}
 
 		// hide the processing bar again

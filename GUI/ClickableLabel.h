@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include <Qt>
 #include <QLabel>
 #include <QWidget>
@@ -24,23 +25,25 @@ class ClickableLabel : public QLabel
 
 	signals:
 		void clicked();
-		void returnROI(ResizableRubberband*);
+		void returnROI(std::vector<ResizableRubberband*>);
 
 	public slots:
-		void removeRubberBand(QObject *);
+		//void removeRubberBand(QObject *);
 		void getROI();
 
 	protected:
 		void mousePressEvent(QMouseEvent* event);
 		void mouseMoveEvent(QMouseEvent* event);
+		void mouseReleaseEvent(QMouseEvent* event);
 
 
 	private:
 		QPixmap p;
-		QPoint origin;
 		QPainter painter;
 		QTimer timer;
+		QPoint origin;
 		std::string current;
 		ResizableRubberband* rubberBand;
+		std::vector<ResizableRubberband*> rubberBands;
 };
 

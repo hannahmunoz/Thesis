@@ -42,7 +42,7 @@ GUI::GUI(QWidget *parent)
 
 	//connect Process Button
 	connect(ui.ProcessButton, SIGNAL(clicked()), ui.PictureFrame, SLOT(getROI()));
-	connect(ui.PictureFrame, SIGNAL(returnROI(ResizableRubberband*)), this, SLOT(testResults(ResizableRubberband*)));
+	connect(ui.PictureFrame, SIGNAL(returnROI(std::vector<ResizableRubberband*>)), this, SLOT(testResults(std::vector<ResizableRubberband*>)));
 	//connect(ui.ProcessButton, SIGNAL(clicked()), this, SLOT(testResults()));
 	connect(ui.ExportButton, SIGNAL(clicked()), this, SLOT(Export()));
 	ui.ProcessButton->setEnabled(false);

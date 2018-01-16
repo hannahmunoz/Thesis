@@ -25,7 +25,7 @@ ClickableLabel::~ClickableLabel()
 
 void ClickableLabel::getROI()
 {
-	emit returnROI(rubberBand);
+	emit returnROI(rubberBands);
 }
 
 // called when a mouse click is detected
@@ -33,9 +33,11 @@ void ClickableLabel::mousePressEvent(QMouseEvent* event) {
 	if (!current.empty()) {
 		if (current.compare("Region of Interest") == 0 && event->buttons() == Qt::LeftButton) {
 			origin = this->mapFromGlobal(this->mapToGlobal(event->pos()));
-			if (!rubberBand)
+			if (!rubberBand) {
 				rubberBand = new ResizableRubberband(event->pos(), this);
-				connect(rubberBand, SIGNAL(destroyed(QObject *)), this, SLOT(removeRubberBand(QObject *)));
+				rubberBand->setOrigin (this->mapToGlobal(event->pos()));
+				//connect(rubberBand, SIGNAL(destroyed(QObject *)), this, SLOT(removeRubberBand(QObject *)));
+			}
 		}
 	}
 }
@@ -48,6 +50,15 @@ void ClickableLabel::mouseMoveEvent(QMouseEvent * event)
 		QToolTip::showText(event->globalPos(), QString("%1,%2")
 			.arg(rubberBand->size().width())
 			.arg(rubberBand->size().height()), this);
+	}
+}
+
+void ClickableLabel::mouseReleaseEvent(QMouseEvent * event)
+{
+	if (rubberBand) {
+		rubberBands.push_back(rubberBand);
+		rubberBands.back()->show();
+		rubberBand = NULL;
 	}
 }
 
@@ -90,9 +101,9 @@ void ClickableLabel::setPix(QString file)
 
 
 
-void ClickableLabel::removeRubberBand(QObject *obj) {
+/*void ClickableLabel::removeRubberBand(QObject *obj) {
 	//delete rubberBand;
 	rubberBand = NULL;
-}
+}*/
 
 
