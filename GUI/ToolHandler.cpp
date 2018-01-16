@@ -14,6 +14,7 @@ ToolHandler::ToolHandler() {
 }
 
 void ToolHandler::menuHandler(QListWidgetItem *current, QListWidgetItem * previous) {
+
 	// check that something has been selected in the tool box
 	if (current != NULL) {
 		// change the current seletion

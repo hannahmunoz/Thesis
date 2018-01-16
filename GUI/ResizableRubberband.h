@@ -3,6 +3,7 @@
 #include <QRubberBand>
 #include <Qt>
 #include <QObject>
+#include <opencv2/opencv.hpp>
 
 
 class ResizableRubberband : public QWidget
@@ -14,7 +15,11 @@ class ResizableRubberband : public QWidget
 		~ResizableRubberband();
 
 	signals:
-		void deleteRubberBand();
+		void deletion();
+
+	private slots:
+		void showContextMenu(const QPoint&);
+	//	void deleteRubberBand();
 
 	private:
 		QRubberBand* rubberband;

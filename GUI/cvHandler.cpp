@@ -12,10 +12,11 @@
 
 using namespace cv;
 
-//outputs snow/cloud coverage % to a csv
-void GUI::testResults()
-{	// probably move to thread?
 
+
+//outputs snow/cloud coverage % to a csv
+void GUI::testResults(ResizableRubberband* rb)
+{	// probably move to thread?
 	// threshold value
 	// > means snow/cloud
 	float threshold = 0.75;
@@ -47,9 +48,10 @@ void GUI::testResults()
 			// load the image in
 			Mat image;
 			image = imread(filenames[i].toStdString(), CV_LOAD_IMAGE_COLOR);
-			cv::Rect roi(0, 180, 640, 300);
-			//cv::Rect roi(0, 0, 640, 150);
+			QRect region = rb->geometry().normalized();
+			cv::Rect roi(region.topLeft().x(), region.topLeft().y(), region.bottomRight().x(), region.bottomRight().y());
 			Mat imageROI = image(roi);
+			//test image showing
 			cv::imshow("image", imageROI);
 
 			// if image isn't corrupted
@@ -84,7 +86,7 @@ void GUI::testResults()
 				}
 
 				// ouput coverage percentage
-
+				// test outputs
 				imshow("Main Image", image);
 				imshow("Gray image", imageCheck);
 				stream << (((float)imageCoverage/((float)imageROI.rows*(float)imageROI.cols))*100);

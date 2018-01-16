@@ -41,7 +41,9 @@ GUI::GUI(QWidget *parent)
 	connect(this, SIGNAL(imageSet(cv::Mat)), this, SLOT(loadRGB(cv::Mat)));
 
 	//connect Process Button
-	connect(ui.ProcessButton, SIGNAL(clicked()), this, SLOT(testResults()));
+	connect(ui.ProcessButton, SIGNAL(clicked()), ui.PictureFrame, SLOT(getROI()));
+	connect(ui.PictureFrame, SIGNAL(returnROI(ResizableRubberband*)), this, SLOT(testResults(ResizableRubberband*)));
+	//connect(ui.ProcessButton, SIGNAL(clicked()), this, SLOT(testResults()));
 	connect(ui.ExportButton, SIGNAL(clicked()), this, SLOT(Export()));
 	ui.ProcessButton->setEnabled(false);
 	ui.ExportButton->setEnabled(false);
@@ -168,5 +170,7 @@ void GUI::loadMDWindow()
 	Metadata *mdWindow = new Metadata();
 	mdWindow->show();
 }
+
+
 
 

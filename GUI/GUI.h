@@ -28,13 +28,12 @@ public:
 		void loadPictures(int center);
 		void passSelection(QListWidgetItem *);
 		void loadRGB(cv::Mat image);
-		void testResults();
+		void testResults(ResizableRubberband*);
 		void Export();
 		void loadMDWindow();
 
 	signals:
 		void imageSet(cv::Mat image);
-
 
 	private:
 		Ui::GUIClass ui;

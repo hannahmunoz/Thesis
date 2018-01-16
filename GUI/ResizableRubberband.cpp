@@ -25,11 +25,29 @@ ResizableRubberband::~ResizableRubberband()
 {	
 }
 
+
 void ResizableRubberband::mousePressEvent(QMouseEvent* event) {
 	 if (event->buttons() == Qt::RightButton) {
-		 emit deleteRubberBand();
+		 this->setContextMenuPolicy(Qt::CustomContextMenu);
+		 connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(showContextMenu(const QPoint &)));
+		//emit deleteRubberBand();
 	}
 }
+
+void ResizableRubberband::showContextMenu(const QPoint &pos) {
+	QMenu contextMenu(tr("Context menu"), this);
+
+	QAction action1("Delete", this);
+	connect(&action1, SIGNAL(triggered()), this, SLOT(deleteLater()));
+	contextMenu.addAction(&action1);
+
+	contextMenu.exec(mapToGlobal(pos));
+}
+
+/*void ResizableRubberband::deleteRubberBand() {
+	emit deletion();
+}*/
+
 
 void ResizableRubberband::mouseMoveEvent(QMouseEvent* event) {
 

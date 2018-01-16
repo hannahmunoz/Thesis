@@ -24,9 +24,11 @@ class ClickableLabel : public QLabel
 
 	signals:
 		void clicked();
+		void returnROI(ResizableRubberband*);
 
 	public slots:
-		void removeRubberBand();
+		void removeRubberBand(QObject *);
+		void getROI();
 
 	protected:
 		void mousePressEvent(QMouseEvent* event);

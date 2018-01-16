@@ -23,6 +23,11 @@ ClickableLabel::~ClickableLabel()
 	// destructor does nothing
 }
 
+void ClickableLabel::getROI()
+{
+	emit returnROI(rubberBand);
+}
+
 // called when a mouse click is detected
 void ClickableLabel::mousePressEvent(QMouseEvent* event) {
 	if (!current.empty()) {
@@ -30,7 +35,7 @@ void ClickableLabel::mousePressEvent(QMouseEvent* event) {
 			origin = this->mapFromGlobal(this->mapToGlobal(event->pos()));
 			if (!rubberBand)
 				rubberBand = new ResizableRubberband(event->pos(), this);
-				connect(rubberBand, SIGNAL(deleteRubberBand()), this, SLOT(removeRubberBand()));
+				connect(rubberBand, SIGNAL(destroyed(QObject *)), this, SLOT(removeRubberBand(QObject *)));
 		}
 	}
 }
@@ -83,8 +88,10 @@ void ClickableLabel::setPix(QString file)
 	setPixmap(p);
 }
 
-void ClickableLabel::removeRubberBand() {
-	delete rubberBand;
+
+
+void ClickableLabel::removeRubberBand(QObject *obj) {
+	//delete rubberBand;
 	rubberBand = NULL;
 }
 
