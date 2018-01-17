@@ -27,8 +27,9 @@ class ClickableLabel : public QLabel
 		void clicked();
 		void returnROI(std::vector<ResizableRubberband*>);
 
+
 	public slots:
-		//void removeRubberBand(QObject *);
+		void removeRubberBand(int);
 		void getROI();
 
 	protected:

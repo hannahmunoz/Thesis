@@ -56,8 +56,10 @@ void GUI::testResults(std::vector<ResizableRubberband*> rbs)
 				// for each region of interest
 				for (int j = 0; j < rbs.size(); j++) {
 					QRect region = rbs.at(j)->geometry();
-					QPoint coord = rbs.at(j)->getOrigin();
-					cv::Rect roi(coord.rx(), coord.ry(), region.width(), region.height());
+					// Y coord isnt working correctly. No idea why.
+					float  ratioW = (float)image.cols / (float)ui.PictureFrame->width();
+					float  ratioH = (float) image.rows / (float)ui.PictureFrame->height();
+					cv::Rect roi( (int) region.x() *ratioW, (int)region.x() * ratioH, region.width(), region.height());
 					//Mat imageROI = image(roi);
 					Mat imageROI = image(roi);
 

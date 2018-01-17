@@ -34,9 +34,8 @@ void ClickableLabel::mousePressEvent(QMouseEvent* event) {
 		if (current.compare("Region of Interest") == 0 && event->buttons() == Qt::LeftButton) {
 			origin = this->mapFromGlobal(this->mapToGlobal(event->pos()));
 			if (!rubberBand) {
-				rubberBand = new ResizableRubberband(event->pos(), this);
-				rubberBand->setOrigin (this->mapToGlobal(event->pos()));
-				//connect(rubberBand, SIGNAL(destroyed(QObject *)), this, SLOT(removeRubberBand(QObject *)));
+				rubberBand = new ResizableRubberband(event->pos(), rubberBands.size()+1, this);
+				connect(rubberBand, SIGNAL(sendNumber(int)), this, SLOT(removeRubberBand(int)));
 			}
 		}
 	}
@@ -47,9 +46,9 @@ void ClickableLabel::mouseMoveEvent(QMouseEvent * event)
 	if (rubberBand) {
 		rubberBand->setGeometry(QRect(origin, event->pos()).normalized());
 
-		QToolTip::showText(event->globalPos(), QString("%1,%2")
+	/*	QToolTip::showText(event->globalPos(), QString("%1,%2")
 			.arg(rubberBand->size().width())
-			.arg(rubberBand->size().height()), this);
+			.arg(rubberBand->size().height()), this);*/
 	}
 }
 
@@ -101,9 +100,16 @@ void ClickableLabel::setPix(QString file)
 
 
 
-/*void ClickableLabel::removeRubberBand(QObject *obj) {
-	//delete rubberBand;
-	rubberBand = NULL;
-}*/
+void ClickableLabel::removeRubberBand(int rb) {
+	for (int i = 0; i < rubberBands.size(); i++) {
+		if (rubberBands[i]->number == rb) {
+			rubberBands.erase(rubberBands.begin() + i);
+			for (int j = i; j < rubberBands.size(); j++) {
+				rubberBands[j]->number--;
+			}
+			break;
+		}
+	}
+}
 
 
