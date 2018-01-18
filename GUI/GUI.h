@@ -41,6 +41,7 @@ public:
 		ToolHandler* tools;
 		QString filepath;
 		QStringList filenames;
+		QRect ROI;
 };
 
 //Q_DECLARE_METATYPE(Mat)

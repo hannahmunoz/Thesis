@@ -16,7 +16,6 @@ ClickableLabel::ClickableLabel(QWidget* parent, Qt::WindowFlags f): QLabel(paren
 	// label checks for clicks ever 200 msec
 	timer.start(200);
 	rubberBand = NULL;
-	this->grabGesture(Qt::PanGesture, Qt::ReceivePartialGestures);
 }
 
 ClickableLabel::~ClickableLabel() 
@@ -52,9 +51,6 @@ void ClickableLabel::mousePressEvent(QMouseEvent* event) {
 			origin = this->mapFromGlobal(this->mapToGlobal(event->pos()));
 			if (!rubberBand) {
 				rubberBand = std::make_unique<ResizableRubberband>(rubberBands.size() + 1, this);
-					//new ResizableRubberband(rubberBands.size()+1, this);
-				//connect(rubberBand, SIGNAL(sendNumber(int)), this, SLOT(removeRubberBand(int)));
-				//connect(rubberBand, SIGNAL(toParentLabel(int)), this, SLOT(passToGUI(int)));
 			}
 		}
 	}
@@ -64,7 +60,6 @@ void ClickableLabel::mouseMoveEvent(QMouseEvent * event)
 {
 	if (rubberBand) {
 		rubberBand->setGeometry(QRect(origin, event->pos()).normalized());
-
 	/*	QToolTip::showText(event->globalPos(), QString("%1,%2")
 			.arg(rubberBand->size().width())
 			.arg(rubberBand->size().height()), this);*/
@@ -74,7 +69,7 @@ void ClickableLabel::mouseMoveEvent(QMouseEvent * event)
 void ClickableLabel::mouseReleaseEvent(QMouseEvent * event)
 {
 	if (rubberBand) {
-		if (rubberBand->height() != 12 && rubberBand->width() != 32) {
+		if (rubberBand->height() > 30 && rubberBand->width() > 30) {
 			(rubberBands).push_back(std::move (rubberBand));
 			rubberBands.back()->show();
 		}
@@ -125,14 +120,22 @@ void ClickableLabel::setPix(QString file)
 
 void ClickableLabel::removeRubberBand(int rb) {
 	for (int i = 0; i < rubberBands.size(); i++) {
+		if (rubberBands[i]->isHidden()) {
+			rubberBands[i].release();
+			rubberBands[i] = NULL;
+			rubberBands.erase(rubberBands.begin() + i);
+		}
 		if (rubberBands[i]->number == rb) {
 			rubberBands[i]->hide();
 			rubberBands[i].release();
 			rubberBands[i] = NULL;
 			rubberBands.erase(rubberBands.begin() + i);
+			for (int j = i; j < rubberBands.size(); j++) {
+				rubberBands[j]->number--;
+			}
+			break;
 		}
 	}
-
 }
 
 

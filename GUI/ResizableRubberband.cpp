@@ -19,8 +19,9 @@ ResizableRubberband::ResizableRubberband( int num, QWidget* parent) : QWidget(pa
 	e->setColor(QColor("white"));
 	rubberband->setGraphicsEffect(e);
 	rubberband->setFocusPolicy(Qt::ClickFocus);
-	connect(this, SIGNAL(focusReceived()), this, SLOT(changeHistogram()));
+	//connect(this, SIGNAL(focusReceived()), this, SLOT(changeHistogram()));
 	connect(this, SIGNAL(sendNumber(int)), parent, SLOT(removeRubberBand(int)));
+	connect(this, SIGNAL(toParentLabel(int)), parent, SLOT(passToGUI(int)));
 
 	rubberband->show();
 	setLayout(layout);
@@ -30,7 +31,8 @@ ResizableRubberband::ResizableRubberband( int num, QWidget* parent) : QWidget(pa
 
 
 ResizableRubberband::~ResizableRubberband()
-{	
+{
+
 }
 
 
@@ -68,7 +70,6 @@ void ResizableRubberband::showContextMenu(const QPoint &pos) {
 
 bool ResizableRubberband::eventFilter(QObject * object, QEvent * event)
 {
-	this->ungrabGesture(Qt::PanGesture);
 	if (event->type() == event->FocusIn) {
 		QGraphicsColorizeEffect *e = new QGraphicsColorizeEffect(rubberband);
 		e->setColor(QColor("red"));

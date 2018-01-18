@@ -38,13 +38,13 @@ GUI::GUI(QWidget *parent)
 	connect(ui.Toolbox, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT( passSelection(QListWidgetItem *)));
 
 	//connect RGB Viewer
-	//connect(this, SIGNAL(imageSet(cv::Mat)), this, SLOT(loadRGB(cv::Mat)));
+	connect(this, SIGNAL(imageSet(cv::Mat)), this, SLOT(loadRGB(cv::Mat)));
 
 	//connect Process Button
 	connect(ui.ProcessButton, SIGNAL(clicked()), ui.PictureFrame, SLOT(getROI()));
-	connect(ui.PictureFrame, SIGNAL(returnROI(std::vector<ResizableRubberband*>)), this, SLOT(testResults(std::vector<ResizableRubberband*>)));
+	//connect(ui.PictureFrame, SIGNAL(returnROI(std::vector<ResizableRubberband*>)), this, SLOT(testResults(std::vector<ResizableRubberband*>)));
 	//connect(ui.ProcessButton, SIGNAL(clicked()), this, SLOT(testResults()));
-	connect(ui.ExportButton, SIGNAL(clicked()), this, SLOT(Export()));
+	//connect(ui.ExportButton, SIGNAL(clicked()), this, SLOT(Export()));
 	ui.ProcessButton->setEnabled(false);
 	ui.ExportButton->setEnabled(false);
 
@@ -52,6 +52,7 @@ GUI::GUI(QWidget *parent)
 	connect(ui.menuEdit, SIGNAL(triggered(QAction *)), this, SLOT(loadMDWindow()));
 
 	connect(ui.PictureFrame, SIGNAL(GUIPass(QRect)), this, SLOT(changeHist(QRect)));
+
 }
 
 void GUI::loadPictures(int center)
@@ -111,6 +112,12 @@ void GUI::singleImage(QLabel *image, QString file) {
 // https://docs.opencv.org/2.4/doc/tutorials/imgproc/histograms/histogram_calculation/histogram_calculation.html
 // creates the RGB historgram on the side from the main image
 void GUI::loadRGB(Mat image) {
+	if (!ROI.isNull()) {
+		cv::Rect openroi(ROI.x(), ROI.y(), ROI.width(), ROI.height());
+		imshow("Test", image(openroi));
+		image = image (openroi);
+	}
+
 	std::vector<Mat> bgr_planes;
 	split(image, bgr_planes);
 	int histSize = 256;
@@ -175,19 +182,14 @@ void GUI::loadMDWindow()
 
 void GUI::changeHist(QRect roi)
 {
+	ROI = roi;
 	QImage temp = QImage(ui.PictureFrame->pixmap()->toImage());
-
 	if (ui.PictureFrame->pixmap()->toImage().format() == QImage::Format_RGB32)
 	{
 		temp = temp.convertToFormat(QImage::Format_RGB888);
 	}
-
 	temp = temp.rgbSwapped();
-
-	Mat image (temp.height(), temp.width(), CV_8UC3, const_cast<uchar*>(temp.bits()), static_cast<size_t>(temp.bytesPerLine()));
-	cv::Rect openroi(roi.x(), roi.y(), roi.width(), roi.height());
-	imshow("Test", image(openroi));
-	loadRGB(image(openroi));
+	loadRGB(Mat(temp.height(), temp.width(), CV_8UC3, const_cast<uchar*>(temp.bits()), static_cast<size_t>(temp.bytesPerLine())));
 }
 
 
