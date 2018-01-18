@@ -21,7 +21,6 @@ class ClickableLabel : public QLabel
 		explicit ClickableLabel(QWidget* parent = Q_NULLPTR, Qt::WindowFlags f = Qt::WindowFlags());
 		~ClickableLabel();
 		//void paintEvent(QPaintEvent *);
-		void setSelection(std::string);
 		void setPix(QString file);
 
 	signals:
@@ -34,6 +33,8 @@ class ClickableLabel : public QLabel
 		void getROI();
 		//void moveUp(int);
 		void passToGUI(int);
+		void setSelection(QString);
+
 
 	protected:
 		void mousePressEvent(QMouseEvent* event);
@@ -46,7 +47,7 @@ class ClickableLabel : public QLabel
 		QPainter painter;
 		QTimer timer;
 		QPoint origin;
-		std::string current;
+		QString current;
 		std::unique_ptr<ResizableRubberband> rubberBand;
 		std::vector <std::unique_ptr<ResizableRubberband>> rubberBands;
 };

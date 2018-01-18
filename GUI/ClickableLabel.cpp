@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "ClickableLabel.h"
-#include "ToolHandler.h"
 
 #include "opencv2\core.hpp"
 #include "opencv2\highgui.hpp"
@@ -46,12 +45,10 @@ void ClickableLabel::passToGUI(int num)
 
 // called when a mouse click is detected
 void ClickableLabel::mousePressEvent(QMouseEvent* event) {
-	if (!current.empty()) {
-		if (current.compare("Region of Interest") == 0 && event->buttons() == Qt::LeftButton) {
-			origin = this->mapFromGlobal(this->mapToGlobal(event->pos()));
-			if (!rubberBand) {
-				rubberBand = std::make_unique<ResizableRubberband>(rubberBands.size() + 1, this);
-			}
+	if (current.compare("Rectangle ROI") == 0 && event->buttons() == Qt::LeftButton) {
+		origin = this->mapFromGlobal(this->mapToGlobal(event->pos()));
+		if (!rubberBand) {
+			rubberBand = std::make_unique<ResizableRubberband>(rubberBands.size() + 1, this);
 		}
 	}
 }
@@ -105,7 +102,7 @@ void ClickableLabel::mouseReleaseEvent(QMouseEvent * event)
 //	}
 //}
 
-void ClickableLabel::setSelection(std::string c)
+void ClickableLabel::setSelection(QString c)
 {
 	// changes current selection to whatever c is
 	current = c;

@@ -17,15 +17,13 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
-#include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QProgressBar>
-#include <QtWidgets/QPushButton>
 #include <QtWidgets/QSlider>
-#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 #include "ClickableLabel.h"
 
@@ -46,14 +44,12 @@ public:
     QAction *actionSave;
     QAction *actionSave_As;
     QAction *actionExport;
+    QAction *actionSelect;
+    QAction *actionRectangle_ROI;
+    QAction *actionLasso_ROI;
+    QAction *actionShow_RGB;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
-    QListWidget *Toolbox;
-    QHBoxLayout *horizontalLayout;
-    QLabel *RGBView;
-    QPushButton *ProcessButton;
-    QSpacerItem *horizontalSpacer;
-    QPushButton *ExportButton;
     QHBoxLayout *horizontalLayout_2;
     QLabel *FarLeftScrollImage;
     QLabel *LeftScrollImage;
@@ -62,12 +58,14 @@ public:
     QLabel *FarRightScrollImage;
     QHBoxLayout *horizontalLayout_3;
     ClickableLabel *PictureFrame;
-    QProgressBar *PictureProcessingBar;
     QSlider *ImageScroller;
+    QProgressBar *PictureProcessingBar;
     QStatusBar *statusBar;
     QMenuBar *menuBar;
     QMenu *menu_File;
     QMenu *menuEdit;
+    QMenu *menuExport;
+    QToolBar *toolBar;
 
     void setupUi(QMainWindow *GUIClass)
     {
@@ -400,6 +398,14 @@ public:
         actionSave_As->setObjectName(QStringLiteral("actionSave_As"));
         actionExport = new QAction(GUIClass);
         actionExport->setObjectName(QStringLiteral("actionExport"));
+        actionSelect = new QAction(GUIClass);
+        actionSelect->setObjectName(QStringLiteral("actionSelect"));
+        actionRectangle_ROI = new QAction(GUIClass);
+        actionRectangle_ROI->setObjectName(QStringLiteral("actionRectangle_ROI"));
+        actionLasso_ROI = new QAction(GUIClass);
+        actionLasso_ROI->setObjectName(QStringLiteral("actionLasso_ROI"));
+        actionShow_RGB = new QAction(GUIClass);
+        actionShow_RGB->setObjectName(QStringLiteral("actionShow_RGB"));
         centralWidget = new QWidget(GUIClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
@@ -413,91 +419,57 @@ public:
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        Toolbox = new QListWidget(centralWidget);
-        Toolbox->setObjectName(QStringLiteral("Toolbox"));
-        Toolbox->setMaximumSize(QSize(200, 300));
-
-        gridLayout->addWidget(Toolbox, 0, 0, 1, 1);
-
-        horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setSpacing(6);
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        RGBView = new QLabel(centralWidget);
-        RGBView->setObjectName(QStringLiteral("RGBView"));
-        QSizePolicy sizePolicy2(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(RGBView->sizePolicy().hasHeightForWidth());
-        RGBView->setSizePolicy(sizePolicy2);
-        RGBView->setMaximumSize(QSize(200, 200));
-
-        horizontalLayout->addWidget(RGBView);
-
-
-        gridLayout->addLayout(horizontalLayout, 1, 0, 3, 1);
-
-        ProcessButton = new QPushButton(centralWidget);
-        ProcessButton->setObjectName(QStringLiteral("ProcessButton"));
-
-        gridLayout->addWidget(ProcessButton, 6, 0, 1, 1);
-
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        gridLayout->addItem(horizontalSpacer, 0, 1, 1, 1);
-
-        ExportButton = new QPushButton(centralWidget);
-        ExportButton->setObjectName(QStringLiteral("ExportButton"));
-
-        gridLayout->addWidget(ExportButton, 7, 0, 1, 1);
-
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
         FarLeftScrollImage = new QLabel(centralWidget);
         FarLeftScrollImage->setObjectName(QStringLiteral("FarLeftScrollImage"));
-        QSizePolicy sizePolicy3(QSizePolicy::Maximum, QSizePolicy::Fixed);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(FarLeftScrollImage->sizePolicy().hasHeightForWidth());
-        FarLeftScrollImage->setSizePolicy(sizePolicy3);
+        QSizePolicy sizePolicy2(QSizePolicy::Maximum, QSizePolicy::Fixed);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(FarLeftScrollImage->sizePolicy().hasHeightForWidth());
+        FarLeftScrollImage->setSizePolicy(sizePolicy2);
         FarLeftScrollImage->setMinimumSize(QSize(150, 100));
 
         horizontalLayout_2->addWidget(FarLeftScrollImage);
 
         LeftScrollImage = new QLabel(centralWidget);
         LeftScrollImage->setObjectName(QStringLiteral("LeftScrollImage"));
-        sizePolicy3.setHeightForWidth(LeftScrollImage->sizePolicy().hasHeightForWidth());
-        LeftScrollImage->setSizePolicy(sizePolicy3);
+        sizePolicy2.setHeightForWidth(LeftScrollImage->sizePolicy().hasHeightForWidth());
+        LeftScrollImage->setSizePolicy(sizePolicy2);
         LeftScrollImage->setMinimumSize(QSize(150, 100));
 
         horizontalLayout_2->addWidget(LeftScrollImage);
 
         CenterScollImage = new QLabel(centralWidget);
         CenterScollImage->setObjectName(QStringLiteral("CenterScollImage"));
-        sizePolicy2.setHeightForWidth(CenterScollImage->sizePolicy().hasHeightForWidth());
-        CenterScollImage->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy3(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(CenterScollImage->sizePolicy().hasHeightForWidth());
+        CenterScollImage->setSizePolicy(sizePolicy3);
         CenterScollImage->setMinimumSize(QSize(150, 100));
 
         horizontalLayout_2->addWidget(CenterScollImage);
 
         RightScrollImage = new QLabel(centralWidget);
         RightScrollImage->setObjectName(QStringLiteral("RightScrollImage"));
-        sizePolicy3.setHeightForWidth(RightScrollImage->sizePolicy().hasHeightForWidth());
-        RightScrollImage->setSizePolicy(sizePolicy3);
+        sizePolicy2.setHeightForWidth(RightScrollImage->sizePolicy().hasHeightForWidth());
+        RightScrollImage->setSizePolicy(sizePolicy2);
         RightScrollImage->setMinimumSize(QSize(150, 100));
 
         horizontalLayout_2->addWidget(RightScrollImage);
 
         FarRightScrollImage = new QLabel(centralWidget);
         FarRightScrollImage->setObjectName(QStringLiteral("FarRightScrollImage"));
-        sizePolicy3.setHeightForWidth(FarRightScrollImage->sizePolicy().hasHeightForWidth());
-        FarRightScrollImage->setSizePolicy(sizePolicy3);
+        sizePolicy2.setHeightForWidth(FarRightScrollImage->sizePolicy().hasHeightForWidth());
+        FarRightScrollImage->setSizePolicy(sizePolicy2);
         FarRightScrollImage->setMinimumSize(QSize(150, 100));
 
         horizontalLayout_2->addWidget(FarRightScrollImage);
 
 
-        gridLayout->addLayout(horizontalLayout_2, 3, 2, 1, 1);
+        gridLayout->addLayout(horizontalLayout_2, 2, 0, 1, 1);
 
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setSpacing(6);
@@ -505,8 +477,8 @@ public:
         horizontalLayout_3->setSizeConstraint(QLayout::SetDefaultConstraint);
         PictureFrame = new ClickableLabel(centralWidget);
         PictureFrame->setObjectName(QStringLiteral("PictureFrame"));
-        sizePolicy2.setHeightForWidth(PictureFrame->sizePolicy().hasHeightForWidth());
-        PictureFrame->setSizePolicy(sizePolicy2);
+        sizePolicy3.setHeightForWidth(PictureFrame->sizePolicy().hasHeightForWidth());
+        PictureFrame->setSizePolicy(sizePolicy3);
         PictureFrame->setMinimumSize(QSize(0, 0));
         PictureFrame->setSizeIncrement(QSize(10, 10));
         PictureFrame->setFrameShape(QFrame::Box);
@@ -515,19 +487,19 @@ public:
         horizontalLayout_3->addWidget(PictureFrame);
 
 
-        gridLayout->addLayout(horizontalLayout_3, 0, 2, 3, 1);
-
-        PictureProcessingBar = new QProgressBar(centralWidget);
-        PictureProcessingBar->setObjectName(QStringLiteral("PictureProcessingBar"));
-        PictureProcessingBar->setValue(24);
-
-        gridLayout->addWidget(PictureProcessingBar, 7, 2, 1, 1);
+        gridLayout->addLayout(horizontalLayout_3, 0, 0, 2, 1);
 
         ImageScroller = new QSlider(centralWidget);
         ImageScroller->setObjectName(QStringLiteral("ImageScroller"));
         ImageScroller->setOrientation(Qt::Horizontal);
 
-        gridLayout->addWidget(ImageScroller, 6, 2, 1, 1);
+        gridLayout->addWidget(ImageScroller, 5, 0, 1, 1);
+
+        PictureProcessingBar = new QProgressBar(centralWidget);
+        PictureProcessingBar->setObjectName(QStringLiteral("PictureProcessingBar"));
+        PictureProcessingBar->setValue(24);
+
+        gridLayout->addWidget(PictureProcessingBar, 7, 0, 1, 1);
 
         GUIClass->setCentralWidget(centralWidget);
         statusBar = new QStatusBar(GUIClass);
@@ -542,16 +514,25 @@ public:
         menu_File->setObjectName(QStringLiteral("menu_File"));
         menuEdit = new QMenu(menuBar);
         menuEdit->setObjectName(QStringLiteral("menuEdit"));
+        menuExport = new QMenu(menuBar);
+        menuExport->setObjectName(QStringLiteral("menuExport"));
         GUIClass->setMenuBar(menuBar);
+        toolBar = new QToolBar(GUIClass);
+        toolBar->setObjectName(QStringLiteral("toolBar"));
+        GUIClass->addToolBar(Qt::TopToolBarArea, toolBar);
 
         menuBar->addAction(menu_File->menuAction());
         menuBar->addAction(menuEdit->menuAction());
+        menuBar->addAction(menuExport->menuAction());
         menu_File->addAction(action_Open);
         menu_File->addAction(action_Recent);
         menu_File->addSeparator();
         menu_File->addSeparator();
         menu_File->addAction(action_Exit);
         menuEdit->addAction(actionView);
+        toolBar->addAction(actionRectangle_ROI);
+        toolBar->addAction(actionLasso_ROI);
+        toolBar->addAction(actionShow_RGB);
 
         retranslateUi(GUIClass);
         QObject::connect(action_Exit, SIGNAL(triggered()), GUIClass, SLOT(close()));
@@ -577,9 +558,10 @@ public:
         actionSave->setText(QApplication::translate("GUIClass", "Save", Q_NULLPTR));
         actionSave_As->setText(QApplication::translate("GUIClass", "Save As", Q_NULLPTR));
         actionExport->setText(QApplication::translate("GUIClass", "Export", Q_NULLPTR));
-        RGBView->setText(QString());
-        ProcessButton->setText(QApplication::translate("GUIClass", "Process", Q_NULLPTR));
-        ExportButton->setText(QApplication::translate("GUIClass", "Export", Q_NULLPTR));
+        actionSelect->setText(QApplication::translate("GUIClass", "Select", Q_NULLPTR));
+        actionRectangle_ROI->setText(QApplication::translate("GUIClass", "Rectangle ROI", Q_NULLPTR));
+        actionLasso_ROI->setText(QApplication::translate("GUIClass", "Lasso ROI", Q_NULLPTR));
+        actionShow_RGB->setText(QApplication::translate("GUIClass", "Show RGB", Q_NULLPTR));
         FarLeftScrollImage->setText(QString());
         LeftScrollImage->setText(QString());
         CenterScollImage->setText(QString());
@@ -588,6 +570,8 @@ public:
         PictureFrame->setText(QString());
         menu_File->setTitle(QApplication::translate("GUIClass", "&File", Q_NULLPTR));
         menuEdit->setTitle(QApplication::translate("GUIClass", "Metadata", Q_NULLPTR));
+        menuExport->setTitle(QApplication::translate("GUIClass", "Export", Q_NULLPTR));
+        toolBar->setWindowTitle(QApplication::translate("GUIClass", "toolBar", Q_NULLPTR));
     } // retranslateUi
 
 };

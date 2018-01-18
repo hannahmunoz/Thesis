@@ -359,67 +359,7 @@ QMenu::separator {
     </size>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QListWidget" name="Toolbox">
-      <property name="maximumSize">
-       <size>
-        <width>200</width>
-        <height>300</height>
-       </size>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0" rowspan="3">
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QLabel" name="RGBView">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>200</width>
-          <height>200</height>
-         </size>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="6" column="0">
-     <widget class="QPushButton" name="ProcessButton">
-      <property name="text">
-       <string>Process</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <spacer name="horizontalSpacer">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="7" column="0">
-     <widget class="QPushButton" name="ExportButton">
-      <property name="text">
-       <string>Export</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="2">
+    <item row="2" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
        <widget class="QLabel" name="FarLeftScrollImage">
@@ -518,7 +458,7 @@ QMenu::separator {
       </item>
      </layout>
     </item>
-    <item row="0" column="2" rowspan="3">
+    <item row="0" column="0" rowspan="2">
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <property name="sizeConstraint">
        <enum>QLayout::SetDefaultConstraint</enum>
@@ -556,17 +496,17 @@ QMenu::separator {
       </item>
      </layout>
     </item>
-    <item row="7" column="2">
-     <widget class="QProgressBar" name="PictureProcessingBar">
-      <property name="value">
-       <number>24</number>
-      </property>
-     </widget>
-    </item>
-    <item row="6" column="2">
+    <item row="5" column="0">
      <widget class="QSlider" name="ImageScroller">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="0">
+     <widget class="QProgressBar" name="PictureProcessingBar">
+      <property name="value">
+       <number>24</number>
       </property>
      </widget>
     </item>
@@ -607,8 +547,28 @@ QMenu::separator {
     </property>
     <addaction name="actionView"/>
    </widget>
+   <widget class="QMenu" name="menuExport">
+    <property name="title">
+     <string>Export</string>
+    </property>
+   </widget>
    <addaction name="menu_File"/>
    <addaction name="menuEdit"/>
+   <addaction name="menuExport"/>
+  </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionRectangle_ROI"/>
+   <addaction name="actionLasso_ROI"/>
+   <addaction name="actionShow_RGB"/>
   </widget>
   <action name="action_Open">
    <property name="text">
@@ -671,6 +631,26 @@ QMenu::separator {
   <action name="actionExport">
    <property name="text">
     <string>Export</string>
+   </property>
+  </action>
+  <action name="actionSelect">
+   <property name="text">
+    <string>Select</string>
+   </property>
+  </action>
+  <action name="actionRectangle_ROI">
+   <property name="text">
+    <string>Rectangle ROI</string>
+   </property>
+  </action>
+  <action name="actionLasso_ROI">
+   <property name="text">
+    <string>Lasso ROI</string>
+   </property>
+  </action>
+  <action name="actionShow_RGB">
+   <property name="text">
+    <string>Show RGB</string>
    </property>
   </action>
  </widget>

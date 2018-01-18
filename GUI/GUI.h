@@ -7,8 +7,6 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgcodecs/imgcodecs.hpp>
 
-#include "ToolHandler.h"
-
 #include "ui_GUI.h"
 
 class GUI : public QMainWindow
@@ -19,7 +17,6 @@ public:
 	GUI(QWidget *parent = Q_NULLPTR);
 	
 	void singleImage (QLabel *image, QString file);
-	void populateToolbox();
 	void threadExport();
 	private slots:
 		//menu bar funtions
@@ -27,18 +24,19 @@ public:
 		void on_action_Edit_triggered();
 		void loadPictures(int center);
 		void passSelection(QListWidgetItem *);
-		void loadRGB(cv::Mat image);
+		//void loadRGB(cv::Mat image);
 		void testResults(std::vector<ResizableRubberband*>);
 		void Export();
 		void loadMDWindow();
 		void changeHist(QRect);
+		void selection(QAction* action);
 
 	signals:
 		void imageSet(cv::Mat image);
+		void onChange(QString);
 
 	private:
 		Ui::GUIClass ui;
-		ToolHandler* tools;
 		QString filepath;
 		QStringList filenames;
 		QRect ROI;

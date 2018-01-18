@@ -27,6 +27,7 @@ ResizableRubberband::ResizableRubberband( int num, QWidget* parent) : QWidget(pa
 	setLayout(layout);
 	show();
 	rubberband->installEventFilter(this);
+	focus = false;
 }
 
 
@@ -75,18 +76,25 @@ bool ResizableRubberband::eventFilter(QObject * object, QEvent * event)
 		e->setColor(QColor("red"));
 		rubberband->setGraphicsEffect(e);
 		emit focusReceived();
+		focus = true;
 		return true;
 	}
+	 if (event->type() == QEvent::KeyPress && focus) {
+		QKeyEvent* key = static_cast<QKeyEvent*>(event);
+		if (key->key() == Qt::Key_Backspace || key->key() == Qt::Key_Delete) {
+			remove();
+		}
+	}
 	QFocusEvent *fevent = dynamic_cast <QFocusEvent *> (event);
-	if ( event->type() == event->FocusOut && fevent->reason() != QFocusEvent::ContextMenu ){
+	 if ( event->type() == event->FocusOut && fevent->reason() != QFocusEvent::ContextMenu ){
 		QGraphicsColorizeEffect *e = new QGraphicsColorizeEffect(rubberband);
 		e->setColor(QColor("white"));
 		rubberband->setGraphicsEffect(e);
+		focus = false;
 		return true;	
 	}
 	return false;
 }
-
 
 void ResizableRubberband::resizeEvent(QResizeEvent *) {
 	rubberband->resize(size());

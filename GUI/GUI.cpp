@@ -30,23 +30,25 @@ GUI::GUI(QWidget *parent)
 	ui.ImageScroller->setRange(0, 0);
 
 	//set up the toolbox
-	populateToolbox();
-	tools = new ToolHandler();
-	connect(ui.Toolbox, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)), tools, SLOT(menuHandler (QListWidgetItem *, QListWidgetItem *)));
+	//populateToolbox();
+	//tools = new ToolHandler();
+	//connect(ui.Toolbox, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)), tools, SLOT(menuHandler (QListWidgetItem *, QListWidgetItem *)));
+	connect(ui.toolBar, SIGNAL(actionTriggered(QAction*)), this, SLOT(selection(QAction*)));
+	connect(this, SIGNAL(onChange(QString)), ui.PictureFrame, SLOT(setSelection(QString)));
 
 	//label events
-	connect(ui.Toolbox, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT( passSelection(QListWidgetItem *)));
+	//connect(ui.Toolbox, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT( passSelection(QListWidgetItem *)));
 
 	//connect RGB Viewer
 	connect(this, SIGNAL(imageSet(cv::Mat)), this, SLOT(loadRGB(cv::Mat)));
 
 	//connect Process Button
-	connect(ui.ProcessButton, SIGNAL(clicked()), ui.PictureFrame, SLOT(getROI()));
+	//connect(ui.ProcessButton, SIGNAL(clicked()), ui.PictureFrame, SLOT(getROI()));
 	//connect(ui.PictureFrame, SIGNAL(returnROI(std::vector<ResizableRubberband*>)), this, SLOT(testResults(std::vector<ResizableRubberband*>)));
 	//connect(ui.ProcessButton, SIGNAL(clicked()), this, SLOT(testResults()));
 	//connect(ui.ExportButton, SIGNAL(clicked()), this, SLOT(Export()));
-	ui.ProcessButton->setEnabled(false);
-	ui.ExportButton->setEnabled(false);
+	//ui.ProcessButton->setEnabled(false);
+	//ui.ExportButton->setEnabled(false);
 
 	//connect edit
 	connect(ui.menuEdit, SIGNAL(triggered(QAction *)), this, SLOT(loadMDWindow()));
@@ -57,10 +59,6 @@ GUI::GUI(QWidget *parent)
 
 void GUI::loadPictures(int center)
 {
-	// activate buttons
-	ui.ProcessButton->setEnabled(true);
-	ui.ExportButton->setEnabled(true);
-
 	//load pictures
 	ui.PictureFrame->setPix(filenames.at(center));
 	// and center
@@ -99,7 +97,7 @@ void GUI::loadPictures(int center)
 void GUI::passSelection(QListWidgetItem *item)
 {
 	// pass current selection to the tool box
-	ui.PictureFrame->setSelection(tools->getCurrentSelection());
+	//ui.PictureFrame->setSelection(tools->getCurrentSelection());
 }
 
 
@@ -111,7 +109,7 @@ void GUI::singleImage(QLabel *image, QString file) {
 // I didn't write this 
 // https://docs.opencv.org/2.4/doc/tutorials/imgproc/histograms/histogram_calculation/histogram_calculation.html
 // creates the RGB historgram on the side from the main image
-void GUI::loadRGB(Mat image) {
+/*void GUI::loadRGB(Mat image) {
 	if (!ROI.isNull()) {
 		cv::Rect openroi(ROI.x(), ROI.y(), ROI.width(), ROI.height());
 		imshow("Test", image(openroi));
@@ -160,17 +158,8 @@ void GUI::loadRGB(Mat image) {
 	ui.RGBView->setPixmap(QPixmap::fromImage( QImage((unsigned char*) histImage.data, histImage.cols,
 						  histImage.rows, histImage.step, QImage::Format_RGB888)));
 
-}
+}*/
 
-// loads options in the tool box
-void GUI::populateToolbox()
-{
-	new QListWidgetItem(tr("Select"), ui.Toolbox);
-	new QListWidgetItem(tr("Region of Interest"), ui.Toolbox);
-
-	// set to "select" so it starts with the arrow cursor
-	ui.Toolbox->setCurrentRow(0);
-}
 
 
 void GUI::loadMDWindow()
@@ -189,8 +178,14 @@ void GUI::changeHist(QRect roi)
 		temp = temp.convertToFormat(QImage::Format_RGB888);
 	}
 	temp = temp.rgbSwapped();
-	loadRGB(Mat(temp.height(), temp.width(), CV_8UC3, const_cast<uchar*>(temp.bits()), static_cast<size_t>(temp.bytesPerLine())));
+	//loadRGB(Mat(temp.height(), temp.width(), CV_8UC3, const_cast<uchar*>(temp.bits()), static_cast<size_t>(temp.bytesPerLine())));
 }
+
+void GUI::selection(QAction* action) {
+	emit onChange (action->iconText());
+}
+
+
 
 
 

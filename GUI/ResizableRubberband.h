@@ -32,6 +32,7 @@ class ResizableRubberband : public QWidget
 		void paintEvent(QPaintEvent * event);
 		void mousePressEvent(QMouseEvent * event);
 		bool eventFilter(QObject *object, QEvent *event);
+		bool focus;
 	
 	public:
 		int number;
