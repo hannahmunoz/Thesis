@@ -11,15 +11,18 @@ class ResizableRubberband : public QWidget
 	Q_OBJECT
 
 	public:
-		ResizableRubberband(QPoint origin, int numb, QWidget* parent = 0);
+		ResizableRubberband(int num, QWidget* parent = 0);
 		~ResizableRubberband();
 
 	signals:
 		void sendNumber(int);
+		void focusReceived();
+		void toParentLabel(int);
 
 	private slots:
 		void showContextMenu(const QPoint&);
 		void remove();
+		void changeHistogram();
 	//	void deleteRubberBand();
 
 	private:
@@ -28,7 +31,7 @@ class ResizableRubberband : public QWidget
 		void resizeEvent(QResizeEvent *);
 		void paintEvent(QPaintEvent * event);
 		void mousePressEvent(QMouseEvent * event);
-		void mouseMoveEvent(QMouseEvent * event);
+		bool eventFilter(QObject *object, QEvent *event);
 	
 	public:
 		int number;

@@ -38,7 +38,7 @@ GUI::GUI(QWidget *parent)
 	connect(ui.Toolbox, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT( passSelection(QListWidgetItem *)));
 
 	//connect RGB Viewer
-	connect(this, SIGNAL(imageSet(cv::Mat)), this, SLOT(loadRGB(cv::Mat)));
+	//connect(this, SIGNAL(imageSet(cv::Mat)), this, SLOT(loadRGB(cv::Mat)));
 
 	//connect Process Button
 	connect(ui.ProcessButton, SIGNAL(clicked()), ui.PictureFrame, SLOT(getROI()));
@@ -50,6 +50,8 @@ GUI::GUI(QWidget *parent)
 
 	//connect edit
 	connect(ui.menuEdit, SIGNAL(triggered(QAction *)), this, SLOT(loadMDWindow()));
+
+	connect(ui.PictureFrame, SIGNAL(GUIPass(QRect)), this, SLOT(changeHist(QRect)));
 }
 
 void GUI::loadPictures(int center)
@@ -169,6 +171,23 @@ void GUI::loadMDWindow()
 	// creates a new window for the metadata creator
 	Metadata *mdWindow = new Metadata();
 	mdWindow->show();
+}
+
+void GUI::changeHist(QRect roi)
+{
+	QImage temp = QImage(ui.PictureFrame->pixmap()->toImage());
+
+	if (ui.PictureFrame->pixmap()->toImage().format() == QImage::Format_RGB32)
+	{
+		temp = temp.convertToFormat(QImage::Format_RGB888);
+	}
+
+	temp = temp.rgbSwapped();
+
+	Mat image (temp.height(), temp.width(), CV_8UC3, const_cast<uchar*>(temp.bits()), static_cast<size_t>(temp.bytesPerLine()));
+	cv::Rect openroi(roi.x(), roi.y(), roi.width(), roi.height());
+	imshow("Test", image(openroi));
+	loadRGB(image(openroi));
 }
 
 

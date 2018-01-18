@@ -59,7 +59,7 @@ void GUI::testResults(std::vector<ResizableRubberband*> rbs)
 					// Y coord isnt working correctly. No idea why.
 					float  ratioW = (float)image.cols / (float)ui.PictureFrame->width();
 					float  ratioH = (float) image.rows / (float)ui.PictureFrame->height();
-					cv::Rect roi( (int) region.x() *ratioW, (int)region.x() * ratioH, region.width(), region.height());
+					cv::Rect roi( (int) region.x() * ratioW, (int)region.y() * ratioH, region.width(), region.height());
 					//Mat imageROI = image(roi);
 					Mat imageROI = image(roi);
 

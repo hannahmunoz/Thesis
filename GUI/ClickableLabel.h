@@ -1,6 +1,7 @@
 #pragma once
-
+#include <memory>
 #include <vector>
+
 #include <Qt>
 #include <QLabel>
 #include <QWidget>
@@ -26,11 +27,13 @@ class ClickableLabel : public QLabel
 	signals:
 		void clicked();
 		void returnROI(std::vector<ResizableRubberband*>);
-
+		void GUIPass(QRect);
 
 	public slots:
 		void removeRubberBand(int);
 		void getROI();
+		//void moveUp(int);
+		void passToGUI(int);
 
 	protected:
 		void mousePressEvent(QMouseEvent* event);
@@ -44,7 +47,7 @@ class ClickableLabel : public QLabel
 		QTimer timer;
 		QPoint origin;
 		std::string current;
-		ResizableRubberband* rubberBand;
-		std::vector<ResizableRubberband*> rubberBands;
+		std::unique_ptr<ResizableRubberband> rubberBand;
+		std::vector <std::unique_ptr<ResizableRubberband>> rubberBands;
 };
 

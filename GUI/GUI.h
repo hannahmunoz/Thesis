@@ -31,6 +31,7 @@ public:
 		void testResults(std::vector<ResizableRubberband*>);
 		void Export();
 		void loadMDWindow();
+		void changeHist(QRect);
 
 	signals:
 		void imageSet(cv::Mat image);

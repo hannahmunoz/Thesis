@@ -16,6 +16,7 @@ ClickableLabel::ClickableLabel(QWidget* parent, Qt::WindowFlags f): QLabel(paren
 	// label checks for clicks ever 200 msec
 	timer.start(200);
 	rubberBand = NULL;
+	this->grabGesture(Qt::PanGesture, Qt::ReceivePartialGestures);
 }
 
 ClickableLabel::~ClickableLabel() 
@@ -25,8 +26,24 @@ ClickableLabel::~ClickableLabel()
 
 void ClickableLabel::getROI()
 {
-	emit returnROI(rubberBands);
+	//emit returnROI(rubberBands);
 }
+
+void ClickableLabel::passToGUI(int num)
+{
+	int passNum;
+	for (int i = 0; i < rubberBands.size(); i++) {
+		if (rubberBands[i]->number == num) {
+			emit GUIPass(rubberBands[i]->geometry());
+		}
+		break;
+	}
+	
+}
+
+/*void ClickableLabel::moveUp(int num)
+{
+}*/
 
 // called when a mouse click is detected
 void ClickableLabel::mousePressEvent(QMouseEvent* event) {
@@ -34,8 +51,10 @@ void ClickableLabel::mousePressEvent(QMouseEvent* event) {
 		if (current.compare("Region of Interest") == 0 && event->buttons() == Qt::LeftButton) {
 			origin = this->mapFromGlobal(this->mapToGlobal(event->pos()));
 			if (!rubberBand) {
-				rubberBand = new ResizableRubberband(event->pos(), rubberBands.size()+1, this);
-				connect(rubberBand, SIGNAL(sendNumber(int)), this, SLOT(removeRubberBand(int)));
+				rubberBand = std::make_unique<ResizableRubberband>(rubberBands.size() + 1, this);
+					//new ResizableRubberband(rubberBands.size()+1, this);
+				//connect(rubberBand, SIGNAL(sendNumber(int)), this, SLOT(removeRubberBand(int)));
+				//connect(rubberBand, SIGNAL(toParentLabel(int)), this, SLOT(passToGUI(int)));
 			}
 		}
 	}
@@ -55,9 +74,15 @@ void ClickableLabel::mouseMoveEvent(QMouseEvent * event)
 void ClickableLabel::mouseReleaseEvent(QMouseEvent * event)
 {
 	if (rubberBand) {
-		rubberBands.push_back(rubberBand);
-		rubberBands.back()->show();
+		if (rubberBand->height() != 12 && rubberBand->width() != 32) {
+			(rubberBands).push_back(std::move (rubberBand));
+			rubberBands.back()->show();
+		}
+		else {
+			rubberBand->hide();
+		}
 		rubberBand = NULL;
+		
 	}
 }
 
@@ -98,18 +123,16 @@ void ClickableLabel::setPix(QString file)
 	setPixmap(p);
 }
 
-
-
 void ClickableLabel::removeRubberBand(int rb) {
 	for (int i = 0; i < rubberBands.size(); i++) {
 		if (rubberBands[i]->number == rb) {
+			rubberBands[i]->hide();
+			rubberBands[i].release();
+			rubberBands[i] = NULL;
 			rubberBands.erase(rubberBands.begin() + i);
-			for (int j = i; j < rubberBands.size(); j++) {
-				rubberBands[j]->number--;
-			}
-			break;
 		}
 	}
+
 }
 
 
