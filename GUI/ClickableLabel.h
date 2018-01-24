@@ -10,6 +10,7 @@
 #include <qcolor.h>
 #include <qimage.h>
 #include "ResizableRubberband.h"
+#include "ColorChannelViewer.h"
 
 // straight from https://wiki.qt.io/Clickable_QLabel
 
@@ -33,7 +34,10 @@ class ClickableLabel : public QLabel
 		void getROI();
 		//void moveUp(int);
 		void passToGUI(int);
+		void showContextMenu(const QPoint & pos);
 		void setSelection(QString);
+		void RGBHandler();
+		void colorWidgetDestroyed(QObject*);
 
 
 	protected:
@@ -50,5 +54,7 @@ class ClickableLabel : public QLabel
 		QString current;
 		std::unique_ptr<ResizableRubberband> rubberBand;
 		std::vector <std::unique_ptr<ResizableRubberband>> rubberBands;
+		QAction action1;
+		ColorChannelViewer *channels;
 };
 

@@ -30,8 +30,8 @@ void GUI::testResults(std::vector<ResizableRubberband*> rbs)
 	if (file.open(QIODevice::WriteOnly))
 	{
 		// set up the ProgressBar
-		ui.PictureProcessingBar->show();
-		ui.PictureProcessingBar->setRange(0, filenames.size());
+		//.PictureProcessingBar->show();
+		//ui.PictureProcessingBar->setRange(0, filenames.size());
 
 		// change mouse
 		QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
@@ -46,7 +46,7 @@ void GUI::testResults(std::vector<ResizableRubberband*> rbs)
 		// For every image in the series
 		for (int i = 0; i < filenames.size(); i++) {
 			// increase progress
-			ui.PictureProcessingBar->setValue(i);
+			//ui.PictureProcessingBar->setValue(i);
 			// load the image in
 			Mat image = imread(filenames[i].toStdString(), CV_LOAD_IMAGE_COLOR);
 
@@ -112,7 +112,7 @@ void GUI::testResults(std::vector<ResizableRubberband*> rbs)
 		}
 
 		// hide the processing bar again
-		ui.PictureProcessingBar->hide();
+		//ui.PictureProcessingBar->hide();
 
 		// change mouse
 		QApplication::setOverrideCursor(QCursor(Qt::ArrowCursor));
@@ -151,8 +151,8 @@ void GUI::Export(){
 	QString filename = QFileDialog::getSaveFileName(this, tr("Save Results"), "/", tr("Video Files (*.avi);; All files (*.*)"));
 
 	// show processing bar
-	ui.PictureProcessingBar->show();
-	ui.PictureProcessingBar->setRange(0, filenames.size());
+	//ui.PictureProcessingBar->show();
+	//ui.PictureProcessingBar->setRange(0, filenames.size());
 
 	//change mouse
 	QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
@@ -174,11 +174,11 @@ void GUI::Export(){
 				out.write(Mat(imread(filenames[i].toStdString(), CV_LOAD_IMAGE_COLOR)));
 			}
 			// increase progress
-			ui.PictureProcessingBar->setValue(i);
+			//ui.PictureProcessingBar->setValue(i);
 		}
 	}
 	// hide processing bar
-	ui.PictureProcessingBar->hide();
+	//ui.PictureProcessingBar->hide();
 
 	// change mouse
 	QApplication::setOverrideCursor(QCursor(Qt::ArrowCursor));

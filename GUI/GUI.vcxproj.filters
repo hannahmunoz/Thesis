@@ -5,10 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
       <Extensions>qrc;*</Extensions>
@@ -37,6 +33,10 @@
       <UniqueIdentifier>{cacb7f21-202d-4c6a-8522-6194c8fc3af6}</UniqueIdentifier>
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -94,24 +94,33 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ResizableRubberband.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="ColorChannelViewer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
+      <Filter>Generated Files\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_GUI.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="FileExplorer.h">
-      <Filter>Header Files</Filter>
+      <Filter>Generated Files\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_Metadata.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorChannelViewer.h">
+      <Filter>Generated Files\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_histogramViewer.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="GUI.h">
-      <Filter>Header Files</Filter>
+      <Filter>Generated Files\Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="GUI.ui">
       <Filter>Form Files</Filter>
@@ -120,16 +129,19 @@
       <Filter>Resource Files</Filter>
     </CustomBuild>
     <CustomBuild Include="ClickableLabel.h">
-      <Filter>Header Files</Filter>
+      <Filter>Generated Files\Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="Metadata.h">
-      <Filter>Header Files</Filter>
+      <Filter>Generated Files\Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="Metadata.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
     <CustomBuild Include="ResizableRubberband.h">
-      <Filter>Header Files</Filter>
+      <Filter>Generated Files\Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="histogramViewer.ui">
+      <Filter>Form Files</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

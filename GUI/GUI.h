@@ -24,7 +24,6 @@ public:
 		void on_action_Edit_triggered();
 		void loadPictures(int center);
 		void passSelection(QListWidgetItem *);
-		//void loadRGB(cv::Mat image);
 		void testResults(std::vector<ResizableRubberband*>);
 		void Export();
 		void loadMDWindow();

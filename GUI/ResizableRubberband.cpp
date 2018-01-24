@@ -53,6 +53,7 @@ void ResizableRubberband::showContextMenu(const QPoint &pos) {
 
 	QMenu contextMenu(tr("Menu"), this);
 	QAction action1("Delete", this);
+	QAction action2("Show RGB", this);
 	//QAction action2("Move Up", this);
 	//QAction action3("Move Down", this);
 

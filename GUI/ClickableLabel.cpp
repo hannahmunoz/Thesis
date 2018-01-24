@@ -15,6 +15,7 @@ ClickableLabel::ClickableLabel(QWidget* parent, Qt::WindowFlags f): QLabel(paren
 	// label checks for clicks ever 200 msec
 	timer.start(200);
 	rubberBand = NULL;
+	channels = new ColorChannelViewer(this);
 }
 
 ClickableLabel::~ClickableLabel() 
@@ -50,6 +51,10 @@ void ClickableLabel::mousePressEvent(QMouseEvent* event) {
 		if (!rubberBand) {
 			rubberBand = std::make_unique<ResizableRubberband>(rubberBands.size() + 1, this);
 		}
+	}
+	else if (event->buttons() == Qt::RightButton) {
+		this->setContextMenuPolicy(Qt::CustomContextMenu);
+		connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(showContextMenu(const QPoint &)));
 	}
 }
 
@@ -102,17 +107,45 @@ void ClickableLabel::mouseReleaseEvent(QMouseEvent * event)
 //	}
 //}
 
+void ClickableLabel::showContextMenu(const QPoint &pos) {
+
+	QMenu contextMenu(tr("Menu"), this);
+	//QAction action1("Show RGB", this);
+	action1.setText("Show RGB");
+	action1.setCheckable(true);
+	//contextMenu.addAction("Show RGB", this, SLOT (showRGB()));
+	connect(&action1, SIGNAL(triggered()), this, SLOT(RGBHandler()));
+	contextMenu.addAction(&action1);
+	contextMenu.exec(mapToGlobal(pos));
+}
+
 void ClickableLabel::setSelection(QString c)
 {
 	// changes current selection to whatever c is
 	current = c;
 }
 
+void ClickableLabel::RGBHandler()
+{
+	if (action1.isChecked()) {
+		channels->displayRGB("Main Window Histogram");
+	}
+}
+
+void ClickableLabel::colorWidgetDestroyed(QObject *)
+{
+	action1.setChecked(false);
+}
+
+
 void ClickableLabel::setPix(QString file)
 {
 	// creates and sets a pixmap image
 	p = QPixmap(file);
+	this->setMaximumSize(p.size());
 	setPixmap(p);
+	channels->init(QImage(p.toImage()));
+	RGBHandler();
 }
 
 void ClickableLabel::removeRubberBand(int rb) {

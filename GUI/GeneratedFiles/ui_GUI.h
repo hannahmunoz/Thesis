@@ -14,14 +14,13 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QGridLayout>
-#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
-#include <QtWidgets/QProgressBar>
 #include <QtWidgets/QSlider>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
@@ -49,17 +48,18 @@ public:
     QAction *actionLasso_ROI;
     QAction *actionShow_RGB;
     QWidget *centralWidget;
+    QGridLayout *gridLayout_2;
     QGridLayout *gridLayout;
-    QHBoxLayout *horizontalLayout_2;
-    QLabel *FarLeftScrollImage;
     QLabel *LeftScrollImage;
+    QLabel *FarLeftScrollImage;
     QLabel *CenterScollImage;
     QLabel *RightScrollImage;
     QLabel *FarRightScrollImage;
-    QHBoxLayout *horizontalLayout_3;
-    ClickableLabel *PictureFrame;
     QSlider *ImageScroller;
-    QProgressBar *PictureProcessingBar;
+    QGridLayout *gridLayout_3;
+    ClickableLabel *PictureFrame;
+    QSpacerItem *verticalSpacer;
+    QSpacerItem *verticalSpacer_2;
     QStatusBar *statusBar;
     QMenuBar *menuBar;
     QMenu *menu_File;
@@ -71,14 +71,15 @@ public:
     {
         if (GUIClass->objectName().isEmpty())
             GUIClass->setObjectName(QStringLiteral("GUIClass"));
+        GUIClass->setEnabled(true);
         GUIClass->resize(1000, 664);
-        QSizePolicy sizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(GUIClass->sizePolicy().hasHeightForWidth());
         GUIClass->setSizePolicy(sizePolicy);
-        GUIClass->setMinimumSize(QSize(1000, 664));
-        GUIClass->setMaximumSize(QSize(1000, 664));
+        GUIClass->setMinimumSize(QSize(30, 20));
+        GUIClass->setMaximumSize(QSize(1500, 1500));
         GUIClass->setSizeIncrement(QSize(10, 10));
         GUIClass->setAutoFillBackground(false);
         GUIClass->setStyleSheet(QLatin1String("/* Style sheet from \n"
@@ -408,98 +409,112 @@ public:
         actionShow_RGB->setObjectName(QStringLiteral("actionShow_RGB"));
         centralWidget = new QWidget(GUIClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(centralWidget->sizePolicy().hasHeightForWidth());
-        centralWidget->setSizePolicy(sizePolicy1);
-        centralWidget->setMinimumSize(QSize(1000, 600));
-        centralWidget->setMaximumSize(QSize(300, 600));
-        gridLayout = new QGridLayout(centralWidget);
+        sizePolicy.setHeightForWidth(centralWidget->sizePolicy().hasHeightForWidth());
+        centralWidget->setSizePolicy(sizePolicy);
+        centralWidget->setMinimumSize(QSize(0, 0));
+        centralWidget->setMaximumSize(QSize(600000, 600000));
+        gridLayout_2 = new QGridLayout(centralWidget);
+        gridLayout_2->setSpacing(6);
+        gridLayout_2->setContentsMargins(11, 11, 11, 11);
+        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
+        gridLayout = new QGridLayout();
         gridLayout->setSpacing(6);
-        gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setSpacing(6);
-        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
-        FarLeftScrollImage = new QLabel(centralWidget);
-        FarLeftScrollImage->setObjectName(QStringLiteral("FarLeftScrollImage"));
-        QSizePolicy sizePolicy2(QSizePolicy::Maximum, QSizePolicy::Fixed);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(FarLeftScrollImage->sizePolicy().hasHeightForWidth());
-        FarLeftScrollImage->setSizePolicy(sizePolicy2);
-        FarLeftScrollImage->setMinimumSize(QSize(150, 100));
-
-        horizontalLayout_2->addWidget(FarLeftScrollImage);
-
+        gridLayout->setSizeConstraint(QLayout::SetMinimumSize);
         LeftScrollImage = new QLabel(centralWidget);
         LeftScrollImage->setObjectName(QStringLiteral("LeftScrollImage"));
-        sizePolicy2.setHeightForWidth(LeftScrollImage->sizePolicy().hasHeightForWidth());
-        LeftScrollImage->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy1(QSizePolicy::Maximum, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(LeftScrollImage->sizePolicy().hasHeightForWidth());
+        LeftScrollImage->setSizePolicy(sizePolicy1);
         LeftScrollImage->setMinimumSize(QSize(150, 100));
+        LeftScrollImage->setAlignment(Qt::AlignCenter);
 
-        horizontalLayout_2->addWidget(LeftScrollImage);
+        gridLayout->addWidget(LeftScrollImage, 0, 1, 1, 1);
+
+        FarLeftScrollImage = new QLabel(centralWidget);
+        FarLeftScrollImage->setObjectName(QStringLiteral("FarLeftScrollImage"));
+        sizePolicy1.setHeightForWidth(FarLeftScrollImage->sizePolicy().hasHeightForWidth());
+        FarLeftScrollImage->setSizePolicy(sizePolicy1);
+        FarLeftScrollImage->setMinimumSize(QSize(150, 100));
+        FarLeftScrollImage->setMaximumSize(QSize(150, 100));
+        FarLeftScrollImage->setAlignment(Qt::AlignCenter);
+
+        gridLayout->addWidget(FarLeftScrollImage, 0, 0, 1, 1);
 
         CenterScollImage = new QLabel(centralWidget);
         CenterScollImage->setObjectName(QStringLiteral("CenterScollImage"));
-        QSizePolicy sizePolicy3(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(CenterScollImage->sizePolicy().hasHeightForWidth());
-        CenterScollImage->setSizePolicy(sizePolicy3);
+        QSizePolicy sizePolicy2(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(CenterScollImage->sizePolicy().hasHeightForWidth());
+        CenterScollImage->setSizePolicy(sizePolicy2);
         CenterScollImage->setMinimumSize(QSize(150, 100));
+        CenterScollImage->setMaximumSize(QSize(150, 100));
+        CenterScollImage->setAlignment(Qt::AlignCenter);
 
-        horizontalLayout_2->addWidget(CenterScollImage);
+        gridLayout->addWidget(CenterScollImage, 0, 2, 1, 1);
 
         RightScrollImage = new QLabel(centralWidget);
         RightScrollImage->setObjectName(QStringLiteral("RightScrollImage"));
-        sizePolicy2.setHeightForWidth(RightScrollImage->sizePolicy().hasHeightForWidth());
-        RightScrollImage->setSizePolicy(sizePolicy2);
+        sizePolicy1.setHeightForWidth(RightScrollImage->sizePolicy().hasHeightForWidth());
+        RightScrollImage->setSizePolicy(sizePolicy1);
         RightScrollImage->setMinimumSize(QSize(150, 100));
+        RightScrollImage->setAlignment(Qt::AlignCenter);
 
-        horizontalLayout_2->addWidget(RightScrollImage);
+        gridLayout->addWidget(RightScrollImage, 0, 3, 1, 1);
 
         FarRightScrollImage = new QLabel(centralWidget);
         FarRightScrollImage->setObjectName(QStringLiteral("FarRightScrollImage"));
-        sizePolicy2.setHeightForWidth(FarRightScrollImage->sizePolicy().hasHeightForWidth());
-        FarRightScrollImage->setSizePolicy(sizePolicy2);
+        sizePolicy1.setHeightForWidth(FarRightScrollImage->sizePolicy().hasHeightForWidth());
+        FarRightScrollImage->setSizePolicy(sizePolicy1);
         FarRightScrollImage->setMinimumSize(QSize(150, 100));
+        FarRightScrollImage->setAlignment(Qt::AlignCenter);
 
-        horizontalLayout_2->addWidget(FarRightScrollImage);
-
-
-        gridLayout->addLayout(horizontalLayout_2, 2, 0, 1, 1);
-
-        horizontalLayout_3 = new QHBoxLayout();
-        horizontalLayout_3->setSpacing(6);
-        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
-        horizontalLayout_3->setSizeConstraint(QLayout::SetDefaultConstraint);
-        PictureFrame = new ClickableLabel(centralWidget);
-        PictureFrame->setObjectName(QStringLiteral("PictureFrame"));
-        sizePolicy3.setHeightForWidth(PictureFrame->sizePolicy().hasHeightForWidth());
-        PictureFrame->setSizePolicy(sizePolicy3);
-        PictureFrame->setMinimumSize(QSize(0, 0));
-        PictureFrame->setSizeIncrement(QSize(10, 10));
-        PictureFrame->setFrameShape(QFrame::Box);
-        PictureFrame->setLineWidth(2);
-
-        horizontalLayout_3->addWidget(PictureFrame);
-
-
-        gridLayout->addLayout(horizontalLayout_3, 0, 0, 2, 1);
+        gridLayout->addWidget(FarRightScrollImage, 0, 4, 1, 1);
 
         ImageScroller = new QSlider(centralWidget);
         ImageScroller->setObjectName(QStringLiteral("ImageScroller"));
+        ImageScroller->setMaximumSize(QSize(16777215, 15));
         ImageScroller->setOrientation(Qt::Horizontal);
 
-        gridLayout->addWidget(ImageScroller, 5, 0, 1, 1);
+        gridLayout->addWidget(ImageScroller, 1, 0, 1, 5);
 
-        PictureProcessingBar = new QProgressBar(centralWidget);
-        PictureProcessingBar->setObjectName(QStringLiteral("PictureProcessingBar"));
-        PictureProcessingBar->setValue(24);
 
-        gridLayout->addWidget(PictureProcessingBar, 7, 0, 1, 1);
+        gridLayout_2->addLayout(gridLayout, 3, 0, 1, 1);
+
+        gridLayout_3 = new QGridLayout();
+        gridLayout_3->setSpacing(6);
+        gridLayout_3->setObjectName(QStringLiteral("gridLayout_3"));
+        gridLayout_3->setSizeConstraint(QLayout::SetDefaultConstraint);
+        PictureFrame = new ClickableLabel(centralWidget);
+        PictureFrame->setObjectName(QStringLiteral("PictureFrame"));
+        QSizePolicy sizePolicy3(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(PictureFrame->sizePolicy().hasHeightForWidth());
+        PictureFrame->setSizePolicy(sizePolicy3);
+        PictureFrame->setMinimumSize(QSize(0, 0));
+        PictureFrame->setMaximumSize(QSize(0, 0));
+        PictureFrame->setSizeIncrement(QSize(10, 10));
+        PictureFrame->setFrameShape(QFrame::Box);
+        PictureFrame->setLineWidth(2);
+        PictureFrame->setScaledContents(false);
+        PictureFrame->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+
+        gridLayout_3->addWidget(PictureFrame, 0, 0, 1, 1);
+
+
+        gridLayout_2->addLayout(gridLayout_3, 1, 0, 1, 1);
+
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        gridLayout_2->addItem(verticalSpacer, 2, 0, 1, 1);
+
+        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        gridLayout_2->addItem(verticalSpacer_2, 0, 0, 1, 1);
 
         GUIClass->setCentralWidget(centralWidget);
         statusBar = new QStatusBar(GUIClass);
@@ -532,7 +547,6 @@ public:
         menuEdit->addAction(actionView);
         toolBar->addAction(actionRectangle_ROI);
         toolBar->addAction(actionLasso_ROI);
-        toolBar->addAction(actionShow_RGB);
 
         retranslateUi(GUIClass);
         QObject::connect(action_Exit, SIGNAL(triggered()), GUIClass, SLOT(close()));
@@ -562,8 +576,8 @@ public:
         actionRectangle_ROI->setText(QApplication::translate("GUIClass", "Rectangle ROI", Q_NULLPTR));
         actionLasso_ROI->setText(QApplication::translate("GUIClass", "Lasso ROI", Q_NULLPTR));
         actionShow_RGB->setText(QApplication::translate("GUIClass", "Show RGB", Q_NULLPTR));
-        FarLeftScrollImage->setText(QString());
         LeftScrollImage->setText(QString());
+        FarLeftScrollImage->setText(QString());
         CenterScollImage->setText(QString());
         RightScrollImage->setText(QString());
         FarRightScrollImage->setText(QString());

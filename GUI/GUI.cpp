@@ -20,27 +20,20 @@ GUI::GUI(QWidget *parent)
 {
 	// create window
 	ui.setupUi(this);
+	ui.PictureFrame->hide();
 
 	//set up the processing bar
 	//connect(ui.PictureProcessingBar, SIGNAL(signalProgress(int)), ui.PictureProcessingBar, SLOT(setValue(int)));
-	ui.PictureProcessingBar->hide();
+	//ui.PictureProcessingBar->hide();
 
 	//set up the slider
 	connect(ui.ImageScroller, SIGNAL(valueChanged(int)), this, SLOT(loadPictures(int)));
 	ui.ImageScroller->setRange(0, 0);
 
-	//set up the toolbox
-	//populateToolbox();
-	//tools = new ToolHandler();
-	//connect(ui.Toolbox, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)), tools, SLOT(menuHandler (QListWidgetItem *, QListWidgetItem *)));
+	//set up the toolbar
 	connect(ui.toolBar, SIGNAL(actionTriggered(QAction*)), this, SLOT(selection(QAction*)));
 	connect(this, SIGNAL(onChange(QString)), ui.PictureFrame, SLOT(setSelection(QString)));
 
-	//label events
-	//connect(ui.Toolbox, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT( passSelection(QListWidgetItem *)));
-
-	//connect RGB Viewer
-	connect(this, SIGNAL(imageSet(cv::Mat)), this, SLOT(loadRGB(cv::Mat)));
 
 	//connect Process Button
 	//connect(ui.ProcessButton, SIGNAL(clicked()), ui.PictureFrame, SLOT(getROI()));
@@ -54,13 +47,19 @@ GUI::GUI(QWidget *parent)
 	connect(ui.menuEdit, SIGNAL(triggered(QAction *)), this, SLOT(loadMDWindow()));
 
 	connect(ui.PictureFrame, SIGNAL(GUIPass(QRect)), this, SLOT(changeHist(QRect)));
-
 }
 
 void GUI::loadPictures(int center)
 {
 	//load pictures
 	ui.PictureFrame->setPix(filenames.at(center));
+	ui.PictureFrame->show();
+	QSize temp = ui.PictureFrame->pixmap()->size();
+	//this->setFixedSize(temp.width() + 10, temp.height() + 10);
+	this->setMaximumHeight(temp.height() + 200);
+	this->setMaximumWidth(temp.width() + 100);
+	
+
 	// and center
 	singleImage(ui.CenterScollImage, filenames.at(center));
 	emit imageSet(imread(filenames.at(center).toStdString(), CV_LOAD_IMAGE_COLOR));
@@ -105,61 +104,6 @@ void GUI::singleImage(QLabel *image, QString file) {
 	// set a single image in a label
 	image->setPixmap(QPixmap(file).scaled(image->width(), image->height(), Qt::KeepAspectRatio));
 }
-
-// I didn't write this 
-// https://docs.opencv.org/2.4/doc/tutorials/imgproc/histograms/histogram_calculation/histogram_calculation.html
-// creates the RGB historgram on the side from the main image
-/*void GUI::loadRGB(Mat image) {
-	if (!ROI.isNull()) {
-		cv::Rect openroi(ROI.x(), ROI.y(), ROI.width(), ROI.height());
-		imshow("Test", image(openroi));
-		image = image (openroi);
-	}
-
-	std::vector<Mat> bgr_planes;
-	split(image, bgr_planes);
-	int histSize = 256;
-
-	/// Set the ranges ( for B,G,R) )
-	float range[] = { 0, 256 };
-	const float* histRange = { range };
-	bool uniform = true;
-	bool accumulate = false;
-	Mat b_hist, g_hist, r_hist;
-
-	/// Compute the histograms:
-	calcHist(&bgr_planes[0], 1, 0, Mat(), b_hist, 1, &histSize, &histRange, uniform, accumulate);
-	calcHist(&bgr_planes[1], 1, 0, Mat(), g_hist, 1, &histSize, &histRange, uniform, accumulate);
-	calcHist(&bgr_planes[2], 1, 0, Mat(), r_hist, 1, &histSize, &histRange, uniform, accumulate);
-
-	int bin_w = cvRound((double)ui.RGBView->width() / histSize);
-	Mat histImage(ui.RGBView->height(), ui.RGBView->width(), CV_8UC3, Scalar(0, 0, 0));
-
-	/// Normalize the result to [ 0, histImage.rows ]
-	normalize(b_hist, b_hist, 0, histImage.rows, NORM_MINMAX, -1, Mat());
-	normalize(g_hist, g_hist, 0, histImage.rows, NORM_MINMAX, -1, Mat());
-	normalize(r_hist, r_hist, 0, histImage.rows, NORM_MINMAX, -1, Mat());
-
-	/// Draw for each channel
-	for (int i = 1; i < histSize; i++)
-	{
-		line(histImage, Point(bin_w*(i - 1), ui.RGBView->height() - cvRound(b_hist.at<float>(i - 1))),
-			Point(bin_w*(i), ui.RGBView->height() - cvRound(b_hist.at<float>(i))),
-			Scalar(255, 0, 0), 2, 8, 0);
-		line(histImage, Point(bin_w*(i - 1), ui.RGBView->height() - cvRound(g_hist.at<float>(i - 1))),
-			Point(bin_w*(i), ui.RGBView->height() - cvRound(g_hist.at<float>(i))),
-			Scalar(0, 255, 0), 2, 8, 0);
-		line(histImage, Point(bin_w*(i - 1), ui.RGBView->height() - cvRound(r_hist.at<float>(i - 1))),
-			Point(bin_w*(i), ui.RGBView->height() - cvRound(r_hist.at<float>(i))),
-			Scalar(0, 0, 255), 2, 8, 0);
-	}
-	
-	cvtColor(histImage, histImage, CV_BGR2RGB);
-	ui.RGBView->setPixmap(QPixmap::fromImage( QImage((unsigned char*) histImage.data, histImage.cols,
-						  histImage.rows, histImage.step, QImage::Format_RGB888)));
-
-}*/
-
 
 
 void GUI::loadMDWindow()
