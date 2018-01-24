@@ -72,7 +72,7 @@ public:
         if (GUIClass->objectName().isEmpty())
             GUIClass->setObjectName(QStringLiteral("GUIClass"));
         GUIClass->setEnabled(true);
-        GUIClass->resize(1000, 664);
+        GUIClass->resize(998, 664);
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -522,7 +522,7 @@ public:
         GUIClass->setStatusBar(statusBar);
         menuBar = new QMenuBar(GUIClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1000, 21));
+        menuBar->setGeometry(QRect(0, 0, 998, 21));
         menuBar->setMinimumSize(QSize(10, 5));
         menuBar->setDefaultUp(true);
         menu_File = new QMenu(menuBar);

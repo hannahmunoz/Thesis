@@ -6,11 +6,10 @@
 #include "ui_histogramViewer.h"
 
 
-ColorChannelViewer::ColorChannelViewer(QWidget* parent) : QWidget(parent)
+ColorChannelViewer::ColorChannelViewer()
 {
-
 	rgbWindow = NULL;
-	connect(rgbWindow, SIGNAL(destroyed(QObject*)), parent, SLOT(colorWidgetDestroyed(QObject*)));
+
 }
 
 ColorChannelViewer::~ColorChannelViewer()
@@ -45,7 +44,7 @@ void ColorChannelViewer::init(QImage img)
 // I didn't write this 
 // https://docs.opencv.org/2.4/doc/tutorials/imgproc/histograms/histogram_calculation/histogram_calculation.html
 // creates the RGB historgram on the side from the main image
-void ColorChannelViewer::displayRGB(QString title)
+void ColorChannelViewer::displayRGB(QString title, QWidget* parent)
 {
 	int width = 300;
 	int height = 300;
@@ -87,12 +86,23 @@ void ColorChannelViewer::displayRGB(QString title)
 
 	cvtColor(histImage, histImage, CV_BGR2RGB);
 
-	if (rgbWindow== NULL) {
+	if (rgbWindow == NULL) {
 		rgbWindow = new QWidget;
-		ui.setupUi(rgbWindow);
 		rgbWindow->setAttribute(Qt::WA_DeleteOnClose);
-		rgbWindow->show();
+		ui.setupUi(rgbWindow);
+		connect(rgbWindow, SIGNAL(destroyed(QObject *)), parent, SLOT(colorWidgetDestroyed(QObject *)));
 	}
 	rgbWindow->setWindowTitle(title);
+	rgbWindow->show();
 	ui.histogram->setPixmap(QPixmap::fromImage(QImage((unsigned char*)histImage.data, histImage.cols, histImage.rows, QImage::Format_RGB888)));
 }
+
+void ColorChannelViewer::windowDestroyed()
+{
+	if (rgbWindow != NULL) {
+		rgbWindow->hide();
+	}
+	rgbWindow = NULL;
+}
+
+

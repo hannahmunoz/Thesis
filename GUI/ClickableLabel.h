@@ -37,7 +37,7 @@ class ClickableLabel : public QLabel
 		void showContextMenu(const QPoint & pos);
 		void setSelection(QString);
 		void RGBHandler();
-		void colorWidgetDestroyed(QObject*);
+		void colorWidgetDestroyed(QObject *);
 
 
 	protected:

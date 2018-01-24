@@ -15,7 +15,7 @@ ClickableLabel::ClickableLabel(QWidget* parent, Qt::WindowFlags f): QLabel(paren
 	// label checks for clicks ever 200 msec
 	timer.start(200);
 	rubberBand = NULL;
-	channels = new ColorChannelViewer(this);
+	channels = new ColorChannelViewer();
 }
 
 ClickableLabel::~ClickableLabel() 
@@ -128,13 +128,17 @@ void ClickableLabel::setSelection(QString c)
 void ClickableLabel::RGBHandler()
 {
 	if (action1.isChecked()) {
-		channels->displayRGB("Main Window Histogram");
+		channels->displayRGB("Main Window Histogram", this);
+	}
+	else {
+		channels->windowDestroyed();
 	}
 }
 
-void ClickableLabel::colorWidgetDestroyed(QObject *)
+void ClickableLabel::colorWidgetDestroyed(QObject *e)
 {
 	action1.setChecked(false);
+	channels->windowDestroyed();
 }
 
 
