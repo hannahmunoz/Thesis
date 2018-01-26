@@ -53,12 +53,8 @@ void GUI::loadPictures(int center)
 {
 	//load pictures
 	ui.PictureFrame->setPix(filenames.at(center));
-	ui.PictureFrame->show();
 	QSize temp = ui.PictureFrame->pixmap()->size();
-	//this->setFixedSize(temp.width() + 10, temp.height() + 10);
-	this->setMaximumHeight(temp.height() + 200);
-	this->setMaximumWidth(temp.width() + 100);
-	
+	this->setFixedSize(temp.width() + 100, temp.height() + 250);
 
 	// and center
 	singleImage(ui.CenterScollImage, filenames.at(center));

@@ -3,7 +3,11 @@
 #include <QRubberBand>
 #include <Qt>
 #include <QObject>
+#include <QMainWindow>
+
 #include <opencv2/opencv.hpp>
+
+#include "ColorChannelViewer.h"
 
 
 class ResizableRubberband : public QWidget
@@ -11,7 +15,7 @@ class ResizableRubberband : public QWidget
 	Q_OBJECT
 
 	public:
-		ResizableRubberband(int num, QWidget* parent = 0);
+		ResizableRubberband(int num, QPoint origin, QWidget* parent = 0);
 		~ResizableRubberband();
 
 	signals:
@@ -23,17 +27,23 @@ class ResizableRubberband : public QWidget
 		void showContextMenu(const QPoint&);
 		void remove();
 		void changeHistogram();
-	//	void deleteRubberBand();
+		void RGBHandler();
+		void pix(QImage);
+		void colorWidgetDestroyed(QObject * e);
 
 	private:
 		QRubberBand* rubberband;
 		QHBoxLayout* layout;
+		QPoint origin;
 		void resizeEvent(QResizeEvent *);
 		void paintEvent(QPaintEvent * event);
 		void mousePressEvent(QMouseEvent * event);
 		bool eventFilter(QObject *object, QEvent *event);
 		bool focus;
-	
+		QAction action2;
+		ColorChannelViewer *channels;
+		cv::Mat imageROI;
+
 	public:
 		int number;
 };

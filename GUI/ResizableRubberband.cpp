@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QPainter>
 
-ResizableRubberband::ResizableRubberband( int num, QWidget* parent) : QWidget(parent)
+ResizableRubberband::ResizableRubberband(int num, QPoint o, QWidget* parent) : QWidget(parent)
 {
 	//setStyleSheet("selection-background-color: yellow");;
 	setWindowFlags(Qt::SubWindow);
@@ -22,23 +22,25 @@ ResizableRubberband::ResizableRubberband( int num, QWidget* parent) : QWidget(pa
 	//connect(this, SIGNAL(focusReceived()), this, SLOT(changeHistogram()));
 	connect(this, SIGNAL(sendNumber(int)), parent, SLOT(removeRubberBand(int)));
 	connect(this, SIGNAL(toParentLabel(int)), parent, SLOT(passToGUI(int)));
+	connect(parent, SIGNAL(pixChange(QImage)), this, SLOT(pix(QImage)));
 
 	rubberband->show();
 	setLayout(layout);
 	show();
 	rubberband->installEventFilter(this);
 	focus = false;
+	channels = new ColorChannelViewer();
+	origin = o;
 }
 
 
 ResizableRubberband::~ResizableRubberband()
 {
-
+	 
 }
 
 
-void ResizableRubberband::mousePressEvent(QMouseEvent* event) {
-	
+void ResizableRubberband::mousePressEvent(QMouseEvent* event) {	
 	if (event->buttons() == Qt::RightButton || event->buttons() == Qt::LeftButton) {
 		rubberband->setFocus();
 	}
@@ -46,21 +48,21 @@ void ResizableRubberband::mousePressEvent(QMouseEvent* event) {
 		 this->setContextMenuPolicy(Qt::CustomContextMenu);
 		 connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(showContextMenu(const QPoint &)));
 	}
-
 }
 
 void ResizableRubberband::showContextMenu(const QPoint &pos) {
 
 	QMenu contextMenu(tr("Menu"), this);
 	QAction action1("Delete", this);
-	QAction action2("Show RGB", this);
+	action2.setText("Show RGB");
+	action2.setCheckable(true);
 	//QAction action2("Move Up", this);
 	//QAction action3("Move Down", this);
 
 	//connect(&action1, SIGNAL(triggered()), this, SLOT(deleteLater()));
 	connect(&action1, SIGNAL(triggered()), this, SLOT(remove()));
-	//connect(&action2, SIGNAL(triggered()), this->parent(), SLOT(moveUp(int)));
-
+	connect(&action2, SIGNAL(triggered()), this, SLOT(RGBHandler()));
+	contextMenu.addAction(&action2);
 	contextMenu.addAction(&action1);
 //	contextMenu.addSeparator();
 	//contextMenu.addAction(&action2);
@@ -68,6 +70,32 @@ void ResizableRubberband::showContextMenu(const QPoint &pos) {
 	//contextMenu.addSeparator();
 
 	contextMenu.exec(mapToGlobal(pos));
+}
+
+void ResizableRubberband::RGBHandler()
+{
+	if (action2.isChecked()) {
+		channels->displayRGB("ROI " + QString(number) + " Histogram", this);
+	}
+	else {
+		channels->windowDestroyed();
+	}
+}
+
+void ResizableRubberband::pix(QImage img)
+{
+	img = img.convertToFormat(QImage::Format_RGB888);
+	img = img.rgbSwapped();
+	cv::Mat image(img.height(), img.width(), CV_8UC3, const_cast<uchar*>(img.bits()), static_cast<size_t>(img.bytesPerLine()));
+
+	imageROI = image(cv::Rect(origin.x(), origin.y(), rubberband->geometry().width(), rubberband->geometry().height()));
+	channels->init(img.copy(QRect(origin.x(), origin.y(), rubberband->geometry().width(), rubberband->geometry().height())));
+}
+
+void ResizableRubberband::colorWidgetDestroyed(QObject *e)
+{
+	action2.setChecked(false);
+	channels->windowDestroyed();
 }
 
 bool ResizableRubberband::eventFilter(QObject * object, QEvent * event)

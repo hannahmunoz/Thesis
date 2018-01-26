@@ -49,7 +49,8 @@ void ClickableLabel::mousePressEvent(QMouseEvent* event) {
 	if (current.compare("Rectangle ROI") == 0 && event->buttons() == Qt::LeftButton) {
 		origin = this->mapFromGlobal(this->mapToGlobal(event->pos()));
 		if (!rubberBand) {
-			rubberBand = std::make_unique<ResizableRubberband>(rubberBands.size() + 1, this);
+			rubberBand = std::make_unique<ResizableRubberband>(rubberBands.size() + 1, origin, this);
+			emit pixChange(QImage(p.toImage()));
 		}
 	}
 	else if (event->buttons() == Qt::RightButton) {
@@ -146,10 +147,17 @@ void ClickableLabel::setPix(QString file)
 {
 	// creates and sets a pixmap image
 	p = QPixmap(file);
-	this->setMaximumSize(p.size());
+	this->setFixedSize(p.size());
+	this->show();
 	setPixmap(p);
 	channels->init(QImage(p.toImage()));
+	emit pixChange(QImage(p.toImage()));
 	RGBHandler();
+}
+
+QPixmap ClickableLabel::getPix()
+{
+	return p;
 }
 
 void ClickableLabel::removeRubberBand(int rb) {

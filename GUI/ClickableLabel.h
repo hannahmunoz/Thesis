@@ -23,11 +23,13 @@ class ClickableLabel : public QLabel
 		~ClickableLabel();
 		//void paintEvent(QPaintEvent *);
 		void setPix(QString file);
+		QPixmap getPix();
 
 	signals:
 		void clicked();
 		void returnROI(std::vector<ResizableRubberband*>);
 		void GUIPass(QRect);
+		void pixChange(QImage);
 
 	public slots:
 		void removeRubberBand(int);
@@ -56,5 +58,6 @@ class ClickableLabel : public QLabel
 		std::vector <std::unique_ptr<ResizableRubberband>> rubberBands;
 		QAction action1;
 		ColorChannelViewer *channels;
+		
 };
 
