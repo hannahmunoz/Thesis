@@ -150,6 +150,10 @@ void ClickableLabel::setPix(QString file)
 	this->setFixedSize(p.size());
 	this->show();
 	setPixmap(p);
+	//get the matrix version for ROI handling
+
+
+	//Do other stuff
 	channels->init(QImage(p.toImage()));
 	emit pixChange(QImage(p.toImage()));
 	RGBHandler();
@@ -158,6 +162,11 @@ void ClickableLabel::setPix(QString file)
 QPixmap ClickableLabel::getPix()
 {
 	return p;
+}
+
+std::vector<std::unique_ptr<ResizableRubberband>> const & ClickableLabel::getRubberbands() const
+{
+	return rubberBands;
 }
 
 void ClickableLabel::removeRubberBand(int rb) {

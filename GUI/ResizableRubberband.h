@@ -41,6 +41,7 @@ class ResizableRubberband : public QWidget
 		bool eventFilter(QObject *object, QEvent *event);
 		bool focus;
 		QAction action2;
+		QAction action3;
 		ColorChannelViewer *channels;
 		cv::Mat imageROI;
 

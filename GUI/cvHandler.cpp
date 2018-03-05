@@ -144,7 +144,7 @@ void GUI::threadExport() {
 }
 
 
-void GUI::Export(){
+void GUI::exportData(){
 	//needs to be moved to a thread
 
 	// open save file

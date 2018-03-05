@@ -25,10 +25,12 @@ public:
 		void loadPictures(int center);
 		void passSelection(QListWidgetItem *);
 		void testResults(std::vector<ResizableRubberband*>);
-		void Export();
+		void exportData();
 		void loadMDWindow();
+		void loadExportWindow(QAction *);
 		void changeHist(QRect);
 		void selection(QAction* action);
+		void processSelection(int);
 
 	signals:
 		void imageSet(cv::Mat image);

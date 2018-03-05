@@ -7,6 +7,8 @@
 #include <qtextstream.h>
 #include <qpixmap.h>
 #include <Metadata.h>
+#include <Export.h>
+#include <CPU.h>
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
@@ -45,6 +47,7 @@ GUI::GUI(QWidget *parent)
 
 	//connect edit
 	connect(ui.menuEdit, SIGNAL(triggered(QAction *)), this, SLOT(loadMDWindow()));
+	connect(ui.menuExport, SIGNAL(triggered(QAction *)), this, SLOT(loadExportWindow(QAction *)));
 
 	connect(ui.PictureFrame, SIGNAL(GUIPass(QRect)), this, SLOT(changeHist(QRect)));
 }
@@ -109,6 +112,14 @@ void GUI::loadMDWindow()
 	mdWindow->show();
 }
 
+void GUI::loadExportWindow(QAction *t)
+{
+	Export *exwindow = new Export();
+	connect(exwindow, SIGNAL(choice(int)), this, SLOT(processSelection(int)));
+	//exwindow->show();
+	exwindow->exec();
+}
+
 void GUI::changeHist(QRect roi)
 {
 	ROI = roi;
@@ -123,6 +134,16 @@ void GUI::changeHist(QRect roi)
 
 void GUI::selection(QAction* action) {
 	emit onChange (action->iconText());
+}
+
+void GUI::processSelection(int selection)
+{
+	const std::vector<std::unique_ptr<ResizableRubberband> > *rbs = &(ui.PictureFrame->getRubberbands());
+	if (rbs->size() > 0) {
+		if (selection == 0) {
+			CPU *process = new CPU(rbs);
+		}
+	}
 }
 
 

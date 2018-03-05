@@ -47,6 +47,7 @@ public:
     QAction *actionRectangle_ROI;
     QAction *actionLasso_ROI;
     QAction *actionShow_RGB;
+    QAction *actionView_2;
     QWidget *centralWidget;
     QGridLayout *gridLayout_2;
     QGridLayout *gridLayout;
@@ -81,6 +82,7 @@ public:
         GUIClass->setMinimumSize(QSize(30, 20));
         GUIClass->setMaximumSize(QSize(1500, 1500));
         GUIClass->setSizeIncrement(QSize(10, 10));
+        GUIClass->setAcceptDrops(true);
         GUIClass->setAutoFillBackground(false);
         GUIClass->setStyleSheet(QLatin1String("/* Style sheet from \n"
 "	https://github.com/EClaesson/QTDark/blob/master/QTDark.stylesheet\n"
@@ -407,6 +409,8 @@ public:
         actionLasso_ROI->setObjectName(QStringLiteral("actionLasso_ROI"));
         actionShow_RGB = new QAction(GUIClass);
         actionShow_RGB->setObjectName(QStringLiteral("actionShow_RGB"));
+        actionView_2 = new QAction(GUIClass);
+        actionView_2->setObjectName(QStringLiteral("actionView_2"));
         centralWidget = new QWidget(GUIClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         sizePolicy.setHeightForWidth(centralWidget->sizePolicy().hasHeightForWidth());
@@ -531,6 +535,7 @@ public:
         menuEdit->setObjectName(QStringLiteral("menuEdit"));
         menuExport = new QMenu(menuBar);
         menuExport->setObjectName(QStringLiteral("menuExport"));
+        menuExport->setAcceptDrops(false);
         GUIClass->setMenuBar(menuBar);
         toolBar = new QToolBar(GUIClass);
         toolBar->setObjectName(QStringLiteral("toolBar"));
@@ -545,6 +550,7 @@ public:
         menu_File->addSeparator();
         menu_File->addAction(action_Exit);
         menuEdit->addAction(actionView);
+        menuExport->addAction(actionView_2);
         toolBar->addAction(actionRectangle_ROI);
         toolBar->addAction(actionLasso_ROI);
 
@@ -576,6 +582,7 @@ public:
         actionRectangle_ROI->setText(QApplication::translate("GUIClass", "Rectangle ROI", Q_NULLPTR));
         actionLasso_ROI->setText(QApplication::translate("GUIClass", "Lasso ROI", Q_NULLPTR));
         actionShow_RGB->setText(QApplication::translate("GUIClass", "Show RGB", Q_NULLPTR));
+        actionView_2->setText(QApplication::translate("GUIClass", "View", Q_NULLPTR));
         LeftScrollImage->setText(QString());
         FarLeftScrollImage->setText(QString());
         CenterScollImage->setText(QString());

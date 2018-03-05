@@ -54,19 +54,21 @@ void ResizableRubberband::showContextMenu(const QPoint &pos) {
 
 	QMenu contextMenu(tr("Menu"), this);
 	QAction action1("Delete", this);
-	action2.setText("Show RGB");
+	//action2.setText("Show RGB");
+	//action2.setCheckable(true);
+	action2.setText("Cloud Detection");
 	action2.setCheckable(true);
-	//QAction action2("Move Up", this);
-	//QAction action3("Move Down", this);
+	action3.setText("Snow Detection");
+	action3.setCheckable(true);
 
 	//connect(&action1, SIGNAL(triggered()), this, SLOT(deleteLater()));
 	connect(&action1, SIGNAL(triggered()), this, SLOT(remove()));
-	connect(&action2, SIGNAL(triggered()), this, SLOT(RGBHandler()));
-	contextMenu.addAction(&action2);
-	contextMenu.addAction(&action1);
-//	contextMenu.addSeparator();
+	//connect(&action2, SIGNAL(triggered()), this, SLOT(RGBHandler()));
 	//contextMenu.addAction(&action2);
-	//contextMenu.addAction(&action3);
+	contextMenu.addAction(&action1);
+	contextMenu.addSeparator();
+	contextMenu.addAction(&action2);
+	contextMenu.addAction(&action3);
 	//contextMenu.addSeparator();
 
 	contextMenu.exec(mapToGlobal(pos));
