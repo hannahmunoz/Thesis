@@ -64,12 +64,6 @@
     <ClCompile Include="ClickableLabel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ClickableLabel.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ClickableLabel.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="MenuBar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -112,6 +106,12 @@
     <ClCompile Include="CPU.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ClickableLabel.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ClickableLabel.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -152,9 +152,6 @@
     <CustomBuild Include="GUI.qrc">
       <Filter>Resource Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="ClickableLabel.h">
-      <Filter>Generated Files\Header Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="Metadata.h">
       <Filter>Generated Files\Header Files</Filter>
     </CustomBuild>
@@ -171,6 +168,9 @@
       <Filter>Form Files</Filter>
     </CustomBuild>
     <CustomBuild Include="Export.h">
+      <Filter>Generated Files\Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ClickableLabel.h">
       <Filter>Generated Files\Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

@@ -141,7 +141,7 @@ void GUI::processSelection(int selection)
 	const std::vector<std::unique_ptr<ResizableRubberband> > *rbs = &(ui.PictureFrame->getRubberbands());
 	if (rbs->size() > 0) {
 		if (selection == 0) {
-			CPU *process = new CPU(rbs);
+			CPU *process = new CPU(filenames, rbs);
 		}
 	}
 }

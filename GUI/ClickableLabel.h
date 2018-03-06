@@ -18,47 +18,46 @@ class ClickableLabel : public QLabel
 {
 	Q_OBJECT
 
-	public:
-		explicit ClickableLabel(QWidget* parent = Q_NULLPTR, Qt::WindowFlags f = Qt::WindowFlags());
-		~ClickableLabel();
-		//void paintEvent(QPaintEvent *);
-		void setPix(QString file);
-		QPixmap getPix();
-		std::vector <std::unique_ptr<ResizableRubberband> > const& getRubberbands() const;
+public:
+	explicit ClickableLabel(QWidget* parent = Q_NULLPTR, Qt::WindowFlags f = Qt::WindowFlags());
+	~ClickableLabel();
+	//void paintEvent(QPaintEvent *);
+	void setPix(QString file);
+	QPixmap getPix();
+	std::vector <std::unique_ptr<ResizableRubberband> > const& getRubberbands() const;
 
-	signals:
-		void clicked();
-		void returnROI(std::vector<ResizableRubberband*>);
-		void GUIPass(QRect);
-		void pixChange(QImage);
+signals:
+	void clicked();
+	//void returnROI(std::vector<ResizableRubberband*>);
+	void GUIPass(QRect);
+	void pixChange(cv::Mat);
 
 	public slots:
-		void removeRubberBand(int);
-		void getROI();
-		//void moveUp(int);
-		void passToGUI(int);
-		void showContextMenu(const QPoint & pos);
-		void setSelection(QString);
-		void RGBHandler();
-		void colorWidgetDestroyed(QObject *);
+	void removeRubberBand(int);
+	void getROI();
+	//void moveUp(int);
+	void passToGUI(int);
+	void showContextMenu(const QPoint & pos);
+	void setSelection(QString);
+	void RGBHandler();
+	void colorWidgetDestroyed(QObject *);
 
 
-	protected:
-		void mousePressEvent(QMouseEvent* event);
-		void mouseMoveEvent(QMouseEvent* event);
-		void mouseReleaseEvent(QMouseEvent* event);
+protected:
+	void mousePressEvent(QMouseEvent* event);
+	void mouseMoveEvent(QMouseEvent* event);
+	void mouseReleaseEvent(QMouseEvent* event);
 
 
-	private:
-		QPixmap p;
-		QPainter painter;
-		QTimer timer;
-		QPoint origin;
-		QString current;
-		std::unique_ptr<ResizableRubberband> rubberBand;
-		std::vector <std::unique_ptr<ResizableRubberband>> rubberBands;
-		QAction action1;
-		ColorChannelViewer *channels;
-		cv::Mat image;
+private:
+	QPixmap p;
+	QPainter painter;
+	QPoint origin;
+	QString current;
+	std::unique_ptr<ResizableRubberband> rubberBand;
+	std::vector <std::unique_ptr<ResizableRubberband>> rubberBands;
+	QAction action1;
+	ColorChannelViewer *channels;
+	cv::Mat matImage;
 };
 

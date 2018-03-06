@@ -22,14 +22,14 @@ ResizableRubberband::ResizableRubberband(int num, QPoint o, QWidget* parent) : Q
 	//connect(this, SIGNAL(focusReceived()), this, SLOT(changeHistogram()));
 	connect(this, SIGNAL(sendNumber(int)), parent, SLOT(removeRubberBand(int)));
 	connect(this, SIGNAL(toParentLabel(int)), parent, SLOT(passToGUI(int)));
-	connect(parent, SIGNAL(pixChange(QImage)), this, SLOT(pix(QImage)));
+	//connect(parent, SIGNAL(pixChange(cv::Mat)), this, SLOT(pix(cv::Mat)));
 
 	rubberband->show();
 	setLayout(layout);
 	show();
 	rubberband->installEventFilter(this);
 	focus = false;
-	channels = new ColorChannelViewer();
+	//channels = new ColorChannelViewer();
 	origin = o;
 }
 
@@ -37,6 +37,11 @@ ResizableRubberband::ResizableRubberband(int num, QPoint o, QWidget* parent) : Q
 ResizableRubberband::~ResizableRubberband()
 {
 	 
+}
+
+std::vector<int> ResizableRubberband::getFilters()
+{
+	return filterType;
 }
 
 
@@ -69,12 +74,15 @@ void ResizableRubberband::showContextMenu(const QPoint &pos) {
 	contextMenu.addSeparator();
 	contextMenu.addAction(&action2);
 	contextMenu.addAction(&action3);
+	connect(&action2, SIGNAL(triggered()), this, SLOT(checkFilter()));
+	connect(&action3, SIGNAL(triggered()), this, SLOT(checkFilter()));
+
 	//contextMenu.addSeparator();
 
 	contextMenu.exec(mapToGlobal(pos));
 }
 
-void ResizableRubberband::RGBHandler()
+/*void ResizableRubberband::RGBHandler()
 {
 	if (action2.isChecked()) {
 		channels->displayRGB("ROI " + QString(number) + " Histogram", this);
@@ -84,21 +92,16 @@ void ResizableRubberband::RGBHandler()
 	}
 }
 
-void ResizableRubberband::pix(QImage img)
+void ResizableRubberband::pix(cv::Mat img)
 {
-	img = img.convertToFormat(QImage::Format_RGB888);
-	img = img.rgbSwapped();
-	cv::Mat image(img.height(), img.width(), CV_8UC3, const_cast<uchar*>(img.bits()), static_cast<size_t>(img.bytesPerLine()));
-
-	imageROI = image(cv::Rect(origin.x(), origin.y(), rubberband->geometry().width(), rubberband->geometry().height()));
-	channels->init(img.copy(QRect(origin.x(), origin.y(), rubberband->geometry().width(), rubberband->geometry().height())));
+	channels->init(img(cv::Rect(origin.x(), origin.y(), rubberband->geometry().width(), rubberband->geometry().height())));
 }
 
 void ResizableRubberband::colorWidgetDestroyed(QObject *e)
 {
 	action2.setChecked(false);
 	channels->windowDestroyed();
-}
+}*/
 
 bool ResizableRubberband::eventFilter(QObject * object, QEvent * event)
 {
@@ -138,6 +141,23 @@ void ResizableRubberband::remove() {
 void ResizableRubberband::changeHistogram()
 {
 	emit toParentLabel(number);
+}
+
+void ResizableRubberband::checkFilter()
+{
+	if (action2.isChecked() && std::find(filterType.begin(), filterType.end(), 0) == filterType.end()) {
+		filterType.push_back(0);
+	}
+	else if (!action2.isChecked() && std::find(filterType.begin(), filterType.end(), 0) != filterType.end()) {
+		filterType.erase(std::remove(filterType.begin(), filterType.end(), 0), filterType.end());
+	}
+	if (action3.isChecked() && std::find(filterType.begin(), filterType.end(), 1) == filterType.end()) {
+		filterType.push_back(1);
+	}
+	else if (!action3.isChecked() && std::find(filterType.begin(), filterType.end(), 1) != filterType.end()) {
+		filterType.erase(std::remove(filterType.begin(), filterType.end(), 1), filterType.end());
+	}
+
 }
 
 void ResizableRubberband::paintEvent(QPaintEvent *event)

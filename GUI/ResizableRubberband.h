@@ -17,6 +17,7 @@ class ResizableRubberband : public QWidget
 	public:
 		ResizableRubberband(int num, QPoint origin, QWidget* parent = 0);
 		~ResizableRubberband();
+		std::vector <int> getFilters();
 
 	signals:
 		void sendNumber(int);
@@ -27,9 +28,10 @@ class ResizableRubberband : public QWidget
 		void showContextMenu(const QPoint&);
 		void remove();
 		void changeHistogram();
-		void RGBHandler();
-		void pix(QImage);
-		void colorWidgetDestroyed(QObject * e);
+		void checkFilter();
+		//void RGBHandler();
+		//void pix(cv::Mat);
+		//void colorWidgetDestroyed(QObject * e);
 
 	private:
 		QRubberBand* rubberband;
@@ -42,8 +44,8 @@ class ResizableRubberband : public QWidget
 		bool focus;
 		QAction action2;
 		QAction action3;
-		ColorChannelViewer *channels;
-		cv::Mat imageROI;
+		std::vector <int> filterType;
+		//ColorChannelViewer *channels;
 
 	public:
 		int number;

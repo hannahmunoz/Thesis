@@ -10,10 +10,6 @@ using namespace cv;
 
 ClickableLabel::ClickableLabel(QWidget* parent, Qt::WindowFlags f): QLabel(parent) 
 {
-	// start the timer
-	connect(&timer, SIGNAL(timeout()), this, SLOT(update()));
-	// label checks for clicks ever 200 msec
-	timer.start(200);
 	rubberBand = NULL;
 	channels = new ColorChannelViewer();
 }
@@ -50,7 +46,7 @@ void ClickableLabel::mousePressEvent(QMouseEvent* event) {
 		origin = this->mapFromGlobal(this->mapToGlobal(event->pos()));
 		if (!rubberBand) {
 			rubberBand = std::make_unique<ResizableRubberband>(rubberBands.size() + 1, origin, this);
-			emit pixChange(QImage(p.toImage()));
+			emit pixChange(matImage);
 		}
 	}
 	else if (event->buttons() == Qt::RightButton) {
@@ -80,33 +76,9 @@ void ClickableLabel::mouseReleaseEvent(QMouseEvent * event)
 			rubberBand->hide();
 		}
 		rubberBand = NULL;
-		
 	}
 }
 
-// paint event for drawing the ROI to the user
-//void ClickableLabel::paintEvent(QPaintEvent *event) {
-//	//// currently just shows "Qt" on select area selection
-//	QLabel::paintEvent(event);
-//	// make sure we're working on a picture
-//	if (!p.isNull()) {
-//		// check that the user wants to select a ROI
-//		if (!current.empty()) {
-//			if (current.compare("Region of Interest") == 0) {
-//				painter.begin(this);
-//				painter.setPen(QPen(Qt::red, 3, Qt::DashLine));
-//				painter.drawRect(0, 0, 700, 120);
-//				/*painter.setFont(QFont("Arial", 30));
-//				painter.drawText(rect(), Qt::AlignCenter, "Qt");*/
-//				painter.end();
-//				//setPixmap(p);
-//			}
-//			//else {
-//				//painter.drawText(rect(), Qt::AlignCenter, "qT");
-//			//}
-//		}
-//	}
-//}
 
 void ClickableLabel::showContextMenu(const QPoint &pos) {
 
@@ -150,12 +122,13 @@ void ClickableLabel::setPix(QString file)
 	this->setFixedSize(p.size());
 	this->show();
 	setPixmap(p);
-	//get the matrix version for ROI handling
 
+	//get the matrix version for ROI handling
+	matImage = imread(file.toStdString(), CV_LOAD_IMAGE_COLOR);
 
 	//Do other stuff
-	channels->init(QImage(p.toImage()));
-	emit pixChange(QImage(p.toImage()));
+	channels->init(matImage);
+	emit pixChange(matImage);
 	RGBHandler();
 }
 

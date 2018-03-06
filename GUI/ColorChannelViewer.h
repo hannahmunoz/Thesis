@@ -16,7 +16,7 @@ class ColorChannelViewer :public QWidget
 		ColorChannelViewer();
 		~ColorChannelViewer();
 
-		void init(QImage img);
+		void init(cv::Mat img);
 		void displayRGB(QString title, QWidget* parent);
 		void windowDestroyed();
 

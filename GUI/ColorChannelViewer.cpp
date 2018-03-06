@@ -16,15 +16,8 @@ ColorChannelViewer::~ColorChannelViewer()
 {
 }
 
-void ColorChannelViewer::init(QImage img)
+void ColorChannelViewer::init(cv::Mat image)
 {
-	if (img.format() == QImage::Format_RGB32)
-	{
-		img = img.convertToFormat(QImage::Format_RGB888);
-	}
-	img = img.rgbSwapped();
-	cv::Mat image(img.height(), img.width(), CV_8UC3, const_cast<uchar*>(img.bits()), static_cast<size_t>(img.bytesPerLine()));
-
 	split(image, bgr_planes);
 
 	cv::Mat YCbCr;
