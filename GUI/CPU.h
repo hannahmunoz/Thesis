@@ -17,5 +17,7 @@ private:
 	void snowFilterDebug(cv::Mat, ResizableRubberband*);
 	void cloudFilter(cv::Mat, ResizableRubberband*);
 	void cloudFilterDebug(cv::Mat, ResizableRubberband*);
+
+	static bool minFunc(const float i, const float j);
 };
 

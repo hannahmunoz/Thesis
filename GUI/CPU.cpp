@@ -1,14 +1,17 @@
 #include "stdafx.h"
 #include "CPU.h"
+#include "opencv2\highgui.hpp"
+#include "opencv2\imgproc.hpp"
+#include <algorithm>
 
 #include "cuda.h"
 
 
 CPU::CPU(QStringList filenames, const std::vector<std::unique_ptr<ResizableRubberband> > *rbs)
 {
-	std::vector<std::unique_ptr<ResizableRubberband> >:: const_iterator it;
+	std::vector<std::unique_ptr<ResizableRubberband> >::const_iterator it;
 	std::vector <int>::iterator jt;
-	
+
 	// begin timing
 	LARGE_INTEGER frequency;        // ticks per second
 	LARGE_INTEGER t1, t2;           // ticks
@@ -68,30 +71,56 @@ void CPU::snowFilter(cv::Mat roi, ResizableRubberband* rb)
 
 }
 
+bool CPU::minFunc(const float i, const float j) { return  i > 127.0; }
+
 void CPU::snowFilterDebug(cv::Mat roi, ResizableRubberband * rb)
 {
-	// median filter?
+
 	cv::Vec3b white(255, 255, 255);
 	cv::Vec3b black(0, 0, 0);
 	int imageCoverage = 0;
 
-	// for each row and column in the image
-	/*for (int row = 0; row < roi.rows; row++) {
-		for (int col = 0; col < roi.cols; col++) {
+	int histSize = 256;
+	float range[] = { 0, 256 };
+	const float* histRange = { range };
+	cv::Mat b_hist, g_hist, r_hist;
 
-		}
-	}*/
-	//
-	//cv::bilateralFilter(roi, roi, 5);
+	//BGR
 	cv::Mat output;
-	cv::cvtColor(roi, output, cv::COLOR_BGR2GRAY);
-	//cv::medianBlur(output, output, 5);
-	//cv::adaptiveThreshold(output, output, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C, cv::THRESH_BINARY, 11, 2);
-	//cv::GaussianBlur(output, output, cv::Size (3,3), 0);
-	cv::threshold(output, output, 0, 255, cv::THRESH_BINARY + cv::THRESH_OTSU);
+	roi.copyTo(output);
+
+
+	std::vector<cv::Mat> planes(3);
+	cv::split(output, planes);
+
+	calcHist(&planes[0], 1, 0, cv::Mat(), b_hist, 1, &histSize, &histRange, true, false);
+	calcHist(&planes[1], 1, 0, cv::Mat(), g_hist, 1, &histSize, &histRange, true, false);
+	calcHist(&planes[2], 1, 0, cv::Mat(), r_hist, 1, &histSize, &histRange, true, false);
+	cv::GaussianBlur(b_hist, b_hist, cv::Size(5, 5), 0);
+
+	std::vector<float>blue(b_hist.begin<float>(), b_hist.end<float>());
+	std::vector<float>red(r_hist.begin<float>(), r_hist.end<float>());
+	int threshold = 127;
+	for (int i = 0; i <blue.size(); i++) {
+		if ( blue[i] > 127.0) {
+			threshold = blue[i];
+			break;
+		}
+	}
+
+	// for each row and column in the image
+	for (int row = 0; row < roi.rows; row++) {
+		for (int col = 0; col < roi.cols; col++) {
+			if (threshold < (int) planes[0].at <uchar>(row, col)) {
+				output.at <cv::Vec3b>(cv::Point(col, row)) = white;
+			}
+			else {
+				output.at <cv::Vec3b>(cv::Point(col, row)) = black;
+			}
+		}
+	}
+
 	imshow("Check Image", output);
-
-
 }
 
 void CPU::cloudFilter(cv::Mat roi, ResizableRubberband* rb)
@@ -99,6 +128,7 @@ void CPU::cloudFilter(cv::Mat roi, ResizableRubberband* rb)
 	float threshold = 38;
 	int imageCoverage = 0;
 
+	//BGR
 	std::vector<cv::Mat> planes(3);
 	cv::split(roi, planes);
 
