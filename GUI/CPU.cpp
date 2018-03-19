@@ -3,6 +3,7 @@
 #include "opencv2\highgui.hpp"
 #include "opencv2\imgproc.hpp"
 #include <algorithm>
+#include <valarray>  
 
 #include "cuda.h"
 
@@ -89,29 +90,42 @@ void CPU::snowFilterDebug(cv::Mat roi, ResizableRubberband * rb)
 	cv::Mat output;
 	roi.copyTo(output);
 
-
 	std::vector<cv::Mat> planes(3);
 	cv::split(output, planes);
 
 	calcHist(&planes[0], 1, 0, cv::Mat(), b_hist, 1, &histSize, &histRange, true, false);
-	calcHist(&planes[1], 1, 0, cv::Mat(), g_hist, 1, &histSize, &histRange, true, false);
-	calcHist(&planes[2], 1, 0, cv::Mat(), r_hist, 1, &histSize, &histRange, true, false);
+	//calcHist(&planes[1], 1, 0, cv::Mat(), g_hist, 1, &histSize, &histRange, true, false);
+	//calcHist(&planes[2], 1, 0, cv::Mat(), r_hist, 1, &histSize, &histRange, true, false);
 	cv::GaussianBlur(b_hist, b_hist, cv::Size(5, 5), 0);
 
-	std::vector<float>blue(b_hist.begin<float>(), b_hist.end<float>());
-	std::vector<float>red(r_hist.begin<float>(), r_hist.end<float>());
+	std::vector<int>blue; (b_hist.begin<float>(), b_hist.end<float>());
+	//std::vector<int>green(b_hist.begin<float>(), b_hist.end<float>());
+	//std::vector<int>red(r_hist.begin<float>(), r_hist.end<float>());
+
+	std::vector<uchar> blueCheck;
+	Mat2Vec(blueCheck, planes[0]);
+
 	int threshold = 127;
-	for (int i = 0; i <blue.size(); i++) {
-		if ( blue[i] > 127.0) {
-			threshold = blue[i];
+	for (int i = 127; i <= blue.size(); i++) {
+		if ((blue[i] > blue[i+1] && blue[i] < blue[i - 1])) {
+			threshold = i;
 			break;
 		}
 	}
 
+	cv::Mat luminace;
+	cv::cvtColor(roi, luminace, cv::COLOR_BGR2HLS);
+
+	std::vector<cv::Mat> luminancePlanes(3);
+	cv::split(luminace, luminancePlanes);
+	cv::GaussianBlur(luminancePlanes[0], luminancePlanes[0], cv::Size(5, 5), 0);
+	std::vector <uchar> lum;
+	Mat2Vec(lum, luminancePlanes[0]);
+
 	// for each row and column in the image
 	for (int row = 0; row < roi.rows; row++) {
-		for (int col = 0; col < roi.cols; col++) {
-			if (threshold < (int) planes[0].at <uchar>(row, col)) {
+		for (int col = 0; col <roi.cols; col++) {
+			if (threshold < blueCheck [row*roi.cols+col] && lum [row*roi.cols + col]  > 20) {
 				output.at <cv::Vec3b>(cv::Point(col, row)) = white;
 			}
 			else {
@@ -119,8 +133,19 @@ void CPU::snowFilterDebug(cv::Mat roi, ResizableRubberband * rb)
 			}
 		}
 	}
-
 	imshow("Check Image", output);
+}
+
+
+void CPU::Mat2Vec(std::vector <uchar> &vec, cv::Mat mat) {
+	if (mat.isContinuous()) {
+		vec.assign(mat.datastart, mat.dataend);
+	}
+	else {
+		for (int i = 0; i < mat.rows; ++i) {
+			vec.insert(vec.end(), mat.ptr<uchar>(i), mat.ptr<uchar>(i) + mat.cols);
+		}
+	}
 }
 
 void CPU::cloudFilter(cv::Mat roi, ResizableRubberband* rb)

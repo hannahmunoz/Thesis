@@ -29,7 +29,7 @@ void ColorChannelViewer::init(cv::Mat image)
 	split(LAB, LAB_planes);
 
 	cv::Mat HSV;
-	cv::cvtColor(image, HSV, cv::COLOR_BGR2HSV );
+	cv::cvtColor(image, HSV, cv::COLOR_BGR2HLS );
 	split(HSV, HSV_planes);
 }
 
