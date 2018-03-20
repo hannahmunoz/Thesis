@@ -16,7 +16,7 @@ public:
 		void videoExport(int);
 	
 	signals:
-		void choice(int);
+		void choice(int, bool, QString);
 
 private:
 	Ui::Export ui;

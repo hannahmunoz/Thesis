@@ -9,6 +9,8 @@
 #include <Metadata.h>
 #include <Export.h>
 #include <CPU.h>
+#include <SingleGPU.h>
+#include <MultiGPU.h>
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
@@ -24,10 +26,6 @@ GUI::GUI(QWidget *parent)
 	ui.setupUi(this);
 	ui.PictureFrame->hide();
 
-	//set up the processing bar
-	//connect(ui.PictureProcessingBar, SIGNAL(signalProgress(int)), ui.PictureProcessingBar, SLOT(setValue(int)));
-	//ui.PictureProcessingBar->hide();
-
 	//set up the slider
 	connect(ui.ImageScroller, SIGNAL(valueChanged(int)), this, SLOT(loadPictures(int)));
 	ui.ImageScroller->setRange(0, 0);
@@ -35,15 +33,6 @@ GUI::GUI(QWidget *parent)
 	//set up the toolbar
 	connect(ui.toolBar, SIGNAL(actionTriggered(QAction*)), this, SLOT(selection(QAction*)));
 	connect(this, SIGNAL(onChange(QString)), ui.PictureFrame, SLOT(setSelection(QString)));
-
-
-	//connect Process Button
-	//connect(ui.ProcessButton, SIGNAL(clicked()), ui.PictureFrame, SLOT(getROI()));
-	//connect(ui.PictureFrame, SIGNAL(returnROI(std::vector<ResizableRubberband*>)), this, SLOT(testResults(std::vector<ResizableRubberband*>)));
-	//connect(ui.ProcessButton, SIGNAL(clicked()), this, SLOT(testResults()));
-	//connect(ui.ExportButton, SIGNAL(clicked()), this, SLOT(Export()));
-	//ui.ProcessButton->setEnabled(false);
-	//ui.ExportButton->setEnabled(false);
 
 	//connect edit
 	connect(ui.menuEdit, SIGNAL(triggered(QAction *)), this, SLOT(loadMDWindow()));
@@ -115,7 +104,7 @@ void GUI::loadMDWindow()
 void GUI::loadExportWindow(QAction *t)
 {
 	Export *exwindow = new Export();
-	connect(exwindow, SIGNAL(choice(int)), this, SLOT(processSelection(int)));
+	connect(exwindow, SIGNAL(choice(int, bool, QString)), this, SLOT(processSelection(int, bool, QString)));
 	//exwindow->show();
 	exwindow->exec();
 }
@@ -136,12 +125,18 @@ void GUI::selection(QAction* action) {
 	emit onChange (action->iconText());
 }
 
-void GUI::processSelection(int selection)
+void GUI::processSelection(int selection, bool checked, QString saveName)
 {
 	const std::vector<std::unique_ptr<ResizableRubberband> > *rbs = &(ui.PictureFrame->getRubberbands());
 	if (rbs->size() > 0) {
 		if (selection == 0) {
-			CPU *process = new CPU(filenames, rbs);
+			CPU *process = new CPU(filenames, rbs, saveName, checked);
+		}
+		else if (selection == 1) {
+			SingleGPU *process = new SingleGPU(filenames, rbs, checked);
+		}
+		else {
+			MultiGPU *process = new MultiGPU(filenames, rbs, checked, selection);
 		}
 	}
 }

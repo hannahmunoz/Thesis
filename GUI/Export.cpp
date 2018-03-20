@@ -41,7 +41,7 @@ void Export::accept()
 		else {
 			// Single GPU
 			if (ui.GPUBox->value() == 1) {
-
+				process = 1;
 			}
 			// Multiple GPU
 			else {
@@ -49,7 +49,9 @@ void Export::accept()
 			}
 		}
 	}
-	emit choice (process);
+	//QString filename = QFileDialog::getSaveFileName(this, tr("Save Results"), "/", tr("CSV Files (*.csv);; All files (*.*)"));
+	QString filename = "";
+	emit choice (process, ui.checkBox->isChecked(), filename);
 	this->close();
 }
 void Export::videoExport(int state)

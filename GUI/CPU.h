@@ -1,24 +1,30 @@
 #pragma once
 #include <memory>
 #include <vector>
+
 #include "opencv2/opencv.hpp"
 #include "opencv2\core\cuda\common.hpp"
 
 #include "ResizableRubberband.h"
+#include <QObject>
 
-class CPU
+class CPU : public QObject
 {
+	Q_OBJECT
+
 public:
-	CPU(QStringList, const std::vector< std::unique_ptr<ResizableRubberband> > *rbs);
+	CPU(QStringList, const std::vector< std::unique_ptr<ResizableRubberband> > *rbs, QString, bool);
 	~CPU();
 
-private:
-	void snowFilter(cv::Mat, ResizableRubberband*);
-	void snowFilterDebug(cv::Mat, ResizableRubberband*);
-	void cloudFilter(cv::Mat, ResizableRubberband*);
-	void cloudFilterDebug(cv::Mat, ResizableRubberband*);
-	void Mat2Vec(std::vector <uchar> &vec, cv::Mat mat);
+signals:
+	void progress(int);
 
-	static bool minFunc(const float i, const float j);
+private:
+	float snowFilterDebug(cv::Mat);
+	float cloudFilterDebug(cv::Mat);
+	void printResults(double time, QString saveName, size_t Size);
+
+	std::vector <std::vector <float> > results;
+	bool debug;
 };
 

@@ -30,7 +30,7 @@ public:
 		void loadExportWindow(QAction *);
 		void changeHist(QRect);
 		void selection(QAction* action);
-		void processSelection(int);
+		void processSelection(int, bool, QString);
 
 	signals:
 		void imageSet(cv::Mat image);

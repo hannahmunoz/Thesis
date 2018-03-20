@@ -100,9 +100,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_Export.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="SingleGPU.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CPU.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -111,6 +108,27 @@
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_ClickableLabel.cpp">
       <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ProgressBar.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ProgressBar.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ProgressBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_CPU.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_CPU.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="SingleGPU.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiGPU.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -135,11 +153,14 @@
     <ClInclude Include="GeneratedFiles\ui_Export.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="CPU.h">
-      <Filter>Generated Files\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SingleGPU.h">
       <Filter>Generated Files\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_progress.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiGPU.h">
+      <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +192,15 @@
       <Filter>Generated Files\Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="ClickableLabel.h">
+      <Filter>Generated Files\Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="progress.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ProgressBar.h">
+      <Filter>Generated Files\Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CPU.h">
       <Filter>Generated Files\Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
