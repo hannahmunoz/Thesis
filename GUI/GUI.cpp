@@ -10,7 +10,6 @@
 #include <Export.h>
 #include <CPU.h>
 #include <SingleGPU.h>
-#include <MultiGPU.h>
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
@@ -104,7 +103,7 @@ void GUI::loadMDWindow()
 void GUI::loadExportWindow(QAction *t)
 {
 	Export *exwindow = new Export();
-	connect(exwindow, SIGNAL(choice(int, bool, QString)), this, SLOT(processSelection(int, bool, QString)));
+	connect(exwindow, SIGNAL(choice(int, bool, QString, bool, int)), this, SLOT(processSelection(int, bool, QString, bool, int)));
 	//exwindow->show();
 	exwindow->exec();
 }
@@ -125,19 +124,17 @@ void GUI::selection(QAction* action) {
 	emit onChange (action->iconText());
 }
 
-void GUI::processSelection(int selection, bool checked, QString saveName)
+void GUI::processSelection(int selection, bool checked, QString saveName, bool fpsChecked, int fpsValue )
 {
 	const std::vector<std::unique_ptr<ResizableRubberband> > *rbs = &(ui.PictureFrame->getRubberbands());
-	if (rbs->size() > 0) {
+	if (rbs->size() > 0 && !saveName.isEmpty()) {
 		if (selection == 0) {
-			CPU *process = new CPU(filenames, rbs, saveName, checked);
-		}
-		else if (selection == 1) {
-			SingleGPU *process = new SingleGPU(filenames, rbs, checked);
+			CPU *process = new CPU(filenames, rbs, saveName, checked, fpsChecked, fpsValue);
 		}
 		else {
-			MultiGPU *process = new MultiGPU(filenames, rbs, checked, selection);
+			SingleGPU *process = new SingleGPU(filenames, rbs, checked);
 		}
+
 	}
 }
 

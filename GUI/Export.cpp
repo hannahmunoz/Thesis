@@ -13,10 +13,7 @@ Export::Export(QWidget *parent)
 	ui.setupUi(this);
 	int devices = cv::cuda::getCudaEnabledDeviceCount();
 	if (devices == 0) {
-		ui.GPUBox->setEnabled(false);
-	}
-	else {
-		ui.GPUBox->setMaximum(devices);
+		ui.MutliGPU->setEnabled(false);
 	}
 
 	// video export
@@ -40,18 +37,13 @@ void Export::accept()
 		}
 		else {
 			// Single GPU
-			if (ui.GPUBox->value() == 1) {
-				process = 1;
-			}
-			// Multiple GPU
-			else {
+			process = 1;
 
-			}
 		}
 	}
-	//QString filename = QFileDialog::getSaveFileName(this, tr("Save Results"), "/", tr("CSV Files (*.csv);; All files (*.*)"));
-	QString filename = "";
-	emit choice (process, ui.checkBox->isChecked(), filename);
+
+	QString filename = QFileDialog::getSaveFileName(this, tr("Save Results"), "/", tr("CSV Files (*.csv);; All files (*.*)"));
+	emit choice (process, ui.checkBox->isChecked(), filename, ui.fpsBox->isEnabled(), ui.fpsBox->value());
 	this->close();
 }
 void Export::videoExport(int state)

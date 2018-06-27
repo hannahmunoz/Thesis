@@ -16,6 +16,8 @@ private:
 	float snowFilterDebug(cv::cuda::GpuMat);
 	float cloudFilterDebug(cv::cuda::GpuMat);
 
+	std::vector<cv::cuda::GpuMat> planes;
+	std::vector<cv::cuda::GpuMat> luminancePlanes;
 	bool debug;
 };
 

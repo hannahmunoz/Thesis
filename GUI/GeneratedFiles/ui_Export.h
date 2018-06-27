@@ -35,7 +35,6 @@ public:
     QHBoxLayout *horizontalLayout;
     QRadioButton *cpuButton;
     QRadioButton *MutliGPU;
-    QSpinBox *GPUBox;
     QCheckBox *checkBox;
     QCheckBox *videoExport;
     QLabel *processingLabel;
@@ -85,18 +84,6 @@ public:
         MutliGPU->setMinimumSize(QSize(20, 20));
 
         horizontalLayout->addWidget(MutliGPU);
-
-        GPUBox = new QSpinBox(groupBox);
-        GPUBox->setObjectName(QStringLiteral("GPUBox"));
-        sizePolicy.setHeightForWidth(GPUBox->sizePolicy().hasHeightForWidth());
-        GPUBox->setSizePolicy(sizePolicy);
-        GPUBox->setMinimumSize(QSize(20, 18));
-        GPUBox->setMaximumSize(QSize(40, 20));
-        GPUBox->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
-        GPUBox->setReadOnly(false);
-        GPUBox->setMinimum(1);
-
-        horizontalLayout->addWidget(GPUBox);
 
         checkBox = new QCheckBox(groupBox);
         checkBox->setObjectName(QStringLiteral("checkBox"));

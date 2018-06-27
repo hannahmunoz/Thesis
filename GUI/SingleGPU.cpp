@@ -14,13 +14,8 @@ SingleGPU::SingleGPU(QStringList filenames, const std::vector< std::unique_ptr<R
 	debug = checked;
 	std::vector<std::unique_ptr<ResizableRubberband> >::const_iterator it;
 	std::vector <int>::iterator jt;
-
-	// begin timing
-	LARGE_INTEGER frequency;        // ticks per second
-	LARGE_INTEGER t1, t2;           // ticks
-	double elapsedTime;
-	QueryPerformanceFrequency(&frequency);
-	QueryPerformanceCounter(&t1);
+	planes.resize(3);
+	luminancePlanes.resize(3);
 
 	// For every image in the series
 	for (int i = 0; i < filenames.size(); i++) {
@@ -55,14 +50,13 @@ SingleGPU::SingleGPU(QStringList filenames, const std::vector< std::unique_ptr<R
 			}
 		}
 	}
+	planes[0].release();
+	planes[1].release();
+	planes[2].release();
 
-	//end time
-	QueryPerformanceCounter(&t2);
-
-	//millisec
-	elapsedTime = (t2.QuadPart - t1.QuadPart) * 1000.0 / frequency.QuadPart;
-
-	//std::cout << "SINGLE GPU TIME: " << elapsedTime << endl;
+	luminancePlanes[0].release();
+	luminancePlanes[1].release();
+	luminancePlanes[2].release();
 }
 
 
@@ -77,13 +71,12 @@ float SingleGPU::snowFilterDebug(cv::cuda::GpuMat roi)
 	int lumThreshold = 18;
 
 	//BGR
-	std::vector<cv::cuda::GpuMat> planes(3);
 	cv::cuda::split(roi, planes);
 
 	//HLS
 	cv::cuda::GpuMat luminace;
 	cv::cuda::cvtColor(roi, luminace, cv::COLOR_BGR2HLS);
-	std::vector<cv::cuda::GpuMat> luminancePlanes(3);
+
 	cv::cuda::split(luminace, luminancePlanes);
 	cv::Ptr<cv::cuda::Filter> filter = cv::cuda::createGaussianFilter(luminancePlanes[0].type(), luminancePlanes[0].type(), cv::Size(5, 5), 0);
 	filter->apply(luminancePlanes[0], luminancePlanes[0]);
@@ -103,16 +96,7 @@ float SingleGPU::snowFilterDebug(cv::cuda::GpuMat roi)
 	}
 
 	//releases
-	planes[0].release();
-	planes[1].release();
-	planes[2].release();
-
 	luminace.release();
-
-	luminancePlanes[0].release();
-	luminancePlanes[1].release();
-	luminancePlanes[2].release();
-
 	output.release();
 	output2.release();
 
@@ -123,7 +107,6 @@ float SingleGPU::cloudFilterDebug(cv::cuda::GpuMat roi)
 {
 	float threshold = 38;
 
-	std::vector<cv::cuda::GpuMat> planes(3);
 	cv::cuda::split(roi, planes);
 
 	cv::cuda::GpuMat sub;
@@ -137,9 +120,6 @@ float SingleGPU::cloudFilterDebug(cv::cuda::GpuMat roi)
 		imshow("Check Image", CPU);
 	}
 
-	planes[0].release();
-	planes[1].release();
-	planes[2].release();
 	sub.release();
 
 	return float(imageCoverage / (roi.rows*roi.cols));
