@@ -8,7 +8,7 @@
     <RemoteDebuggerWorkingDirectory>C:\cse\home\hannahm\thesis</RemoteDebuggerWorkingDirectory>
     <RemoteDebuggerServerName>cubix.cse.unr.edu:4020</RemoteDebuggerServerName>
     <DeploymentDirectory>C:\cse\home\hannahm\thesis</DeploymentDirectory>
-    <LocalDebuggerEnvironment>PATH=$(QTDIR)\bin%3b$(PATH)</LocalDebuggerEnvironment>
+    <LocalDebuggerEnvironment>PATH=$(QTDIR)\bin%3b$(PATH)%3bC:\exiv2-0.26-msvc\dist\2015\x64\dll\Release\bin</LocalDebuggerEnvironment>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <QTDIR>C:\Qt\5.9.1\msvc2015_64</QTDIR>

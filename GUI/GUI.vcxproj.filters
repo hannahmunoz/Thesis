@@ -127,9 +127,6 @@
     <ClCompile Include="SingleGPU.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tinyxml2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -158,9 +155,6 @@
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_progress.h">
       <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tinyxml2.h">
-      <Filter>Generated Files\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

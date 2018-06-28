@@ -5,7 +5,6 @@
 #include <algorithm>
 #include <valarray>  
 #include "ProgressBar.h"
-#include "tinyxml2.h"
 #include <stdlib.h>
 
 
@@ -14,7 +13,14 @@ CPU::CPU(QStringList filenames, const std::vector<std::unique_ptr<ResizableRubbe
 	debug = check;
 	std::vector<std::unique_ptr<ResizableRubberband> >::const_iterator it;
 	std::vector <int>::iterator jt;
+	// get the metadata
+	// Apparently our cameras dont have metadata
+	// Exiv2::Image::AutoPtr md = Exiv2::ImageFactory::open(filenames[0].toStdString());
+	// md->readMetadata();
+	// Exiv2::ExifData &exifData = md->exifData();
+
 	cv::Mat test = cv::imread(filenames[0].toStdString(), CV_LOAD_IMAGE_COLOR);
+
 	cv::VideoWriter out;
 	// video 
 	if (fpsChecked) {
@@ -26,7 +32,7 @@ CPU::CPU(QStringList filenames, const std::vector<std::unique_ptr<ResizableRubbe
 	QFile resultsCSV(saveName);
 
 	// metadata
-	tinyxml2::XMLDocument* metadata = new tinyxml2::XMLDocument();
+	//tinyxml2::XMLDocument* metadata = new tinyxml2::XMLDocument();
 
 	if (resultsCSV.open(QIODevice::WriteOnly))
 	{

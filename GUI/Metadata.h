@@ -11,6 +11,9 @@ public:
 	Metadata(QWidget *parent = Q_NULLPTR);
 	~Metadata();
 
+	private slots:
+		void saveMetadata();
+
 private:
 	Ui::Metadata ui;
 };

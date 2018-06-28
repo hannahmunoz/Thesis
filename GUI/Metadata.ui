@@ -1435,7 +1435,7 @@ QDateEdit::down-arrow:focus {
       </font>
      </property>
      <property name="text">
-      <string>Research Site</string>
+      <string>Project</string>
      </property>
     </widget>
    </item>

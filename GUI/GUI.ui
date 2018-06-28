@@ -1599,7 +1599,6 @@ QDateEdit::down-arrow:focus {
     <bool>false</bool>
    </attribute>
    <addaction name="actionRectangle_ROI"/>
-   <addaction name="actionLasso_ROI"/>
   </widget>
   <action name="action_Open">
    <property name="text">
