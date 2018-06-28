@@ -132,7 +132,7 @@ void GUI::processSelection(int selection, bool checked, QString saveName, bool f
 			CPU *process = new CPU(filenames, rbs, saveName, checked, fpsChecked, fpsValue);
 		}
 		else {
-			SingleGPU *process = new SingleGPU(filenames, rbs, checked);
+			SingleGPU *process = new SingleGPU(filenames, rbs, saveName, checked, fpsChecked, fpsValue);
 		}
 
 	}

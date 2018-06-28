@@ -10,7 +10,7 @@
 class SingleGPU
 {
 public:
-	SingleGPU(QStringList, const std::vector< std::unique_ptr<ResizableRubberband> > *rbs, bool);
+	SingleGPU(QStringList, const std::vector< std::unique_ptr<ResizableRubberband> > *rbs, QString, bool, bool, int );
 	~SingleGPU();
 private:
 	float snowFilterDebug(cv::cuda::GpuMat);
