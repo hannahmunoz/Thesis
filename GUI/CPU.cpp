@@ -6,6 +6,7 @@
 #include <valarray>  
 #include "ProgressBar.h"
 #include "tinyxml2.h"
+#include <stdlib.h>
 
 
 CPU::CPU(QStringList filenames, const std::vector<std::unique_ptr<ResizableRubberband> > *rbs, QString saveName, bool check, bool fpsChecked, int fpsValue)
@@ -76,28 +77,34 @@ CPU::CPU(QStringList filenames, const std::vector<std::unique_ptr<ResizableRubbe
 
 					//get filters
 					std::vector <int> filter = it->get()->getFilters();
-
+					
+					float result;
 					//for each filter on the rubberBand
 					for (jt = filter.begin(); jt != filter.end(); jt++) {
 						// snow
 						if ((*jt) == 0) {
-							stream << cloudFilterDebug(imageROI) << ",";
+							result = cloudFilterDebug(imageROI);
 						}
 						// cloud
 						else if ((*jt) == 1) {
-							stream << snowFilterDebug(imageROI) << ",";
+							result = snowFilterDebug(imageROI);
 						}
 
 					}
-					//WHY CANT I GET THIS WORKING
-					/*if (fpsChecked) {
-						imageROI.copyTo(image(roi));
-					}*/
+					stream << result << ",";
+
+					// highlight ROI in the image
+					rectangle(image, roi, cv::Scalar (0,0,255) , 2, 8, 0);
+					cv::putText(image, std::to_string (result), cv::Point(roi.x +5, roi.y + roi.height-5), cv::FONT_HERSHEY_PLAIN, 1, cv::Scalar (0,0,255), 1.5, 8);
+					
+					// add coverage percentage
+
+
 				}
-				/*if (fpsChecked) {
+				if (fpsChecked) {
 					// write to the video
 					out.write(image);
-				}*/
+				}
 			}
 			// out error to csv
 			else {
