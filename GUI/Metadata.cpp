@@ -15,22 +15,22 @@ Metadata::Metadata(QWidget *parent)
 	try {
 		boost::property_tree::xml_parser::read_xml("C:/Users/hmunoz/Documents/Visual Studio 2015/Projects/Thesis/GUI/Resources/userMetadata.xml", pt, boost::property_tree::xml_parser::trim_whitespace);
 		ui.nameLineEdit->setText(QString::fromStdString(pt.get("Researcher.Name", "")));
-		ui.nameLineEdit->setText(QString::fromStdString(pt.get("Researcher.Email", "")));
-		ui.nameLineEdit->setText(QString::fromStdString(pt.get("Researcher.Phone", "")));
-		ui.nameLineEdit->setText(QString::fromStdString(pt.get("Researcher.Website", "")));
+		ui.emailLineEdit->setText(QString::fromStdString(pt.get("Researcher.Email", "")));
+		ui.phoneLineEdit->setText(QString::fromStdString(pt.get("Researcher.Phone", "")));
+		ui.websiteLineEdit->setText(QString::fromStdString(pt.get("Researcher.Website", "")));
 
-		ui.nameLineEdit->setText(QString::fromStdString(pt.get("Institution.InstitutionName", "")));
-		ui.nameLineEdit->setText(QString::fromStdString(pt.get("Institution.Adress", "")));
-		ui.nameLineEdit->setText(QString::fromStdString(pt.get("Institution.Department", "")));
+		ui.nameLineEdit_3->setText(QString::fromStdString(pt.get("Institution.InstitutionName", "")));
+		ui.addressLineEdit->setText(QString::fromStdString(pt.get("Institution.Adress", "")));
+		ui.departmentLineEdit->setText(QString::fromStdString(pt.get("Institution.Department", "")));
 
-		ui.nameLineEdit->setText(QString::fromStdString(pt.get("Project.ProjectName", "")));
-		ui.nameLineEdit->setText(QString::fromStdString(pt.get("Project.ProjectURL", "")));
-		ui.nameLineEdit->setText(QString::fromStdString(pt.get("Project.Funding", "")));
-		ui.nameLineEdit->setText(QString::fromStdString(pt.get("Project.SiteName", "")));
-		ui.nameLineEdit->setText(QString::fromStdString(pt.get("Project.Location", "")));
-		ui.nameLineEdit->setText(QString::fromStdString(pt.get("Project.Latitude", "")));
-		ui.nameLineEdit->setText(QString::fromStdString(pt.get("Project.Longitude", "")));
-		ui.nameLineEdit->setText(QString::fromStdString(pt.get("Project.Elevation", "")));
+		ui.projectNameLineEdit->setText(QString::fromStdString(pt.get("Project.ProjectName", "")));
+		ui.projectURLLineEdit->setText(QString::fromStdString(pt.get("Project.ProjectURL", "")));
+		ui.fundingAcknowledgementsLineEdit->setText(QString::fromStdString(pt.get("Project.Funding", "")));
+		ui.siteNameLineEdit->setText(QString::fromStdString(pt.get("Project.SiteName", "")));
+		ui.locationLineEdit->setText(QString::fromStdString(pt.get("Project.Location", "")));
+		ui.latitudeLineEdit->setText(QString::fromStdString(pt.get("Project.Latitude", "")));
+		ui.longitudeLineEdit->setText(QString::fromStdString(pt.get("Project.Longitude", "")));
+		ui.elevationLineEdit->setText(QString::fromStdString(pt.get("Project.Elevation", "")));
 	}
 	catch (const boost::property_tree::xml_parser::xml_parser_error& ex){
 
