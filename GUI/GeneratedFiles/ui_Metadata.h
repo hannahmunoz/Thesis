@@ -1549,6 +1549,7 @@ public:
 
         locationLineEdit = new QLineEdit(Metadata);
         locationLineEdit->setObjectName(QStringLiteral("locationLineEdit"));
+        locationLineEdit->setInputMethodHints(Qt::ImhNone);
 
         formLayout_2->setWidget(4, QFormLayout::FieldRole, locationLineEdit);
 
@@ -1560,11 +1561,13 @@ public:
 
         longitudeLineEdit = new QLineEdit(Metadata);
         longitudeLineEdit->setObjectName(QStringLiteral("longitudeLineEdit"));
+        longitudeLineEdit->setInputMethodHints(Qt::ImhDigitsOnly);
 
         formLayout_2->setWidget(6, QFormLayout::FieldRole, longitudeLineEdit);
 
         latitudeLineEdit = new QLineEdit(Metadata);
         latitudeLineEdit->setObjectName(QStringLiteral("latitudeLineEdit"));
+        latitudeLineEdit->setInputMethodHints(Qt::ImhDigitsOnly);
 
         formLayout_2->setWidget(5, QFormLayout::FieldRole, latitudeLineEdit);
 
@@ -1619,6 +1622,7 @@ public:
         fundingAcknowledgementsLabel->setText(QApplication::translate("Metadata", "Funding Acknowledgements", Q_NULLPTR));
         siteNameLabel->setText(QApplication::translate("Metadata", "Site Name", Q_NULLPTR));
         locationLabel->setText(QApplication::translate("Metadata", "Location", Q_NULLPTR));
+        locationLineEdit->setText(QString());
         longitudeLabel->setText(QApplication::translate("Metadata", "Longitude", Q_NULLPTR));
         latitudeLabel->setText(QApplication::translate("Metadata", "Latitude", Q_NULLPTR));
         elevationLabel->setText(QApplication::translate("Metadata", "Elevation", Q_NULLPTR));

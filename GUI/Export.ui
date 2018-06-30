@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>347</width>
+    <width>356</width>
     <height>130</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>347</width>
+    <width>356</width>
     <height>130</height>
    </size>
   </property>
@@ -187,7 +187,7 @@ QTreeView:hover {
        </property>
        <property name="maximumSize">
         <size>
-         <width>50</width>
+         <width>80</width>
          <height>16777215</height>
         </size>
        </property>
@@ -267,7 +267,7 @@ QTreeView:hover {
      </item>
     </layout>
    </item>
-   <item row="3" column="2">
+   <item row="3" column="2" colspan="3">
     <widget class="QGroupBox" name="groupBox">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -277,7 +277,7 @@ QTreeView:hover {
      </property>
      <property name="minimumSize">
       <size>
-       <width>200</width>
+       <width>250</width>
        <height>35</height>
       </size>
      </property>
@@ -338,6 +338,19 @@ QTreeView:hover {
         </property>
         <property name="text">
          <string>GPU</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="numberofGPU">
+        <property name="maximumSize">
+         <size>
+          <width>40</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="minimum">
+         <number>1</number>
         </property>
        </widget>
       </item>

@@ -176,7 +176,7 @@ float CPU::snowFilterDebug(cv::Mat &roi)
 
 float CPU::cloudFilterDebug(cv::Mat &roi)
 {
-	float threshold = 38;
+	float threshold = 42;
 
 	std::vector<cv::Mat> planes(3);
 	cv::split(roi, planes);

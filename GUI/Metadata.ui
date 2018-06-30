@@ -1547,7 +1547,14 @@ QDateEdit::down-arrow:focus {
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QLineEdit" name="locationLineEdit"/>
+      <widget class="QLineEdit" name="locationLineEdit">
+       <property name="inputMethodHints">
+        <set>Qt::ImhNone</set>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
      </item>
      <item row="6" column="0">
       <widget class="QLabel" name="longitudeLabel">
@@ -1563,10 +1570,18 @@ QDateEdit::down-arrow:focus {
       </widget>
      </item>
      <item row="6" column="1">
-      <widget class="QLineEdit" name="longitudeLineEdit"/>
+      <widget class="QLineEdit" name="longitudeLineEdit">
+       <property name="inputMethodHints">
+        <set>Qt::ImhDigitsOnly</set>
+       </property>
+      </widget>
      </item>
      <item row="5" column="1">
-      <widget class="QLineEdit" name="latitudeLineEdit"/>
+      <widget class="QLineEdit" name="latitudeLineEdit">
+       <property name="inputMethodHints">
+        <set>Qt::ImhDigitsOnly</set>
+       </property>
+      </widget>
      </item>
      <item row="5" column="0">
       <widget class="QLabel" name="latitudeLabel">

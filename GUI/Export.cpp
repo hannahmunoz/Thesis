@@ -16,6 +16,8 @@ Export::Export(QWidget *parent)
 		ui.MutliGPU->setEnabled(false);
 	}
 
+	ui.numberofGPU->setMaximum(devices);
+	
 	// video export
 	connect(ui.videoExport, SIGNAL(stateChanged(int)), this, SLOT(videoExport(int)));
 	ui.fpsBox->setEnabled(false);
@@ -38,7 +40,6 @@ void Export::accept()
 		else {
 			// Single GPU
 			process = 1;
-
 		}
 	}
 

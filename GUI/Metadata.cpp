@@ -20,7 +20,7 @@ Metadata::Metadata(QWidget *parent)
 		ui.websiteLineEdit->setText(QString::fromStdString(pt.get("Researcher.Website", "")));
 
 		ui.nameLineEdit_3->setText(QString::fromStdString(pt.get("Institution.InstitutionName", "")));
-		ui.addressLineEdit->setText(QString::fromStdString(pt.get("Institution.Adress", "")));
+		ui.addressLineEdit->setText(QString::fromStdString(pt.get("Institution.Address", "")));
 		ui.departmentLineEdit->setText(QString::fromStdString(pt.get("Institution.Department", "")));
 
 		ui.projectNameLineEdit->setText(QString::fromStdString(pt.get("Project.ProjectName", "")));

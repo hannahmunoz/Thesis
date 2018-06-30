@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Researcher>
-	<Name/>
-	<Email>tes</Email>
-	<Phone/>
-	<Website/>
+	<Name>Hannah Munoz</Name>
+	<Email>hannahmunoz@nevada.unr.edu</Email>
+	<Phone>775-555-1324</Phone>
+	<Website>https://github.com/hannahmunoz</Website>
 </Researcher>
 <Institution>
-	<InstitutionName/>
-	<Address/>
-	<Department/>
+	<InstitutionName>University of Nevada, Reno</InstitutionName>
+	<Address>1664 N Virginia St, Reno, NV 89557</Address>
+	<Department>Computer Science and Engineering</Department>
 </Institution>
 <Project>
-	<ProjectName/>
-	<ProjectURL/>
-	<Funding/>
-	<SiteName/>
-	<Location/>
-	<Latitude/>
-	<Longitude/>
-	<Elevation/>
+	<ProjectName>Walker Basin Hydroclimate</ProjectName>
+	<ProjectURL>http://sensor.nevada.edu/WalkerBasinHydro/</ProjectURL>
+	<Funding>This material is based in part upon work supported by the National Science Foundation under grant number(s) IIA-1301726. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation.</Funding>
+	<SiteName>Rockland Summit</SiteName>
+	<Location>Northern Nevada</Location>
+	<Latitude>38.650556</Latitude>
+	<Longitude>-119.0925</Longitude>
+	<Elevation>0</Elevation>
 </Project>

@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "SingleGPU.h"
-#include "singleGPUCUDA.cuh"
 #include "opencv2\highgui.hpp"
 #include "opencv2\imgproc.hpp"
 #include <opencv2\core\cuda\common.hpp>

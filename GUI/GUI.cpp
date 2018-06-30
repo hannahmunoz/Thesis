@@ -42,6 +42,7 @@ GUI::GUI(QWidget *parent)
 
 void GUI::loadPictures(int center)
 {
+	ui.WelcomeLabel->setHidden(true);
 	//load pictures
 	ui.PictureFrame->setPix(filenames.at(center));
 	QSize temp = ui.PictureFrame->pixmap()->size();
@@ -124,7 +125,7 @@ void GUI::selection(QAction* action) {
 	emit onChange (action->iconText());
 }
 
-void GUI::processSelection(int selection, bool checked, QString saveName, bool fpsChecked, int fpsValue )
+void GUI::processSelection(int selection, bool checked, QString saveName, bool fpsChecked, int fpsValue)
 {
 	const std::vector<std::unique_ptr<ResizableRubberband> > *rbs = &(ui.PictureFrame->getRubberbands());
 	if (rbs->size() > 0 && !saveName.isEmpty()) {
@@ -132,7 +133,12 @@ void GUI::processSelection(int selection, bool checked, QString saveName, bool f
 			CPU *process = new CPU(filenames, rbs, saveName, checked, fpsChecked, fpsValue);
 		}
 		else {
-			SingleGPU *process = new SingleGPU(filenames, rbs, saveName, checked, fpsChecked, fpsValue);
+			//if (numGPU == 1) {
+				SingleGPU *process = new SingleGPU(filenames, rbs, saveName, checked, fpsChecked, fpsValue);
+			//}
+			/*else {
+				MultiGPU *process = new MultiGPU (filenames, rbs, saveName, checked, fpsChecked, fpsValue, numGPU);
+			}*/
 		}
 
 	}

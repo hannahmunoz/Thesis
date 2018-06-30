@@ -9,10 +9,15 @@
 class MultiGPU
 {
 public:
-	MultiGPU(QStringList filenames, const std::vector< std::unique_ptr<ResizableRubberband> > *rbs, bool checked, int selection);
+	MultiGPU(QStringList filenames, const std::vector< std::unique_ptr<ResizableRubberband> > *rbs, QString saveName, bool checked, bool fpsChecked, int fpsValue, int numGPU);
 	~MultiGPU();
 
 private:
-	int numGPU;
+	float snowFilterDebug(cv::cuda::GpuMat);
+	float cloudFilterDebug(cv::cuda::GpuMat);
+
+	std::vector<cv::cuda::GpuMat> planes;
+	std::vector<cv::cuda::GpuMat> luminancePlanes;
+	bool debug;
 };
 

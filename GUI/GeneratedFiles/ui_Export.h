@@ -40,19 +40,20 @@ public:
     QHBoxLayout *horizontalLayout;
     QRadioButton *cpuButton;
     QRadioButton *MutliGPU;
+    QSpinBox *numberofGPU;
     QCheckBox *checkBox;
 
     void setupUi(QDialog *Export)
     {
         if (Export->objectName().isEmpty())
             Export->setObjectName(QStringLiteral("Export"));
-        Export->resize(347, 130);
+        Export->resize(356, 130);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(Export->sizePolicy().hasHeightForWidth());
         Export->setSizePolicy(sizePolicy);
-        Export->setMaximumSize(QSize(347, 130));
+        Export->setMaximumSize(QSize(356, 130));
         Export->setStyleSheet(QLatin1String("/***\n"
 "Style sheet\"QDarkStyleSheet\" by Colin Duquesnoy and Daniel Pizetta\n"
 "https://github.com/ColinDuquesnoy/QDarkStyleSheet\n"
@@ -197,7 +198,7 @@ public:
         videoExport = new QCheckBox(Export);
         videoExport->setObjectName(QStringLiteral("videoExport"));
         videoExport->setMinimumSize(QSize(50, 0));
-        videoExport->setMaximumSize(QSize(50, 16777215));
+        videoExport->setMaximumSize(QSize(80, 16777215));
 
         horizontalLayout_2->addWidget(videoExport);
 
@@ -243,7 +244,7 @@ public:
         groupBox->setObjectName(QStringLiteral("groupBox"));
         sizePolicy.setHeightForWidth(groupBox->sizePolicy().hasHeightForWidth());
         groupBox->setSizePolicy(sizePolicy);
-        groupBox->setMinimumSize(QSize(200, 35));
+        groupBox->setMinimumSize(QSize(250, 35));
         groupBox->setMaximumSize(QSize(300, 60));
         groupBox->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         horizontalLayout = new QHBoxLayout(groupBox);
@@ -267,6 +268,13 @@ public:
 
         horizontalLayout->addWidget(MutliGPU);
 
+        numberofGPU = new QSpinBox(groupBox);
+        numberofGPU->setObjectName(QStringLiteral("numberofGPU"));
+        numberofGPU->setMaximumSize(QSize(40, 16777215));
+        numberofGPU->setMinimum(1);
+
+        horizontalLayout->addWidget(numberofGPU);
+
         checkBox = new QCheckBox(groupBox);
         checkBox->setObjectName(QStringLiteral("checkBox"));
         sizePolicy.setHeightForWidth(checkBox->sizePolicy().hasHeightForWidth());
@@ -276,7 +284,7 @@ public:
         horizontalLayout->addWidget(checkBox);
 
 
-        gridLayout_2->addWidget(groupBox, 3, 2, 1, 1);
+        gridLayout_2->addWidget(groupBox, 3, 2, 1, 3);
 
 
         retranslateUi(Export);
