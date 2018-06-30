@@ -1611,7 +1611,7 @@ public:
         websiteLabel->setText(QApplication::translate("Metadata", "Website", Q_NULLPTR));
         Save->setText(QApplication::translate("Metadata", "Save", Q_NULLPTR));
         Cancel->setText(QApplication::translate("Metadata", "Cancel", Q_NULLPTR));
-        SiteLabel->setText(QApplication::translate("Metadata", "Research Site", Q_NULLPTR));
+        SiteLabel->setText(QApplication::translate("Metadata", "Project", Q_NULLPTR));
         InstitutionLabel->setText(QApplication::translate("Metadata", "Institution", Q_NULLPTR));
         ResearchLabel->setText(QApplication::translate("Metadata", "Researcher", Q_NULLPTR));
         projectNameLabel->setText(QApplication::translate("Metadata", "Project Name", Q_NULLPTR));

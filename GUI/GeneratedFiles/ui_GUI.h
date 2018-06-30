@@ -1532,7 +1532,6 @@ public:
         menuEdit->addAction(actionView);
         menuExport->addAction(actionView_2);
         toolBar->addAction(actionRectangle_ROI);
-        toolBar->addAction(actionLasso_ROI);
 
         retranslateUi(GUIClass);
         QObject::connect(action_Exit, SIGNAL(triggered()), GUIClass, SLOT(close()));
