@@ -13,7 +13,7 @@
 
 SingleGPU::SingleGPU(QStringList filenames, const std::vector< std::unique_ptr<ResizableRubberband> > *rbs, QString saveName, bool checked, bool fpsChecked, int fpsValue)
 {
-	if (cv::cuda::getCudaEnabledDeviceCount() == 0) {
+	if (cv::cuda::getCudaEnabledDeviceCount() <= 0) {
 		ErrorHandler *eWindow = new ErrorHandler();
 		QString errorMsg = "No CUDA compatible GPU avaible";
 		eWindow->setLabel(errorMsg);
