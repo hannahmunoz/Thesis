@@ -4,7 +4,7 @@
 #include "opencv2\imgproc.hpp"
 #include <algorithm>
 #include <valarray>  
-#include "ProgressBar.h"
+#include "ErrorHandler.h"
 #include <stdlib.h>
 
 #include <direct.h>
@@ -69,6 +69,13 @@ CPU::CPU(QStringList filenames, const std::vector<std::unique_ptr<ResizableRubbe
 
 		for (it = rbs->begin(); it != rbs->end(); it++) {
 			std::vector <int> filter = it->get()->getFilters();
+			if (filter.empty()) {
+				ErrorHandler *eWindow = new ErrorHandler();
+				QString errorMsg = "ROI " + QString::number (it->get()->number) +" has no detection type.";
+				eWindow->setLabel(errorMsg);
+				eWindow->exec();
+				return;
+			}
 			for (jt = filter.begin(); jt != filter.end(); jt++) {
 				if ((*jt) == 0) {
 					stream << "Cloud Coverage (%),";
@@ -195,7 +202,7 @@ float CPU::snowFilterDebug(cv::Mat &roi)
 
 float CPU::cloudFilterDebug(cv::Mat &roi)
 {
-	float threshold = 42;
+	float threshold = 38;
 
 	std::vector<cv::Mat> planes(3);
 	cv::split(roi, planes);

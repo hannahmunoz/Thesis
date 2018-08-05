@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ErrorWindow</class>
+ <widget class="QDialog" name="ErrorWindow">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>350</width>
+    <height>100</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>350</width>
+    <height>100</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>350</width>
+    <height>100</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Error</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/***
+Style sheet&quot;QDarkStyleSheet&quot; by Colin Duquesnoy and Daniel Pizetta
+https://github.com/ColinDuquesnoy/QDarkStyleSheet
+***/
+
+QToolTip {
+    border: 1px solid #76797C;
+    background-color: #5A7566;
+    color: white;
+    padding: 0px;                /*remove padding, for fix combobox tooltip.*/
+    opacity: 200;
+}
+
+QWidget {
+    color: #eff0f1;
+    background-color: #31363b;
+    selection-background-color: #3daee9;
+    selection-color: #eff0f1;
+    background-clip: border;
+    border-image: none;
+    border: 0px transparent black;
+    outline: 0;
+}
+
+QWidget:item:hover {
+    background-color: #18465d;
+    color: #eff0f1;
+}
+
+QWidget:item:selected {
+    background-color: #18465d;
+}
+
+QRadioButton {
+    spacing: 5px;
+    outline: none;
+    color: #eff0f1;
+    margin-bottom: 2px;
+}
+
+QAbstractSpinBox {
+    padding: 5px;
+    border: 1px solid #76797C;
+    background-color: #232629;
+    color: #eff0f1;
+    border-radius: 2px;
+    min-width: 20px;
+}
+
+
+QAbstractSpinBox::up-arrow:hover {
+    image: url(:/qss_icons/rc/up_arrow.png);
+}
+
+QAbstractSpinBox::down-arrow:hover {
+    image: url(:/qss_icons/rc/down_arrow.png);
+}
+
+QLabel {
+    border: 0px solid black;
+}
+
+QPushButton {
+    color: #eff0f1;
+    background-color: #31363b;
+    border-width: 1px;
+    border-color: #76797C;
+    border-style: solid;
+    padding: 5px;
+    border-radius: 2px;
+    outline: none;
+}
+
+QPushButton:disabled {
+    background-color: #31363b;
+    border-width: 1px;
+    border-color: #454545;
+    border-style: solid;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 2px;
+    color: #454545;
+}
+
+QPushButton:focus {
+    background-color: #3daee9;
+    color: white;
+}
+
+QPushButton:pressed {
+    background-color: #3daee9;
+    padding-top: -15px;
+    padding-bottom: -17px;
+}
+
+QComboBox {
+    selection-background-color: #3daee9;
+    border-style: solid;
+    border: 1px solid #76797C;
+    border-radius: 2px;
+    padding: 5px;
+    min-width: 75px;
+}
+
+QPushButton:checked {
+    background-color: #76797C;
+    border-color: #6A6969;
+}
+
+QComboBox:hover,
+QPushButton:hover,
+QAbstractSpinBox:hover,
+QLineEdit:hover,
+QTextEdit:hover,
+QPlainTextEdit:hover,
+QAbstractView:hover,
+QTreeView:hover {
+    border: 1px solid #3daee9;
+    color: #eff0f1;
+}
+
+
+</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <widget class="QLabel" name="ErrorLabel">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>The following error has occured:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="ErrorText">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton">
+     <property name="text">
+      <string>OK</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ErrorWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>297</x>
+     <y>81</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>174</x>
+     <y>49</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
