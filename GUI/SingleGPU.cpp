@@ -6,6 +6,9 @@
 #include <opencv2\core\cuda_stream_accessor.hpp>
 #include "device_launch_parameters.h"
 
+#include <direct.h>
+#define GetCurrentDir _getcwd
+
 
 
 SingleGPU::SingleGPU(QStringList filenames, const std::vector< std::unique_ptr<ResizableRubberband> > *rbs, QString saveName, bool checked, bool fpsChecked, int fpsValue)
@@ -27,6 +30,18 @@ SingleGPU::SingleGPU(QStringList filenames, const std::vector< std::unique_ptr<R
 
 	// csv
 	QFile resultsCSV(saveName);
+
+	std::string metaName = saveName.mid(0, saveName.length() - 3).toStdString();
+	metaName.append("xml");
+
+	char temp[FILENAME_MAX];
+	GetCurrentDir(temp, FILENAME_MAX);
+	std::string metaPath(temp);
+	metaPath.append("/userMetadata.xml");
+
+	std::ifstream src(metaPath.c_str(), std::ios::binary);
+	std::ofstream  dst(metaName.c_str(), std::ios::binary);
+	dst << src.rdbuf();
 
 	if (resultsCSV.open(QIODevice::WriteOnly))
 	{
@@ -66,7 +81,7 @@ SingleGPU::SingleGPU(QStringList filenames, const std::vector< std::unique_ptr<R
 
 			// if image isn't corrupted
 			if (image.data) {
-				stream << i << ",";
+				stream << QString::fromStdString(filenames[i].toStdString()) << ",";
 				// for each rubber band
 				for (it = rbs->begin(); it != rbs->end(); it++) {
 					//get the ROI
@@ -164,7 +179,7 @@ float SingleGPU::snowFilterDebug(cv::cuda::GpuMat roi)
 	output.release();
 	output2.release();
 
-	return float(imageCoverage) / float (roi.rows*roi.cols);
+	return float(imageCoverage) / float (roi.rows*roi.cols) * 100;
 }
 
 float SingleGPU::cloudFilterDebug(cv::cuda::GpuMat roi)
@@ -186,5 +201,5 @@ float SingleGPU::cloudFilterDebug(cv::cuda::GpuMat roi)
 
 	sub.release();
 
-	return float(imageCoverage) / float(roi.rows*roi.cols);
+	return float(imageCoverage) / float(roi.rows*roi.cols) * 100;
 }

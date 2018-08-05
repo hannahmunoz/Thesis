@@ -31,6 +31,18 @@ CPU::CPU(QStringList filenames, const std::vector<std::unique_ptr<ResizableRubbe
 	// csv
 	QFile resultsCSV(saveName);
 
+	std::string metaName = saveName.mid(0, saveName.length() - 3).toStdString();
+	metaName.append("xml");
+
+	char temp[FILENAME_MAX];
+	GetCurrentDir(temp, FILENAME_MAX);
+	std::string metaPath(temp);
+	metaPath.append("/userMetadata.xml");
+
+	std::ifstream src(metaPath.c_str(), std::ios::binary);
+	std::ofstream  dst(metaName.c_str(), std::ios::binary);
+	dst << src.rdbuf();
+
 	// metadata
 	//tinyxml2::XMLDocument* metadata = new tinyxml2::XMLDocument();
 
@@ -72,7 +84,7 @@ CPU::CPU(QStringList filenames, const std::vector<std::unique_ptr<ResizableRubbe
 
 			// if image isn't corrupted
 			if (image.data) {
-				stream << i << ",";
+				stream << QString::fromStdString (filenames[i].toStdString()) << ",";
 
 				// for each rubber band
 				for (it = rbs->begin(); it != rbs->end(); it++) {
@@ -155,18 +167,22 @@ float CPU::snowFilterDebug(cv::Mat &roi)
 
 	//BGR
 	std::vector<cv::Mat> planes(3);
+
 	cv::split(roi, planes);
 
 	//HLS
 	cv::Mat luminace;
-	cv::cvtColor(roi, luminace, cv::COLOR_BGR2HLS);
+	cv::cvtColor(roi, luminace, cv::COLOR_BGR2HSV);
 	std::vector<cv::Mat> luminancePlanes(3);
 	cv::split(luminace, luminancePlanes);
+
 	cv::GaussianBlur(luminancePlanes[0], luminancePlanes[0], cv::Size(15, 15), 0);
 
 	//get output
 	cv::Mat output, output2;
 	cv::threshold(luminancePlanes[0], output, lumThreshold, 255, CV_THRESH_BINARY);
+	//cv::threshold(luminancePlanes[1], output2, 25, 255, CV_THRESH_BINARY_INV);
+	//cv::bitwise_and(output, output2, roi);
 	cv::threshold(planes[0], output2, blueThreshold, 255, CV_THRESH_BINARY);
 	cv::bitwise_and(output, output2, roi);
 	if(debug)

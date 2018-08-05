@@ -3,7 +3,14 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
+#include <direct.h>
+#define GetCurrentDir _getcwd
+
+#include<iostream>
+
+
 using boost::property_tree::ptree;
+
 
 // where the logic for the metadata creation will go
 Metadata::Metadata(QWidget *parent)
@@ -12,8 +19,13 @@ Metadata::Metadata(QWidget *parent)
 	ui.setupUi(this);
 	connect(ui.Save, SIGNAL(clicked()), this, SLOT(saveMetadata()));
 	ptree pt;
+	char temp [FILENAME_MAX];
+	GetCurrentDir(temp, FILENAME_MAX);
+	std::string path(temp);
+	path.append("/userMetadata.xml");
+
 	try {
-		boost::property_tree::xml_parser::read_xml("C:/Users/hmunoz/Documents/Visual Studio 2015/Projects/Thesis/GUI/Resources/userMetadata.xml", pt, boost::property_tree::xml_parser::trim_whitespace);
+		boost::property_tree::xml_parser::read_xml(path, pt, boost::property_tree::xml_parser::trim_whitespace);
 		ui.nameLineEdit->setText(QString::fromStdString(pt.get("Researcher.Name", "")));
 		ui.emailLineEdit->setText(QString::fromStdString(pt.get("Researcher.Email", "")));
 		ui.phoneLineEdit->setText(QString::fromStdString(pt.get("Researcher.Phone", "")));
@@ -72,7 +84,12 @@ void Metadata::saveMetadata() {
 
 	root.push_back(ptree::value_type("Project", project));
 
-	boost::property_tree::xml_parser::write_xml("C:/Users/hmunoz/Documents/Visual Studio 2015/Projects/Thesis/GUI/Resources/userMetadata.xml", root, std::locale(), boost::property_tree::xml_writer_settings<std::string>('\t', 1));
+	char temp[FILENAME_MAX];
+	GetCurrentDir(temp, FILENAME_MAX);
+	std::string path(temp);
+	path.append("/userMetadata.xml");
+
+	boost::property_tree::xml_parser::write_xml(path, root, std::locale(), boost::property_tree::xml_writer_settings<std::string>('\t', 1));
 
 	this->close();
 }

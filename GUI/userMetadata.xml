@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Researcher>
+	<Name>testt</Name>
+	<Email/>
+	<Phone/>
+	<Website/>
+</Researcher>
+<Institution>
+	<InstitutionName>test</InstitutionName>
+	<Address/>
+	<Department/>
+</Institution>
+<Project>
+	<ProjectName>test</ProjectName>
+	<ProjectURL/>
+	<Funding/>
+	<SiteName/>
+	<Location/>
+	<Latitude/>
+	<Longitude/>
+	<Elevation/>
+</Project>
