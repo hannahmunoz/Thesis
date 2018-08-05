@@ -16,7 +16,7 @@ Export::Export(QWidget *parent)
 		ui.MutliGPU->setEnabled(false);
 	}
 
-	ui.numberofGPU->setMaximum(devices);
+	//ui.numberofGPU->setMaximum(devices);
 	
 	// video export
 	connect(ui.videoExport, SIGNAL(stateChanged(int)), this, SLOT(videoExport(int)));

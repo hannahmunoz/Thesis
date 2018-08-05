@@ -7,6 +7,9 @@
 #include "ProgressBar.h"
 #include <stdlib.h>
 
+#include <direct.h>
+#define GetCurrentDir _getcwd
+
 
 CPU::CPU(QStringList filenames, const std::vector<std::unique_ptr<ResizableRubberband> > *rbs, QString saveName, bool check, bool fpsChecked, int fpsValue)
 {

@@ -40,7 +40,6 @@ public:
     QHBoxLayout *horizontalLayout;
     QRadioButton *cpuButton;
     QRadioButton *MutliGPU;
-    QSpinBox *numberofGPU;
 
     void setupUi(QDialog *Export)
     {
@@ -266,13 +265,6 @@ public:
         MutliGPU->setStyleSheet(QStringLiteral(""));
 
         horizontalLayout->addWidget(MutliGPU);
-
-        numberofGPU = new QSpinBox(groupBox);
-        numberofGPU->setObjectName(QStringLiteral("numberofGPU"));
-        numberofGPU->setMaximumSize(QSize(40, 16777215));
-        numberofGPU->setMinimum(1);
-
-        horizontalLayout->addWidget(numberofGPU);
 
 
         gridLayout_2->addWidget(groupBox, 3, 2, 1, 3);
