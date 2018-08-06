@@ -10,7 +10,6 @@
 #include <Export.h>
 #include <CPU.h>
 #include <SingleGPU.h>
-
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -104,7 +103,7 @@ void GUI::loadMDWindow()
 void GUI::loadExportWindow(QAction *t)
 {
 	Export *exwindow = new Export();
-	connect(exwindow, SIGNAL(choice(int, bool, QString, bool, int)), this, SLOT(processSelection(int, bool, QString, bool, int)));
+	connect(exwindow, SIGNAL(choice(int, bool, QString, bool, int)), this, SLOT(processSelection(int, bool, QString, bool, int, int)));
 	//exwindow->show();
 	exwindow->exec();
 }
@@ -136,9 +135,9 @@ void GUI::processSelection(int selection, bool checked, QString saveName, bool f
 			//if (numGPU == 1) {
 				SingleGPU *process = new SingleGPU(filenames, rbs, saveName, checked, fpsChecked, fpsValue);
 			//}
-			/*else {
-				MultiGPU *process = new MultiGPU (filenames, rbs, saveName, checked, fpsChecked, fpsValue, numGPU);
-			}*/
+			//else {
+				//MultiGPU *process = new MultiGPU (filenames, rbs, saveName, checked, fpsChecked, fpsValue);
+			//}
 		}
 
 	}

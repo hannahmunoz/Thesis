@@ -13,11 +13,13 @@ public:
 	~MultiGPU();
 
 private:
-	float snowFilterDebug(cv::cuda::GpuMat);
-	float cloudFilterDebug(cv::cuda::GpuMat);
+	//float snowFilterDebug(cv::cuda::GpuMat);
+	//float cloudFilterDebug(cv::cuda::GpuMat);
 
-	std::vector<cv::cuda::GpuMat> planes;
-	std::vector<cv::cuda::GpuMat> luminancePlanes;
+
+	//std::vector<cv::cuda::GpuMat> planes;
+	//std::vector<cv::cuda::GpuMat> luminancePlanes;
 	bool debug;
 };
+void* threadRoutine(void *tData);
 
