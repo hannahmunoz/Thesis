@@ -40,6 +40,7 @@ public:
     QHBoxLayout *horizontalLayout;
     QRadioButton *cpuButton;
     QRadioButton *MutliGPU;
+    QCheckBox *debug;
 
     void setupUi(QDialog *Export)
     {
@@ -266,6 +267,12 @@ public:
 
         horizontalLayout->addWidget(MutliGPU);
 
+        debug = new QCheckBox(groupBox);
+        debug->setObjectName(QStringLiteral("debug"));
+        debug->setMaximumSize(QSize(60, 16777215));
+
+        horizontalLayout->addWidget(debug);
+
 
         gridLayout_2->addWidget(groupBox, 3, 2, 1, 3);
 
@@ -286,6 +293,7 @@ public:
         groupBox->setTitle(QString());
         cpuButton->setText(QApplication::translate("Export", "CPU", Q_NULLPTR));
         MutliGPU->setText(QApplication::translate("Export", "GPU", Q_NULLPTR));
+        debug->setText(QApplication::translate("Export", "Debug", Q_NULLPTR));
     } // retranslateUi
 
 };

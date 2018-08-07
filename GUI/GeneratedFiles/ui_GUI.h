@@ -1495,7 +1495,6 @@ public:
         menuBar->addAction(menuEdit->menuAction());
         menuBar->addAction(menuExport->menuAction());
         menu_File->addAction(action_Open);
-        menu_File->addAction(action_Recent);
         menu_File->addSeparator();
         menu_File->addSeparator();
         menu_File->addAction(action_Exit);

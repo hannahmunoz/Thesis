@@ -1539,7 +1539,6 @@ QDateEdit::down-arrow:focus {
      <string>&amp;File</string>
     </property>
     <addaction name="action_Open"/>
-    <addaction name="action_Recent"/>
     <addaction name="separator"/>
     <addaction name="separator"/>
     <addaction name="action_Exit"/>

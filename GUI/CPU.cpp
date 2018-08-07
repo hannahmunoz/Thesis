@@ -186,7 +186,7 @@ float CPU::snowFilterDebug(cv::Mat &roi)
 	std::vector<cv::Mat> luminancePlanes(3);
 	cv::split(luminace, luminancePlanes);
 
-	cv::GaussianBlur(luminancePlanes[0], luminancePlanes[0], cv::Size(15, 15), 0);
+	cv::GaussianBlur(luminancePlanes[0], luminancePlanes[0], cv::Size(5, 5), 0);
 
 	//get output
 	cv::Mat output, output2;

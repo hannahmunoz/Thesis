@@ -44,7 +44,7 @@ void Export::accept()
 	}
 
 	QString filename = QFileDialog::getSaveFileName(this, tr("Save Results"), "/", tr("CSV Files (*.csv);; All files (*.*)"));
-	//emit choice (process, ui.checkBox->isChecked(), filename, ui.fpsBox->isEnabled(), ui.fpsBox->value());
+	//emit choice (process, ui.debug->isChecked(), filename, ui.fpsBox->isEnabled(), ui.fpsBox->value());
 	emit choice(process, false, filename, ui.fpsBox->isEnabled(), ui.fpsBox->value());
 	this->close();
 }

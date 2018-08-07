@@ -103,7 +103,7 @@ void GUI::loadMDWindow()
 void GUI::loadExportWindow(QAction *t)
 {
 	Export *exwindow = new Export();
-	connect(exwindow, SIGNAL(choice(int, bool, QString, bool, int)), this, SLOT(processSelection(int, bool, QString, bool, int, int)));
+	connect(exwindow, SIGNAL(choice(int, bool, QString, bool, int)), this, SLOT(processSelection(int, bool, QString, bool, int)));
 	//exwindow->show();
 	exwindow->exec();
 }
